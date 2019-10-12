@@ -1,9 +1,27 @@
+interface World {
+  registerComponent: <T>(component: Component<T>) => void,
+  addEntity: (entity: EntityBuilder) => void,
+  maintain: () => void,
+  query: (componentQueries: ComponentQuery<any>[]) => Entity[],
+}
+
+export function createWorld(): World {
+  return {
+    registerComponent: (component) => {},
+    addEntity: (entity) => {},
+    maintain: () => {},
+    query: (componentQueries) => [],
+  };
+};
+
 interface EntityBuilder {
   addComponent: <T>(component: Component<T>) => void,
 }
 
 interface Entity {
-  addComponent: <T>(component: Component<T>, value: T) => void,
+  removed: boolean,
+  added: boolean,
+  addComponent: <T>(component: Component<T>, value?: T) => void,
   removeComponent: <T>(component: Component<T>) => T,
   getComponent: <T>(component: Component<T>) => ComponentValue<T>,
   remove: () => void,
@@ -14,22 +32,6 @@ export function createEntity(): EntityBuilder {
     addComponent: <T>(component: Component<T>) => {},
   };
 }
-
-interface World {
-  registerComponent: <T>(component: Component<T>) => void,
-  addEntity: (entity: EntityBuilder) => void,
-  maintain: () => void,
-  query: (components: Component<any>[]) => Entity[],
-}
-
-export function createWorld(): World {
-  return {
-    registerComponent: (component) => {},
-    addEntity: (entity) => {},
-    maintain: () => {},
-    query: (components) => [],
-  };
-};
 
 interface Component<T> {
   type: Symbol,
@@ -53,13 +55,57 @@ interface System {
 
 export function createSystem(
   runFunction: (...entities: Entity[][]) => void,
-  ...components: Component<any>[][]
+  ...componentQueries: (ComponentQuery<any> | Component<any>)[][]
 ): System {
   return {
     run: (world): void => {
-      runFunction(...(components).map(c => world.query(c)));
+      runFunction(...(componentQueries).map(cqs => {
+        const queries: ComponentQuery<any>[] = cqs.map(cq => {
+          if ((cq as ComponentQuery<any>).component) {
+            return cq as ComponentQuery<any>;
+          } else {
+            return current(cq as Component<any>);
+          }
+        });
+        return world.query(queries);
+      }));
     },
   }
 }
 
-export function not<T>(component: Component<T>) {}
+enum ComponentQueryType {
+  WITHOUT,
+  CURRENT,
+  REMOVED,
+  ADDED,
+};
+
+interface ComponentQuery<T> {
+  type: ComponentQueryType,
+  component: Component<T>,
+}
+
+export function without<T>(component: Component<T>): ComponentQuery<T> {
+  return {
+    type: ComponentQueryType.WITHOUT,
+    component,
+  }
+}
+export function current<T>(component: Component<T>): ComponentQuery<T> {
+  return {
+    type: ComponentQueryType.CURRENT,
+    component,
+  }
+}
+export function removed<T>(component: Component<T>): ComponentQuery<T> {
+  return {
+    type: ComponentQueryType.REMOVED,
+    component,
+  }
+}
+export function added<T>(component: Component<T>): ComponentQuery<T> {
+  return {
+    type: ComponentQueryType.ADDED,
+    component,
+  }
+}
