@@ -27,11 +27,6 @@ const Velocity = flock.createComponent(
 );
 world.registerComponent(Velocity);
 
-const entity = flock.createEntity();
-entity.addComponent(Position);
-entity.addComponent(Velocity);
-world.addEntity(entity);
-
 const movingSystem = flock.createSystem(
   (entities) => {
     entities.forEach(entity => {
@@ -65,6 +60,11 @@ const logSystem = flock.createSystem(
   },
   [ Position ],
 )
+
+const entity = flock.createEntity();
+entity.addComponent(Position);
+entity.addComponent(Velocity);
+world.addEntity(entity);
 
 const app = new PIXI.Application({ antialias: true });
 document.body.appendChild(app.view);
