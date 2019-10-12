@@ -19,6 +19,7 @@ interface World {
   registerComponent: <T>(component: Component<T>) => void,
   addEntity: (entity: EntityBuilder) => void,
   maintain: () => void,
+  query: (components: Component<any>[]) => Entity[],
 }
 
 export function createWorld(): World {
@@ -26,10 +27,12 @@ export function createWorld(): World {
     registerComponent: (component) => {},
     addEntity: (entity) => {},
     maintain: () => {},
+    query: (components) => [],
   };
 };
 
 interface Component<T> {
+  type: Symbol,
   default: T
 }
 
@@ -39,6 +42,7 @@ interface ComponentValue<T> {
 
 export function createComponent<T>(value: T, reset: (value: ComponentValue<T>) => void): Component<T> {
   return {
+    type: Symbol(),
     default: value
   };
 };
@@ -47,15 +51,14 @@ interface System {
   run: (world: World) => void,
 }
 
-interface QueryResults {
-  added: Array<Entity>,
-  current: Array<Entity>,
-  removed: Array<Entity>,
-}
-
-export function createSystem(queries: Array<Component<any>>, runFunction: (entities: QueryResults) => void): System {
+export function createSystem(
+  runFunction: (...entities: Entity[][]) => void,
+  ...components: Component<any>[][]
+): System {
   return {
-    run: (world) => {},
+    run: (world): void => {
+      runFunction(...(components).map(c => world.query(c)));
+    },
   }
 }
 

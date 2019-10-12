@@ -33,39 +33,44 @@ entity.addComponent(Velocity);
 world.addEntity(entity);
 
 const movingSystem = flock.createSystem(
-  [ Position, Velocity ],
   (entities) => {
-    entities.current.forEach(entity => {
+    entities.forEach(entity => {
       const position = entity.getComponent(Position);
       const velocity = entity.getComponent(Velocity);
       position.value.x = position.value.x + velocity.value.x;
       position.value.y = position.value.y + velocity.value.y;
     })
-  }
+  },
+  [ Position, Velocity ],
+);
+
+const boidSystem = flock.createSystem(
+  (entities, others) => {
+    entities.forEach(entity => {
+      others.forEach(other => {
+        //TODO: Boid stuff
+      });
+    });
+  },
+  [ Position, Velocity ],
+  [ Position, Velocity ],
 );
 
 const logSystem = flock.createSystem(
-  [ Position ],
   (entities) => {
-    entities.removed.forEach(entity => {
-      const position = entity.getComponent(Position);
-      console.log(`Entity removed from {${position.value.x}, ${position.value.y}}`);
-    });
-    entities.added.forEach(entity => {
-      const position = entity.getComponent(Position);
-      console.log(`Entity added to {${position.value.x}, ${position.value.y}}`);
-    });
-    entities.current.forEach(entity => {
+    entities.forEach(entity => {
       const position = entity.getComponent(Position);
       console.log(`Entity currently at {${position.value.x}, ${position.value.y}}`);
     });
-  }
+  },
+  [ Position ],
 )
 
 const app = new PIXI.Application({ antialias: true });
 document.body.appendChild(app.view);
 
 app.ticker.add((delta) => {
+  boidSystem.run(world);
   movingSystem.run(world);
   logSystem.run(world);
   world.maintain();
