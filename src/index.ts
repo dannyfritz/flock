@@ -1,111 +1,125 @@
-interface World {
-  registerComponent: <T>(component: Component<T>) => void,
-  addEntity: (entity: EntityBuilder) => void,
-  maintain: () => void,
-  query: (componentQueries: ComponentQuery<any>[]) => Entity[],
-}
-
-export function createWorld(): World {
-  return {
-    registerComponent: (component) => {},
-    addEntity: (entity) => {},
-    maintain: () => {},
-    query: (componentQueries) => [],
-  };
+export class World {
+  components: Component<any>[] = [];
+  entities: Entity[] = [];
+  constructor () {}
+  registerComponent<T>(component: Component<T>): void {
+    this.components.push(component);
+  }
+  addEntity(entity: Entity): void {
+    this.entities.push(entity);
+  }
+  maintain(): void {
+    this.entities.forEach(entity => {
+      entity.added = false;
+    })
+    this.entities = this.entities.filter(entity => !entity.removed);
+  }
+  query(componentQueries: ComponentQuery<any>[]): Entity[] {
+    return this.entities.filter(entity => {
+      return componentQueries.every(cq => {
+        if(cq instanceof Current) {
+          return entity.componentValues.some(cv => cv.component === cq.component);
+        }
+        else if(cq instanceof Without) {
+          return entity.componentValues.every(cv => cv.component !== cq.component);
+        }
+        else if(cq instanceof Added) {
+          return entity.added;
+        }
+        else if(cq instanceof Removed) {
+          return entity.removed;
+        }
+      });
+    });
+  }
 };
 
-interface EntityBuilder {
-  addComponent: <T>(component: Component<T>) => void,
+export class Entity {
+  componentValues: ComponentValue<any>[] = [];
+  removed: boolean = false;
+  added: boolean = true;
+  constructor () {}
+  addComponent<T>(component: Component<T>, value?: T) {
+    const componentValue = new ComponentValue(value || component.defaultValue, component);
+    this.componentValues.push(componentValue);
+  }
+  getComponent<T>(component: Component<T>): ComponentValue<T> {
+    const componentValue = this.componentValues.find(cv => cv.component === component)!;
+    return componentValue;
+  }
+  removeComponent<T>(component: Component<T>): ComponentValue<T> {
+    const removedComponent = this.componentValues.find(cv => cv.component === component)!;
+    this.componentValues = this.componentValues.filter(cv => cv.component !== component);
+    return removedComponent;
+  }
+  remove() {
+    this.removed = true;
+  }
 }
 
-interface Entity {
-  removed: boolean,
-  added: boolean,
-  addComponent: <T>(component: Component<T>, value?: T) => void,
-  removeComponent: <T>(component: Component<T>) => T,
-  getComponent: <T>(component: Component<T>) => ComponentValue<T>,
-  remove: () => void,
+export class ComponentValue<T> {
+  value: T;
+  component: Component<T>;
+  constructor(value: T, component: Component<T>) {
+    this.value = value;
+    this.component = component;
+  }
 }
 
-export function createEntity(): EntityBuilder {
-  return {
-    addComponent: <T>(component: Component<T>) => {},
-  };
-}
-
-interface Component<T> {
-  type: Symbol,
-  default: T
-}
-
-interface ComponentValue<T> {
-  value: T
-}
-
-export function createComponent<T>(value: T, reset: (value: ComponentValue<T>) => void): Component<T> {
-  return {
-    type: Symbol(),
-    default: value
-  };
+export class Component<T> {
+  defaultValue: T;
+  reset: (value: ComponentValue<T>) => void;
+  constructor(value: T, reset: (value: ComponentValue<T>) => void) {
+    this.defaultValue = value;
+    this.reset = reset;
+  }
 };
 
-interface System {
-  run: (world: World) => void,
-}
-
-export function createSystem(
-  runFunction: (...entities: Entity[][]) => void,
-  ...componentQueries: (ComponentQuery<any> | Component<any>)[][]
-): System {
-  return {
-    run: (world): void => {
-      runFunction(...(componentQueries).map(cqs => {
-        const queries: ComponentQuery<any>[] = cqs.map(cq => {
-          if ((cq as ComponentQuery<any>).component) {
-            return cq as ComponentQuery<any>;
-          } else {
-            return current(cq as Component<any>);
-          }
-        });
-        return world.query(queries);
-      }));
-    },
+export class System {
+  runFunction: (...entities: Entity[][]) => void;
+  componentQueries: (ComponentQuery<any> | Component<any>)[][];
+  constructor(
+    runFunction: (...entities: Entity[][]) => void,
+    ...componentQueries: (ComponentQuery<any> | Component<any>)[][]
+  ) {
+    this.runFunction = runFunction;
+    this.componentQueries = componentQueries;
+  }
+  run(world: World): void {
+    this.runFunction(...(this.componentQueries).map(cqs => {
+      const queries: ComponentQuery<any>[] = cqs.map(cq => {
+        if ((cq as ComponentQuery<any>).component) {
+          return cq as ComponentQuery<any>;
+        } else {
+          return new Current(cq as Component<any>);
+        }
+      });
+      return world.query(queries);
+    }));
   }
 }
 
-enum ComponentQueryType {
-  WITHOUT,
-  CURRENT,
-  REMOVED,
-  ADDED,
-};
-
-interface ComponentQuery<T> {
-  type: ComponentQueryType,
-  component: Component<T>,
+export interface ComponentQuery<T> {
+  component: Component<T>;
 }
 
-export function without<T>(component: Component<T>): ComponentQuery<T> {
-  return {
-    type: ComponentQueryType.WITHOUT,
-    component,
+export class Without<T> implements ComponentQuery<T> {
+  component: Component<T>;
+  constructor(component: Component<T>) {
+    this.component = component;
   }
 }
-export function current<T>(component: Component<T>): ComponentQuery<T> {
-  return {
-    type: ComponentQueryType.CURRENT,
-    component,
+export class Current<T> implements ComponentQuery<T> {
+  component: Component<T>;
+  constructor(component: Component<T>) {
+    this.component = component;
   }
 }
-export function removed<T>(component: Component<T>): ComponentQuery<T> {
-  return {
-    type: ComponentQueryType.REMOVED,
-    component,
-  }
+export class Removed<T> implements ComponentQuery<T> {
+  component: Component<T> = new Component({} as T, () => {});
+  constructor() {}
 }
-export function added<T>(component: Component<T>): ComponentQuery<T> {
-  return {
-    type: ComponentQueryType.ADDED,
-    component,
-  }
+export class Added<T> implements ComponentQuery<T> {
+  component: Component<T> = new Component({} as T, () => {});
+  constructor() {}
 }

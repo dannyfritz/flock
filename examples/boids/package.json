@@ -5,10 +5,9 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "start": "parcel serve index.html --open"
+    "start": "parcel index.html --open"
   },
   "dependencies": {
-    "ecsy": "^0.1.4",
     "flock-ecs": "^1.0.0",
     "pixi.js": "^5.1.5",
     "sat": "^0.8.0"

@@ -1,9 +1,12 @@
 import * as PIXI from 'pixi.js';
 import * as flock from 'flock-ecs';
 
-const world = flock.createWorld();
+const app = new PIXI.Application({ antialias: true });
+document.body.appendChild(app.view);
 
-const Position = flock.createComponent(
+const world = new flock.World();
+
+const Position = new flock.Component(
   {
     x: 0,
     y: 0,
@@ -15,7 +18,7 @@ const Position = flock.createComponent(
 );
 world.registerComponent(Position);
 
-const Velocity = flock.createComponent(
+const Velocity = new flock.Component(
   {
     x: 0,
     y: 0,
@@ -27,7 +30,7 @@ const Velocity = flock.createComponent(
 );
 world.registerComponent(Velocity);
 
-const movingSystem = flock.createSystem(
+const movingSystem = new flock.System(
   (entities) => {
     entities.forEach(entity => {
       const position = entity.getComponent(Position);
@@ -39,7 +42,7 @@ const movingSystem = flock.createSystem(
   [ Position, Velocity ],
 );
 
-const boidSystem = flock.createSystem(
+const boidSystem = new flock.System(
   (entities, others) => {
     entities.forEach(entity => {
       others.forEach(other => {
@@ -51,7 +54,7 @@ const boidSystem = flock.createSystem(
   [ Position, Velocity ],
 );
 
-const logSystem = flock.createSystem(
+const logSystem = new flock.System(
   (entities) => {
     entities.forEach(entity => {
       const position = entity.getComponent(Position);
@@ -61,13 +64,10 @@ const logSystem = flock.createSystem(
   [ Position ],
 )
 
-const entity = flock.createEntity();
+const entity = new flock.Entity();
 entity.addComponent(Position);
-entity.addComponent(Velocity);
+entity.addComponent(Velocity, { x: 1, y: 0 });
 world.addEntity(entity);
-
-const app = new PIXI.Application({ antialias: true });
-document.body.appendChild(app.view);
 
 app.ticker.add((delta) => {
   boidSystem.run(world);
