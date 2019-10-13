@@ -68,10 +68,8 @@ export class ComponentValue<T> {
 
 export class Component<T> {
   defaultValue: T;
-  reset: (value: ComponentValue<T>) => void;
-  constructor(value: T, reset: (value: ComponentValue<T>) => void) {
-    this.defaultValue = value;
-    this.reset = reset;
+  constructor(defaultValue: T) {
+    this.defaultValue = defaultValue;
   }
 };
 
@@ -116,10 +114,10 @@ export class Current<T> implements ComponentQuery<T> {
   }
 }
 export class Removed<T> implements ComponentQuery<T> {
-  component: Component<T> = new Component({} as T, () => {});
+  component: Component<T> = new Component({} as T);
   constructor() {}
 }
 export class Added<T> implements ComponentQuery<T> {
-  component: Component<T> = new Component({} as T, () => {});
+  component: Component<T> = new Component({} as T);
   constructor() {}
 }

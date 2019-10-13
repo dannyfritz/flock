@@ -10,10 +10,6 @@ const Position = new flock.Component(
   {
     x: 0,
     y: 0,
-  },
-  (component) => {
-    component.value.x = 0;
-    component.value.y = 0;
   }
 );
 world.registerComponent(Position);
@@ -22,10 +18,6 @@ const Velocity = new flock.Component(
   {
     x: 0,
     y: 0,
-  },
-  (component) => {
-    component.value.x = 0;
-    component.value.y = 0;
   }
 );
 world.registerComponent(Velocity);
@@ -51,7 +43,7 @@ const boidSystem = new flock.System(
     });
   },
   [ Position, Velocity ],
-  [ Position, Velocity ],
+  [ Position ],
 );
 
 const logSystem = new flock.System(
@@ -69,9 +61,9 @@ entity.addComponent(Position);
 entity.addComponent(Velocity, { x: 1, y: 0 });
 world.addEntity(entity);
 
-app.ticker.add((delta) => {
+// app.ticker.add((delta) => {
   boidSystem.run(world);
   movingSystem.run(world);
   logSystem.run(world);
   world.maintain();
-});
+// });
