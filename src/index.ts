@@ -1,27 +1,68 @@
+import { AssertionError } from "assert";
+
 export class World {
-  components: Component<any>[] = [];
+  components: Map<Component<any>, (ComponentValue<any> | null)[]> = new Map();
+  // entityComponentMap: Map<Entity, Set<Component<any>>> = new Map();
   entities: Entity[] = [];
+  index: number = 0;
   constructor () {}
-  registerComponent<T>(component: Component<T>): void {
-    this.components.push(component);
+  createEntity(): Entity {
+    const entity = new Entity(this, this.index);
+    this.index = this.index + 1;
+    this.entities[entity.index] = entity;
+    for (const [, componentValues] of this.components) {
+      componentValues.push(null);
+    }
+    return entity;
   }
-  addEntity(entity: Entity): void {
-    this.entities.push(entity);
+  registerComponent<T>(component: Component<T>): void {
+    if (this.components.get(component)) {
+      return;
+    }
+    this.components.set(component, Array(this.index).fill(null));
+  }
+  unregisterComponent<T>(component: Component<T>): void {
+    this.components.delete(component);
+  }
+  addEntityComponent<T>(entity: Entity, component: Component<T>, componentValue: ComponentValue<T>): void {
+    const componentValues = this.components.get(component) as ComponentValue<T>[];
+    if (!componentValues) {
+      throw new Error(`Component is not registered. ${component}`);
+    }
+    componentValues[entity.index] = componentValue;
+  }
+  getEntityComponentValue<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
+    const componentValues = this.components.get(component) as (ComponentValue<T> | null)[];
+    if (!componentValues) {
+      throw new Error(`Component is not registered. ${component}`);
+    }
+    return componentValues[entity.index];
+  }
+  removeEntityComponent<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
+    const componentValues = this.components.get(component) as (ComponentValue<T> | null)[];
+    if (!componentValues) {
+      throw new Error(`Component is not registered. ${component}`);
+    }
+    const prevValue = componentValues[entity.index];
+    componentValues[entity.index] = null;
+    return prevValue;
   }
   maintain(): void {
     this.entities.forEach(entity => {
       entity.added = false;
     })
+    const removed = this.entities.filter(entity => entity.removed);
+    //TODO: clean up componentvalues
     this.entities = this.entities.filter(entity => !entity.removed);
   }
   query(componentQueries: ComponentQuery<any>[]): Entity[] {
     return this.entities.filter(entity => {
       return componentQueries.every(cq => {
         if(cq instanceof Current) {
-          return entity.componentValues.some(cv => cv.component === cq.component);
+          return entity.components.has(cq.component);
         }
         else if(cq instanceof Without) {
-          return entity.componentValues.every(cv => cv.component !== cq.component);
+          return !entity.components.has(cq.component);
         }
         else if(cq instanceof Added) {
           return entity.added;
@@ -35,22 +76,26 @@ export class World {
 };
 
 export class Entity {
-  componentValues: ComponentValue<any>[] = [];
+  private world: World;
   removed: boolean = false;
   added: boolean = true;
-  constructor () {}
+  components: Set<Component<any>> = new Set();
+  index: number;
+  constructor (world: World, index: number) {
+    this.world = world;
+    this.index = index;
+  }
   addComponent<T>(component: Component<T>, value?: T) {
     const componentValue = new ComponentValue(value || component.defaultValue, component);
-    this.componentValues.push(componentValue);
+    this.components.add(component);
+    this.world.addEntityComponent(this, component, componentValue);
   }
-  getComponent<T>(component: Component<T>): ComponentValue<T> {
-    const componentValue = this.componentValues.find(cv => cv.component === component)!;
-    return componentValue;
+  removeComponent<T>(component: Component<T>): void {
+    this.components.delete(component);
+    this.world.removeEntityComponent(this, component);
   }
-  removeComponent<T>(component: Component<T>): ComponentValue<T> {
-    const removedComponent = this.componentValues.find(cv => cv.component === component)!;
-    this.componentValues = this.componentValues.filter(cv => cv.component !== component);
-    return removedComponent;
+  getComponent<T>(component: Component<T>): ComponentValue<T> | null {
+    return this.world.getEntityComponentValue(this, component);
   }
   remove() {
     this.removed = true;

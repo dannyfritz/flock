@@ -25,8 +25,8 @@ world.registerComponent(Velocity);
 const movingSystem = new flock.System(
   (entities) => {
     entities.forEach(entity => {
-      const position = entity.getComponent(Position);
-      const velocity = entity.getComponent(Velocity);
+      const position = entity.getComponent(Position)!;
+      const velocity = entity.getComponent(Velocity)!;
       position.value.x = position.value.x + velocity.value.x;
       position.value.y = position.value.y + velocity.value.y;
     })
@@ -49,17 +49,16 @@ const boidSystem = new flock.System(
 const logSystem = new flock.System(
   (entities) => {
     entities.forEach(entity => {
-      const position = entity.getComponent(Position);
+      const position = entity.getComponent(Position)!;
       console.log(`Entity currently at {${position.value.x}, ${position.value.y}}`);
     });
   },
   [ Position ],
 )
 
-const entity = new flock.Entity();
+const entity = world.createEntity();
 entity.addComponent(Position);
 entity.addComponent(Velocity, { x: 1, y: 0 });
-world.addEntity(entity);
 
 // app.ticker.add((delta) => {
   boidSystem.run(world);
