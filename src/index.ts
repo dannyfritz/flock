@@ -27,21 +27,21 @@ export class World {
   addEntityComponent<T>(entity: Entity, component: Component<T>, componentValue: ComponentValue<T>): void {
     const componentValues = this.components.get(component) as ComponentValue<T>[];
     if (!componentValues) {
-      throw new Error(`Component is not registered. ${component}`);
+      throw new Error(`Component is not registered.`);
     }
     componentValues[entity.index] = componentValue;
   }
   getEntityComponentValue<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
     const componentValues = this.components.get(component) as (ComponentValue<T> | null)[];
     if (!componentValues) {
-      throw new Error(`Component is not registered. ${component}`);
+      throw new Error(`Component is not registered.`);
     }
     return componentValues[entity.index];
   }
   removeEntityComponent<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
     const componentValues = this.components.get(component) as (ComponentValue<T> | null)[];
     if (!componentValues) {
-      throw new Error(`Component is not registered. ${component}`);
+      throw new Error(`Component is not registered.`);
     }
     const prevValue = componentValues[entity.index];
     componentValues[entity.index] = null;
@@ -86,7 +86,7 @@ export class Entity {
     this.index = index;
   }
   addComponent<T>(component: Component<T>, value?: T) {
-    const componentValue = new ComponentValue(value || component.defaultValue, component);
+    const componentValue = new ComponentValue(value || component.defaultValue(), component);
     this.components.add(component);
     this.world.addEntityComponent(this, component, componentValue);
   }
@@ -112,8 +112,8 @@ export class ComponentValue<T> {
 }
 
 export class Component<T> {
-  defaultValue: T;
-  constructor(defaultValue: T) {
+  defaultValue: () => T;
+  constructor(defaultValue: () => T) {
     this.defaultValue = defaultValue;
   }
 };
@@ -159,10 +159,10 @@ export class Current<T> implements ComponentQuery<T> {
   }
 }
 export class Removed<T> implements ComponentQuery<T> {
-  component: Component<T> = new Component({} as T);
+  component: Component<T> = new Component(null as any);
   constructor() {}
 }
 export class Added<T> implements ComponentQuery<T> {
-  component: Component<T> = new Component({} as T);
+  component: Component<T> = new Component(null as any);
   constructor() {}
 }

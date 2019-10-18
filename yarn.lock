@@ -1069,6 +1069,11 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
+"@types/victor@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/victor/-/victor-1.1.0.tgz#c540809e2efb94ef60e293495cfad1614d14ec87"
+  integrity sha512-37o+SnbGRoWqb2+6GQ3NoFX8Ff5zCvm0XsXFulNvO89t2zKluqb4twVORheAnmQ+iEd0rKzAcBGC2//3XBoU1A==
+
 abab@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.2.tgz#a2fba1b122c69a85caa02d10f9270c7219709a9d"
@@ -4893,11 +4898,6 @@ safe-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sat@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/sat/-/sat-0.8.0.tgz#eae1e36c96551f7b2fb884eee8ffb4d0e895a667"
-  integrity sha512-W0iWln+43pb+74lxcYW24BrueFMMefdqHvHxGQ/W0NemnyBXrV0oE23kGNjPRgwIoTuodYIH3ul2jqLrf4VGSA==
-
 sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
@@ -5628,6 +5628,11 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+victor@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/victor/-/victor-1.1.0.tgz#de3cc77b15589b1b0c7b22c3dad297034ab002ba"
+  integrity sha1-3jzHexVYmxsMeyLD2tKXA0qwAro=
 
 vlq@^0.2.2:
   version "0.2.3"

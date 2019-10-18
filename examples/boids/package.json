@@ -8,9 +8,10 @@
     "start": "parcel index.html --open"
   },
   "dependencies": {
+    "@types/victor": "^1.1.0",
     "flock-ecs": "^1.0.0",
     "pixi.js": "^5.1.5",
-    "sat": "^0.8.0"
+    "victor": "^1.1.0"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
