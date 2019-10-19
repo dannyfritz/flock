@@ -59,10 +59,12 @@ export class World {
     return this.entities.filter(entity => {
       return componentQueries.every(cq => {
         if(cq instanceof Current) {
-          return entity.components.has(cq.component);
+          const componentValue = this.getEntityComponentValue(entity, cq.component);
+          return componentValue !== null;
         }
         else if(cq instanceof Without) {
-          return !entity.components.has(cq.component);
+          const componentValue = this.getEntityComponentValue(entity, cq.component);
+          return componentValue === null;
         }
         else if(cq instanceof Added) {
           return entity.added;
@@ -79,7 +81,6 @@ export class Entity {
   private world: World;
   removed: boolean = false;
   added: boolean = true;
-  components: Set<Component<any>> = new Set();
   index: number;
   constructor (world: World, index: number) {
     this.world = world;
@@ -87,11 +88,9 @@ export class Entity {
   }
   addComponent<T>(component: Component<T>, value?: T) {
     const componentValue = new ComponentValue(value || component.defaultValue(), component);
-    this.components.add(component);
     this.world.addEntityComponent(this, component, componentValue);
   }
   removeComponent<T>(component: Component<T>): void {
-    this.components.delete(component);
     this.world.removeEntityComponent(this, component);
   }
   getComponent<T>(component: Component<T>): ComponentValue<T> | null {
