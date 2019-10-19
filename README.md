@@ -81,3 +81,5 @@ And then in another terminal:
 ```sh
 yarn workspace boids start
 ```
+
+## [Code of Conduct](./CODE_OF_CONDUCT.md)
