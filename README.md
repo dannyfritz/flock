@@ -2,34 +2,82 @@
 
 An entity component system (ECS) created with TypeScript in mind.
 
+## Featues
+
+* No dependencies
+* Very good TypeScript typings
+* Simple, but powerful API
+* Designed for performance
+* Struct of Arrays for storing entity component values
+* Entities are queryable by:
+  * Component
+  * Absence of Component
+  * Added Entity
+  * Removed Entity
+* Systems can have 1 or more queries
+
 ## Install
 
-`npm install flock-ecs`
+```sh
+npm install flock-ecs
+```
 
-`import * as flock from 'flock-ecs';`
+```ts
+const flock = require("flock-ecs");
+//or
+import * as flock from "flock-ecs";
+```
 
 ## Examples
 
-### Boids
+### [Simple](./examples/simple)
 
-Run with:
+```ts
+import * as flock from 'flock-ecs';
 
-`yarn workspace boids start`
+const world = new flock.World();
 
-![boids](examples/boids/screenshot.png)
+const Position = new flock.Component(
+  () => ({
+    x: 0,
+    y: 0,
+  })
+);
+world.registerComponent(Position);
+
+const logSystem = new flock.System(
+  (entities) => {
+    entities.forEach(entity => {
+      const position = entity.getComponentValue(Position)!;
+      console.log(`{ x: ${position.value.x}, y: ${position.value.y} }`);
+    });
+  },
+  [ Position ],
+);
+
+for (let i=0; i<10; i++) {
+  const entity = world.createEntity();
+  entity.addComponent(Position, { x: Math.random() * 100, y: Math.random() * 100 });
+}
+
+logSystem.run(world);
+world.maintain();
+```
+
+### [Boids](./examples.boids)
 
 ## Development
 
-This uses Yarn workspaces, so make sure you're using yarn instead of npm.
+This repo uses Yarn workspaces, so make sure you're using yarn instead of npm.
 
 To build the library in watch mode:
 
-`yarn workspace flock-ecs dev`
+```sh
+yarn workspace flock-ecs dev
+```
 
 And then in another terminal:
 
-`yarn workspace boids start`
-
-## Documentation
-
-TBA
+```sh
+yarn workspace boids start
+```

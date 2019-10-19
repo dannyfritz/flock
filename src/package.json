@@ -1,11 +1,12 @@
 {
   "name": "flock-ecs",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "author": "Danny Fritz <dannyfritz@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "rollup index.ts -w -c"
+    "dev": "rollup index.ts -w -c",
+    "build": "rollup index.ts -c"
   },
   "devDependencies": {
     "rollup": "^1.23.1",
