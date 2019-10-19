@@ -1,5 +1,3 @@
-import { AssertionError } from "assert";
-
 export class World {
   components: Map<Component<any>, (ComponentValue<any> | null)[]> = new Map();
   entities: Entity[] = [];
@@ -30,7 +28,7 @@ export class World {
     }
     componentValues[entity.index] = componentValue;
   }
-  getEntityComponentValue<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
+  getEntityComponent<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
     const componentValues = this.components.get(component) as (ComponentValue<T> | null)[];
     if (!componentValues) {
       throw new Error(`Component is not registered.`);
@@ -58,11 +56,11 @@ export class World {
     return this.entities.filter(entity => {
       return componentQueries.every(cq => {
         if(cq instanceof Current) {
-          const componentValue = this.getEntityComponentValue(entity, cq.component);
+          const componentValue = this.getEntityComponent(entity, cq.component);
           return componentValue !== null;
         }
         else if(cq instanceof Without) {
-          const componentValue = this.getEntityComponentValue(entity, cq.component);
+          const componentValue = this.getEntityComponent(entity, cq.component);
           return componentValue === null;
         }
         else if(cq instanceof Added) {
@@ -93,7 +91,7 @@ export class Entity {
     this.world.removeEntityComponent(this, component);
   }
   getComponent<T>(component: Component<T>): ComponentValue<T> | null {
-    return this.world.getEntityComponentValue(this, component);
+    return this.world.getEntityComponent(this, component);
   }
   remove() {
     this.removed = true;
