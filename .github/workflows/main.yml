@@ -1,0 +1,16 @@
+name: CI
+
+on: [push]
+
+jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.0.0
+      - name: Install Dependencies
+        run: yarn install
+      - name: Lint
+        run: yarn lint
