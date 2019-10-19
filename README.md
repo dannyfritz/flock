@@ -19,6 +19,8 @@ An entity component system (ECS) created with TypeScript in mind.
   * Removed Entity
 * Systems can have 1 or more queries
 
+## [Roadmap](https://github.com/dannyfritz/flock-ecs/issues/1)
+
 ## Install
 
 ```sh
