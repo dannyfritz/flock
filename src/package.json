@@ -1,6 +1,6 @@
 {
   "name": "flock-ecs",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "files": [
     "index.js",
     "index.d.ts",
