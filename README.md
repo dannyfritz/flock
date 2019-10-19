@@ -7,7 +7,7 @@
 
 An entity component system (ECS) created with TypeScript in mind.
 
-## Featues
+## Features
 
 * No dependencies
 * Very good TypeScript typings
