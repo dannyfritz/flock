@@ -24,7 +24,7 @@ None
 * `World.registerComponent`
 * `World.unregisterComponent`
 * `World.addEntityComponent`
-* `World.getEntityComponentValue`
+* `World.getEntityComponent`
 * `World.removeEntityComponent`
 * `World.maintain`
 * `World.query`
