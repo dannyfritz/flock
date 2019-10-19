@@ -64,7 +64,7 @@ logSystem.run(world);
 world.maintain();
 ```
 
-### [Boids](./examples.boids)
+### [Boids](./examples/boids)
 
 ## Development
 
