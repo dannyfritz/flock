@@ -8,7 +8,7 @@
     "start": "parcel index.html --open"
   },
   "dependencies": {
-    "flock-ecs": "^1.0.0"
+    "flock-ecs": "*"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4",

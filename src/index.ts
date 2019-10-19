@@ -1,6 +1,6 @@
 export class World {
   components: Map<Component<any>, (ComponentValue<any> | null)[]> = new Map();
-  entities: Entity[] = [];
+  entities: (Entity | null)[] = [];
   index: number = 0;
   constructor () {}
   createEntity(): Entity {
@@ -46,14 +46,23 @@ export class World {
   }
   maintain(): void {
     this.entities.forEach(entity => {
+      if (!entity) {
+        return;
+      }
       entity.added = false;
-    })
-    const removed = this.entities.filter(entity => entity.removed);
-    //TODO: clean up componentvalues
-    this.entities = this.entities.filter(entity => !entity.removed);
+      if (entity.removed) {
+        for (const [, componentValues] of this.components) {
+          componentValues[entity.index] = null;
+        }
+        this.entities[entity.index] = null;
+      }
+    });
   }
   query(componentQueries: ComponentQuery<any>[]): Entity[] {
     return this.entities.filter(entity => {
+      if (!entity) {
+        return false;
+      }
       return componentQueries.every(cq => {
         if(cq instanceof Current) {
           const componentValue = this.getEntityComponent(entity, cq.component);
@@ -70,9 +79,9 @@ export class World {
           return entity.removed;
         }
       });
-    });
+    }) as Entity[];
   }
-};
+}
 
 export class Entity {
   private world: World;
@@ -112,7 +121,7 @@ export class Component<T> {
   constructor(defaultValue: () => T) {
     this.defaultValue = defaultValue;
   }
-};
+}
 
 export class System {
   runFunction: (...entities: Entity[][]) => void;
