@@ -51,7 +51,7 @@ world.registerComponent(Position);
 const logSystem = new flock.System(
   (entities) => {
     entities.forEach(entity => {
-      const position = entity.getComponentValue(Position)!;
+      const position = entity.getComponent(Position)!;
       console.log(`{ x: ${position.value.x}, y: ${position.value.y} }`);
     });
   },
