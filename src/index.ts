@@ -2,7 +2,6 @@ import { AssertionError } from "assert";
 
 export class World {
   components: Map<Component<any>, (ComponentValue<any> | null)[]> = new Map();
-  // entityComponentMap: Map<Entity, Set<Component<any>>> = new Map();
   entities: Entity[] = [];
   index: number = 0;
   constructor () {}

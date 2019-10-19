@@ -152,8 +152,6 @@ const boidSystem = new flock.System(
         boid.value.alignment.x = alignment.normalize().x;
         boid.value.alignment.y = alignment.y;
       }
-      if (context.ticks % 60 === 0) {
-      }
       velocity.value.x += boid.value.cohesion.x * COHESION_WEIGHT;
       velocity.value.y += boid.value.cohesion.y * COHESION_WEIGHT;
       velocity.value.x += boid.value.separation.x * SEPARATION_WEIGHT;
@@ -228,6 +226,13 @@ const renderSystem = new flock.System(
       const position = entity.getComponent(Position)!;
       {
         graphics.drawCircle(position.value.x, position.value.y, 4);
+      }
+      {
+        const velocity = entity.getComponent(Velocity)!;
+        const v = new Victor(velocity.value.x, velocity.value.y).normalize().multiply(new Victor(10, 10));
+        graphics.lineStyle(1, 0xFFFFFF, 1);
+        graphics.moveTo(position.value.x, position.value.y);
+        graphics.lineTo(position.value.x + v.x, position.value.y + v.y);
       }
     });
   },
