@@ -1,5 +1,8 @@
 # Flock
 
+![GitHub](https://img.shields.io/github/license/dannyfritz/flock-ecs?style=for-the-badge)
+![npm badge](https://img.shields.io/npm/v/flock-ecs?style=for-the-badge)
+
 An entity component system (ECS) created with TypeScript in mind.
 
 ## Featues
