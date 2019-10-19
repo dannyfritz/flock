@@ -2,4 +2,4 @@
 
 An entity component system (ECS) created with TypeScript in mind.
 
-Please view [the repo](https://github.com/dannyfritz/flock-ecs) for more information.
+This is a mono repo. Please view [the flock-ecs repo](./src) for more information.
