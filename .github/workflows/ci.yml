@@ -7,18 +7,19 @@ on:
     - dev
 
 jobs:
-  test:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: borales/actions-yarn@v2.0.0
-      - run: pwd
+      - name: install yarn
+        uses: borales/actions-yarn@v2.0.0
       - name: Test
         run: yarn test
-  lint:
+  Lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: borales/actions-yarn@v2.0.0
+      - name: install yarn
+        uses: borales/actions-yarn@v2.0.0
       - name: Lint
         run: yarn lint

@@ -6,4 +6,5 @@ export default {
   extensions: [
     "ts"
   ],
+  cache: false,
 };
