@@ -1,18 +1,23 @@
 name: CI
 
-on: [push]
+on:
+  pull_request:
+    branches:
+    - master
+    - dev
 
 jobs:
-  lint:
-
+  test:
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v1
       - uses: borales/actions-yarn@v2.0.0
-      - name: Install Dependencies
-        run: yarn install
-      - name: Lint
-        run: yarn lint
       - name: Test
         run: yarn test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: borales/actions-yarn@v2.0.0
+      - name: Lint
+        run: yarn lint
