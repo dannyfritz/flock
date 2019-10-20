@@ -5,7 +5,8 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:ava/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -20,5 +21,6 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
+      "ava/no-ignored-test-files": 0
     }
 };
