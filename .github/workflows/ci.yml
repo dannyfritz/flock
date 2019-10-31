@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: 
+    branches:
     - master
     - dev
   pull_request:
@@ -16,8 +16,14 @@ jobs:
     steps:
       - name: Checkout Git Repo
         uses: actions/checkout@v1
-      - name: Install Yarn and Dependencies
-        uses: borales/actions-yarn@v2.0.0
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install Dependencies
+        run: yarn install
       - name: Test
         run: yarn test
   Lint:
@@ -25,7 +31,13 @@ jobs:
     steps:
       - name: Checkout Git Repo
         uses: actions/checkout@v1
-      - name: Install Yarn and Dependencies
-        uses: borales/actions-yarn@v2.0.0
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install Dependencies
+        run: yarn install
       - name: Lint
         run: yarn lint

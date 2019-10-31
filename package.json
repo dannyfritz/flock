@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "lint": "eslint './src/**/*.ts' './examples/**/*.ts' './test/**/*.ts'",
-    "test": "ava"
+    "test": "ava",
+    "test:dev": "ava --watch"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.4.0",

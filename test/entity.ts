@@ -4,5 +4,6 @@ import * as flock from 'flock-ecs';
 test('flock.Entity', t => {
   const world = new flock.World();
   const entity = world.createEntity();
-	t.truthy(entity);
+  t.truthy(entity);
+  t.is(entity.added, true);
 });

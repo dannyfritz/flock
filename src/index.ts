@@ -1,22 +1,22 @@
 export class World {
-  components: Map<Component<any>, (ComponentValue<any> | null)[]> = new Map();
-  entities: (Entity | null)[] = [];
+  components: Map<Component<any>, (ComponentValue<any> | undefined)[]> = new Map();
+  entities: (Entity | undefined)[] = [];
   index: number = 0;
   constructor () {}
   createEntity(): Entity {
     const entity = new Entity(this, this.index);
     this.index = this.index + 1;
     this.entities[entity.index] = entity;
-    for (const [, componentValues] of this.components) {
-      componentValues.push(null);
-    }
+    this.components.forEach((componentValues) => {
+      componentValues[entity.index] = undefined;
+    });
     return entity;
   }
   registerComponent<T>(component: Component<T>): void {
     if (this.components.get(component)) {
       return;
     }
-    this.components.set(component, Array(this.index).fill(null));
+    this.components.set(component, Array(this.index).fill(undefined));
   }
   unregisterComponent<T>(component: Component<T>): void {
     this.components.delete(component);
@@ -28,20 +28,20 @@ export class World {
     }
     componentValues[entity.index] = componentValue;
   }
-  getEntityComponent<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
-    const componentValues = this.components.get(component) as (ComponentValue<T> | null)[];
+  getEntityComponent<T>(entity: Entity, component: Component<T>): ComponentValue<T> | undefined {
+    const componentValues = this.components.get(component) as (ComponentValue<T> | undefined)[];
     if (!componentValues) {
       throw new Error(`Component is not registered.`);
     }
     return componentValues[entity.index];
   }
-  removeEntityComponent<T>(entity: Entity, component: Component<T>): ComponentValue<T> | null {
-    const componentValues = this.components.get(component) as (ComponentValue<T> | null)[];
+  removeEntityComponent<T>(entity: Entity, component: Component<T>): ComponentValue<T> | undefined {
+    const componentValues = this.components.get(component) as (ComponentValue<T> | undefined)[];
     if (!componentValues) {
       throw new Error(`Component is not registered.`);
     }
     const prevValue = componentValues[entity.index];
-    componentValues[entity.index] = null;
+    componentValues[entity.index] = undefined;
     return prevValue;
   }
   maintain(): void {
@@ -51,10 +51,10 @@ export class World {
       }
       entity.added = false;
       if (entity.removed) {
-        for (const [, componentValues] of this.components) {
-          componentValues[entity.index] = null;
-        }
-        this.entities[entity.index] = null;
+        this.components.forEach((componentValues) => {
+          componentValues[entity.index] = undefined;
+        });
+        this.entities[entity.index] = undefined;
       }
     });
   }
@@ -66,11 +66,11 @@ export class World {
       return componentQueries.every(cq => {
         if(cq instanceof Current) {
           const componentValue = this.getEntityComponent(entity, cq.component);
-          return componentValue !== null;
+          return componentValue !== undefined;
         }
         else if(cq instanceof Without) {
           const componentValue = this.getEntityComponent(entity, cq.component);
-          return componentValue === null;
+          return componentValue === undefined;
         }
         else if(cq instanceof Added) {
           return entity.added;
@@ -99,7 +99,7 @@ export class Entity {
   removeComponent<T>(component: Component<T>): void {
     this.world.removeEntityComponent(this, component);
   }
-  getComponent<T>(component: Component<T>): ComponentValue<T> | null {
+  getComponent<T>(component: Component<T>): ComponentValue<T> | undefined {
     return this.world.getEntityComponent(this, component);
   }
   remove() {
