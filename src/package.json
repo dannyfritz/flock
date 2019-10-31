@@ -20,7 +20,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "rollup index.ts -w -c",
-    "build": "rollup index.ts -c"
+    "build": "rollup index.ts -c",
+    "postversion": "git push --tags"
   },
   "devDependencies": {
     "rollup": "^1.23.1",
