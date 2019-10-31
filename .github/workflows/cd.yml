@@ -26,8 +26,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Stable
-        run:
-          - yarn workspace flock-ecs publish
+        run: yarn workspace flock-ecs publish
         if: github.event_name == 'push' && github.ref == 'master'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
