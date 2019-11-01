@@ -9,6 +9,7 @@
   "scripts": {
     "lint": "eslint './src/**/*.ts' './examples/**/*.ts' './test/**/*.ts'",
     "test": "ava",
+    "build-examples": "yarn workspace simple build && yarn workspace boids build",
     "test:dev": "ava --watch"
   },
   "devDependencies": {
