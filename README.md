@@ -71,6 +71,8 @@ world.maintain();
 
 ### [Boids](./examples/boids)
 
+## [API Docs](https://dannyfritz.github.io/flock-ecs/)
+
 ## Development
 
 This repo uses Yarn workspaces, so make sure you're using yarn instead of npm.
