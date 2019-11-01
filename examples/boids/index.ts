@@ -166,6 +166,8 @@ const boidSystem = new flock.System(
   [ Boid, Neighbors, Position, Velocity ],
 );
 
+
+//eslint-disable-next-line no-unused-vars
 const debugSystem = new flock.System(
   (entities) => {
     entities.forEach(entity => {

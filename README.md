@@ -87,4 +87,16 @@ And then to live build one of the examples, in another terminal:
 yarn workspace boids start
 ```
 
+To run tests:
+
+```sh
+yarn test
+```
+
+To run tests in watch mode:
+
+```sh
+yarn test:dev
+```
+
 ## [Code of Conduct](./CODE_OF_CONDUCT.md)
