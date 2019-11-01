@@ -69,6 +69,29 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A <a href="flock.system.html">System</a> is a function that queries a <a href="flock.world.html">World</a> for entities.
+						It can then perform operations on each <a href="flock.entity.html">Entity&#39;s</a> <a href="flock.component.html">Components</a>.</p>
+					</div>
+					<p>Given a set of <a href="flock.without.html">Without</a>, <a href="flock.current.html">Current</a>, <a href="flock.removed.html">Removed</a>, and <a href="flock.added.html">Added</a>,
+					<a href="flock.system.html#run">System.run</a> will pass in each query set with a list of appropriate <a href="flock.entity.html">Entities</a>.</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> position = <span class="hljs-keyword">new</span> flock.Component(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> ({
+  x: <span class="hljs-number">0</span>,
+  y: <span class="hljs-number">0</span>,
+}));
+<span class="hljs-keyword">const</span> movement = <span class="hljs-keyword">new</span> flock.Component(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> ({
+  x: <span class="hljs-number">0.5</span>,
+  y: <span class="hljs-number">0.75</span>,
+}));
+<span class="hljs-keyword">const</span> movementSystem = <span class="hljs-keyword">new</span> flock.System(
+  <span class="hljs-function">(<span class="hljs-params">birds, rocks</span>) =&gt;</span> {}, <span class="hljs-comment">// This function specifies 2 entity lists: birds and rocks.</span>
+  [position, movement], <span class="hljs-comment">// This is the query for birds. Requires both position and movement on entities</span>
+  [position, <span class="hljs-keyword">new</span> flock.Without(movement)], <span class="hljs-comment">// This is the query for rocks. Requires a position, but no movement on entities.</span>
+)</code></pre>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -115,7 +138,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L135">index.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L264">index.ts:264</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -158,7 +181,7 @@
 					<div class="tsd-signature tsd-kind-icon">component<wbr>Queries<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ComponentQuery</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L135">index.ts:135</a></li>
+							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L264">index.ts:264</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -168,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">run<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L134">index.ts:134</a></li>
+							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L263">index.ts:263</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -206,9 +229,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L143">index.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L279">index.ts:279</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Execute the system on a <a href="flock.world.html">World</a>.</p>
+								</div>
+								<pre><code class="language-ts">mySystem.run(world);</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -239,9 +268,6 @@
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="flock.component.html" class="tsd-kind-icon">Component</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="flock.componentvalue.html" class="tsd-kind-icon">Component<wbr>Value</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="flock.current.html" class="tsd-kind-icon">Current</a>

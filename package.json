@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build-examples": "yarn workspace simple build && yarn workspace boids build",
-    "docs": "typedoc --readme ./README.md --entryPoint Globals.index --tsconfig ./src/tsconfig.json --out docs ./src",
+    "docs": "typedoc --readme ./README.md --tsconfig ./src/tsconfig.json --out docs ./src",
     "lint": "yarn workspace test lint",
     "test": "yarn workspace test test"
   },

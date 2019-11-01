@@ -74,6 +74,7 @@
 					<div class="lead">
 						<p>Maintains all of the entities and performs queries.</p>
 					</div>
+					<pre><code class="language-ts"><span class="hljs-keyword">const</span> world = <span class="hljs-keyword">new</span> flock.World()</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -130,7 +131,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L11">index.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L15">index.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="flock.world.html" class="tsd-signature-type">World</a></h4>
@@ -143,10 +144,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="components" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> components</h3>
-					<div class="tsd-signature tsd-kind-icon">components<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="flock.componentvalue.html" class="tsd-signature-type">ComponentValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
+					<div class="tsd-signature tsd-kind-icon">components<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ComponentValue</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L9">index.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L13">index.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -156,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">entities<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="flock.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L10">index.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L14">index.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -166,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L11">index.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L15">index.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -177,13 +178,13 @@
 					<a name="_addentitycomponent" class="tsd-anchor"></a>
 					<h3>_add<wbr>Entity<wbr>Component</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">_add<wbr>Entity<wbr>Component&lt;T&gt;<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="flock.entity.html" class="tsd-signature-type">Entity</a>, component<span class="tsd-signature-symbol">: </span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, componentValue<span class="tsd-signature-symbol">: </span><a href="flock.componentvalue.html" class="tsd-signature-type">ComponentValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">_add<wbr>Entity<wbr>Component&lt;T&gt;<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="flock.entity.html" class="tsd-signature-type">Entity</a>, component<span class="tsd-signature-symbol">: </span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, componentValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ComponentValue</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L31">index.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L59">index.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -201,7 +202,7 @@
 									<h5>component: <a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>componentValue: <a href="flock.componentvalue.html" class="tsd-signature-type">ComponentValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>componentValue: <span class="tsd-signature-type">ComponentValue</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -212,13 +213,13 @@
 					<a name="_getentitycomponent" class="tsd-anchor"></a>
 					<h3>_get<wbr>Entity<wbr>Component</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">_get<wbr>Entity<wbr>Component&lt;T&gt;<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="flock.entity.html" class="tsd-signature-type">Entity</a>, component<span class="tsd-signature-symbol">: </span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="flock.componentvalue.html" class="tsd-signature-type">ComponentValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon">_get<wbr>Entity<wbr>Component&lt;T&gt;<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="flock.entity.html" class="tsd-signature-type">Entity</a>, component<span class="tsd-signature-symbol">: </span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ComponentValue</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L38">index.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L66">index.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -236,7 +237,7 @@
 									<h5>component: <a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="flock.componentvalue.html" class="tsd-signature-type">ComponentValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ComponentValue</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">undefined</span>
 							</h4>
@@ -247,13 +248,13 @@
 					<a name="_removeentitycomponent" class="tsd-anchor"></a>
 					<h3>_remove<wbr>Entity<wbr>Component</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">_remove<wbr>Entity<wbr>Component&lt;T&gt;<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="flock.entity.html" class="tsd-signature-type">Entity</a>, component<span class="tsd-signature-symbol">: </span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="flock.componentvalue.html" class="tsd-signature-type">ComponentValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon">_remove<wbr>Entity<wbr>Component&lt;T&gt;<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="flock.entity.html" class="tsd-signature-type">Entity</a>, component<span class="tsd-signature-symbol">: </span><a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ComponentValue</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L45">index.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L73">index.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -271,7 +272,7 @@
 									<h5>component: <a href="flock.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="flock.componentvalue.html" class="tsd-signature-type">ComponentValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ComponentValue</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">undefined</span>
 							</h4>
@@ -288,9 +289,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L13">index.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L24">index.ts:24</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new <a href="flock.entity.html">Entity</a>.</p>
+								</div>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> entity = world.createEntity();</code></pre>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="flock.entity.html" class="tsd-signature-type">Entity</a></h4>
 						</li>
 					</ul>
@@ -305,9 +312,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L54">index.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L90">index.ts:90</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes <a href="flock.entity.html">Entities</a> from the <a href="flock.world.html">World</a> that have been marked for <a href="flock.entity.html#remove">removal</a>.
+									Unmarks <a href="flock.entity.html">Entities</a> as <code>added</code>.</p>
+								</div>
+								<pre><code class="language-ts">world.maintain();</code></pre>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -322,9 +336,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L68">index.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L111">index.ts:111</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Given a set of <a href="flock.without.html">Without</a>, <a href="flock.current.html">Current</a>, <a href="flock.removed.html">Removed</a>, and <a href="flock.added.html">Added</a>,
+									will return a list of <a href="flock.entity.html">Entities</a> that match the query.</p>
+								</div>
+								<p>Typically this is not used directly,
+								but implictly when <a href="flock.system.html#run">System.run</a> is called.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -345,9 +367,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L22">index.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L41">index.ts:41</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers a <a href="flock.component.html">Component</a> with the <a href="flock.world.html">World</a>.</p>
+								</div>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> age = <span class="hljs-keyword">new</span> flock.Component(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-number">30</span>);
+world.registerComponent(age);</code></pre>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -374,9 +403,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/fbfab81/src/index.ts#L28">index.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/dannyfritz/flock-ecs/blob/989d6ed/src/index.ts#L56">index.ts:56</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unregisters a <a href="flock.component.html">Component</a> with the <a href="flock.world.html">World</a>.</p>
+								</div>
+								<pre><code class="language-ts"><span class="hljs-keyword">const</span> age = <span class="hljs-keyword">new</span> flock.Component(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-number">30</span>);
+world.registerComponent(age);
+world.unregisterComponent(age);</code></pre>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -413,9 +450,6 @@
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="flock.component.html" class="tsd-kind-icon">Component</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="flock.componentvalue.html" class="tsd-kind-icon">Component<wbr>Value</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="flock.current.html" class="tsd-kind-icon">Current</a>
