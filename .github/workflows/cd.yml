@@ -20,18 +20,13 @@ jobs:
         run: npm install -g yarn
       - name: Install Dependencies
         run: yarn install
-      - name: Debug
-        run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Publish Beta
         run: yarn workspace flock-ecs publish --tag beta
-        if: github.event_name == 'push' && github.ref == 'dev'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Stable
-        run:
-          - yarn workspace flock-ecs publish
-        if: github.event_name == 'push' && github.ref == 'master'
+        run: yarn workspace flock-ecs publish
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
