@@ -1,0 +1,16 @@
+{
+  "name": "docs-builder",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "api": "sh ./api-docs.sh",
+    "dev": "docsify serve ../docs",
+    "build": "docsify build ../docs && yarn api"
+  },
+  "devDependencies": {
+    "docsify-cli": "^4.3.0",
+    "typedoc": "^0.15.0",
+    "typedoc-plugin-external-module-name": "^2.1.0",
+    "typedoc-plugin-markdown": "^2.2.11"
+  }
+}
