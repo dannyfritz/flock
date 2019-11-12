@@ -2,18 +2,15 @@
   "private": true,
   "workspaces": [
     "src",
+    "docs-builder",
     "test",
     "examples/boids",
     "examples/simple"
   ],
   "scripts": {
     "build-examples": "yarn workspace simple build && yarn workspace boids build",
-    "docs": "typedoc --readme ./README.md --tsconfig ./src/tsconfig.json --out docs ./src",
+    "docs": "yarn workspace docs-builder build",
     "lint": "yarn workspace test lint",
     "test": "yarn workspace test test"
-  },
-  "devDependencies": {
-    "typedoc": "^0.15.0",
-    "typedoc-plugin-external-module-name": "^2.1.0"
   }
 }
