@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "api": "sh ./api-docs.sh",
-    "dev": "docsify serve ../docs",
-    "build": "docsify build ../docs && yarn api"
+    "dev": "vuepress dev docs",
+    "build": "yarn api && vuepress build docs"
   },
-  "devDependencies": {
-    "docsify-cli": "^4.3.0",
+  "devDependencies": {},
+  "dependencies": {
     "typedoc": "^0.15.0",
     "typedoc-plugin-external-module-name": "^2.1.0",
-    "typedoc-plugin-markdown": "^2.2.11"
+    "typedoc-plugin-markdown": "^2.2.11",
+    "vuepress": "^1.2.0"
   }
 }
