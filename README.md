@@ -33,6 +33,8 @@ const flock = require("flock-ecs");
 import * as flock from "flock-ecs";
 ```
 
+## [API Docs](https://dannyfritz.github.io/flock-ecs/)
+
 ## Examples
 
 ### [Simple](./examples/simple)
@@ -70,8 +72,6 @@ world.maintain();
 ```
 
 ### [Boids](./examples/boids)
-
-## [API Docs](https://dannyfritz.github.io/flock-ecs/)
 
 ## Development
 
