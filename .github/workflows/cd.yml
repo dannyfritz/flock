@@ -16,6 +16,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - name: Setup Token
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
       - name: Install Yarn
         run: npm install -g yarn
       - name: Install Dependencies
@@ -27,10 +29,6 @@ jobs:
       - name: Publish Beta
         run: yarn workspace flock-ecs publish --tag beta
         if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Stable
         run: yarn workspace flock-ecs publish
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
