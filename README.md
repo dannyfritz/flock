@@ -73,32 +73,29 @@ world.maintain();
 
 ### [Boids](./examples/boids)
 
+![Image of Boids example](./examples/boids/screenshot.png)
+
+### [Particle System](./examples/particle-system)
+
+![Image of Particle System example](./examples/particle-system/screenshot.gif)
+
 ## Development
 
 This repo uses Yarn workspaces, so make sure you're using yarn instead of npm.
 
-To build the library in watch mode:
+### Relevant Commands
 
 ```sh
-yarn workspace flock-ecs dev
-```
-
-And then to live build one of the examples, in another terminal:
-
-```sh
-yarn workspace boids start
-```
-
-To run tests:
-
-```sh
-yarn test
-```
-
-To run tests in watch mode:
-
-```sh
-yarn test:dev
+yarn build # Build library
+yarn build:dev # Build library in watch mode
+yarn lint # Lint the TypeScript
+yarn test # Run tests
+yarn test:dev # Run tests in watch mode
+yarn docs # Build documentation
+yarn docs:dev # Build documentaiton in watch mode
+yarn workspace simple start # Run the Simple example
+yarn workspace boids start # Run the Boids example
+yarn workspace particle-system start # Run the Particle-System example
 ```
 
 ## [Code of Conduct](./CODE_OF_CONDUCT.md)

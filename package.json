@@ -2,15 +2,20 @@
   "private": true,
   "workspaces": [
     "src",
-    "docs-builder",
     "test",
+    "docs-builder",
+    "examples/simple",
     "examples/boids",
-    "examples/simple"
+    "examples/particle-system"
   ],
   "scripts": {
-    "build-examples": "yarn workspace simple build && yarn workspace boids build",
+    "build": "yarn workspace flock-ecs build",
+    "build:dev": "yarn workspace flock-ecs dev",
+    "build-examples": "yarn workspace simple build && yarn workspace boids build && yarn workspace particle-system build",
     "docs": "yarn workspace docs-builder build",
+    "docs:dev": "yarn workspace docs-builder dev",
     "lint": "yarn workspace test lint",
-    "test": "yarn workspace test test"
+    "test": "yarn workspace test test",
+    "test:dev": "yarn workspace test test:dev"
   }
 }

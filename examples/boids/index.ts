@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 import * as flock from 'flock-ecs';
 import Victor from 'victor';
 
-const NUMBER_OF_BOIDS = 200;
+const NUMBER_OF_BOIDS = 500;
 const SPEED = 50;
 const NEAR = 40;
 const FAR = 100
