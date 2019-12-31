@@ -10,11 +10,8 @@ document.body.appendChild(app.view);
 
 const world = new flock.World(MAX_ENTITIES);
 
-const Particle = new flock.ComponentF32(MAX_ENTITIES, 1)
+const Particle = new flock.ComponentUInt8(MAX_ENTITIES, 1)
 world.registerComponent(Particle)
-
-const ParticleSystem = new flock.ComponentF32(MAX_ENTITIES, 5)
-world.registerComponent(ParticleSystem)
 
 const Position = new flock.ComponentF32(MAX_ENTITIES, 2)
 world.registerComponent(Position)
@@ -86,7 +83,7 @@ const context = {
 app.ticker.add(() => {
   context.dt = app.ticker.deltaMS / 1000;
   context.ticks = context.ticks + 1;
-  if (context.ticks % 60 === 0) {
+  if (context.ticks % 30 === 0) {
     console.log(Math.floor(app.ticker.FPS));
   }
 
@@ -94,8 +91,6 @@ app.ticker.add(() => {
   renderSystem.run(world);
 
   world.maintain();
-
-  // app.ticker.stop();
 });
 
 document.addEventListener('keydown', () => {

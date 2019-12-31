@@ -25,7 +25,7 @@ export class World {
   maintain(): void {}
 }
 
-type TypedArray = Float32Array | Float64Array;
+type TypedArray = Float32Array | Float64Array | Uint8Array | Uint16Array;
 
 interface IComponent<T = TypedArray> {
   addEntity(entityId: EntityId, values: Array<number>): void;
@@ -38,10 +38,12 @@ export class ComponentF32 implements IComponent<Float32Array> {
   private _store: Float32Array;
   private _stride: number;
   private _entities: Set<EntityId>;
+  private _cache: Map<EntityId, Float32Array>;
   constructor(size: number, stride: number) {
     this._stride = stride;
     this._store = new Float32Array(size * stride);
     this._entities = new Set();
+    this._cache = new Map();
   }
   addEntity(entityId: EntityId, values: Array<number>) {
     this._entities.add(entityId);
@@ -54,7 +56,71 @@ export class ComponentF32 implements IComponent<Float32Array> {
     return this._entities;
   }
   getValues(entityId: EntityId): Float32Array {
-    return this._store.subarray(entityId * this._stride, entityId * this._stride + this._stride);
+    if (this._cache.has(entityId)) {
+      return this._cache.get(entityId)!;
+    }
+    this._cache.set(entityId, this._store.subarray(entityId * this._stride, entityId * this._stride + this._stride));
+    return this._cache.get(entityId)!;
+  }
+}
+
+export class ComponentUInt8 implements IComponent<Uint8Array> {
+  private _store: Uint8Array;
+  private _stride: number;
+  private _entities: Set<EntityId>;
+  private _cache: Map<EntityId, Uint8Array>;
+  constructor(size: number, stride: number) {
+    this._stride = stride;
+    this._store = new Uint8Array(size * stride);
+    this._entities = new Set();
+    this._cache = new Map();
+  }
+  addEntity(entityId: EntityId, values: Array<number>) {
+    this._entities.add(entityId);
+    this._store.set(values, entityId * this._stride);
+  }
+  removeEntity(entityId: EntityId) {
+    this._entities.delete(entityId);
+  }
+  entities(): Set<EntityId> {
+    return this._entities;
+  }
+  getValues(entityId: EntityId): Uint8Array {
+    if (this._cache.has(entityId)) {
+      return this._cache.get(entityId)!;
+    }
+    this._cache.set(entityId, this._store.subarray(entityId * this._stride, entityId * this._stride + this._stride));
+    return this._cache.get(entityId)!;
+  }
+}
+
+export class ComponentUInt16 implements IComponent<Uint16Array> {
+  private _store: Uint16Array;
+  private _stride: number;
+  private _entities: Set<EntityId>;
+  private _cache: Map<EntityId, Uint16Array>;
+  constructor(size: number, stride: number) {
+    this._stride = stride;
+    this._store = new Uint16Array(size * stride);
+    this._entities = new Set();
+    this._cache = new Map();
+  }
+  addEntity(entityId: EntityId, values: Array<number>) {
+    this._entities.add(entityId);
+    this._store.set(values, entityId * this._stride);
+  }
+  removeEntity(entityId: EntityId) {
+    this._entities.delete(entityId);
+  }
+  entities(): Set<EntityId> {
+    return this._entities;
+  }
+  getValues(entityId: EntityId): Uint16Array {
+    if (this._cache.has(entityId)) {
+      return this._cache.get(entityId)!;
+    }
+    this._cache.set(entityId, this._store.subarray(entityId * this._stride, entityId * this._stride + this._stride));
+    return this._cache.get(entityId)!;
   }
 }
 
@@ -66,12 +132,13 @@ export class System {
     this._queriesList = queriesList;
   }
   run(world: World): void {
-    const entities = this._queriesList
+    const entitiesArray = this._queriesList
       .map(queries => {
         return queries.flatMap(q => {
           return [...world.query(q)];
         });
-      });
-    this._runFn(...entities);
+      })
+      .map(entities => [...new Set(entities)]);
+    this._runFn(...entitiesArray);
   }
 }

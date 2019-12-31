@@ -1,6 +1,6 @@
 # Boids / Flocking Example
 
-![boids](./screenshot.png)
+![boids](./screenshot.gif)
 
 ## Run:
 

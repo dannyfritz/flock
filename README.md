@@ -41,47 +41,40 @@ import * as flock from "flock-ecs";
 
 ```ts
 import * as flock from 'flock-ecs';
+const NUMBER_OF_ENTITIES = 20;
 
-const world = new flock.World();
+const world = new flock.World(NUMBER_OF_ENTITIES);
 
-const Position = new flock.Component(
-  () => ({
-    x: 0,
-    y: 0,
-  })
-);
+const Position = new flock.ComponentF32(NUMBER_OF_ENTITIES, 2);
 world.registerComponent(Position);
 
 const logSystem = new flock.System(
   (entities) => {
-    entities.forEach(entity => {
-      const position = entity.getComponent(Position)!;
-      console.log(`{ x: ${position.value.x}, y: ${position.value.y} }`);
+    entities.forEach(entityId => {
+      const position = Position.getValues(entityId)!;
+      console.log(`{ x: ${position[0]}, y: ${position[1]} }`);
     });
   },
   [ Position ],
 );
 
 for (let i=0; i<10; i++) {
-  const entity = world.createEntity();
-  entity.addComponent(Position, { x: Math.random() * 100, y: Math.random() * 100 });
+  const entityId = world.createEntity();
+  Position.addEntity(entityId, [Math.random() * 100, Math.random() * 100]);
 }
 
 logSystem.run(world);
 world.maintain();
 ```
 
-### [Boids](./examples/boids)
-
-![Image of Boids example](./examples/boids/screenshot.png)
-
-### [Particle System](./examples/particle-system)
-
-![Image of Particle System example](./examples/particle-system/screenshot.gif)
+[![Image of Boids example](./examples/boids/screenshot.gif)](./examples/boids)
+[![Image of Particle System example](./examples/particle-system/screenshot.gif)](./examples/particle-system)
 
 ## Development
 
-This repo uses Yarn workspaces, so make sure you're using yarn instead of npm.
+### Yarn
+
+This repo uses [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/), so make sure you're using `yarn` instead of `npm`.
 
 ### Relevant Commands
 

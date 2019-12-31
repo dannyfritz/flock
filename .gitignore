@@ -3,7 +3,7 @@ docs-builder/docs/api
 # Logs
 logs
 index.js
-*.d.ts
+src/*.d.ts
 *.d.ts.map
 *.log
 npm-debug.log*
