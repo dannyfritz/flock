@@ -10,9 +10,6 @@ document.body.appendChild(app.view);
 
 const world = new flock.World(MAX_ENTITIES);
 
-const Particle = new flock.ComponentUInt8(MAX_ENTITIES, 1)
-world.registerComponent(Particle)
-
 const Position = new flock.ComponentF32(MAX_ENTITIES, 2)
 world.registerComponent(Position)
 
@@ -63,12 +60,11 @@ const renderSystem = new flock.System(
       sprites[entityId].angle = -1 * new Victor(velocity[0], velocity[1]).verticalAngleDeg() + 180;
     });
   },
-  [ Particle, Position, Velocity ],
+  [ Position, Velocity ],
 )
 
 for (var i=0; i<MAX_ENTITIES; i++) {
   const entityId = world.createEntity();
-  Particle.addEntity(entityId, [1]);
   const position = [Math.random() * 800, Math.random() * 600];
   Position.addEntity(entityId, position);
   const velocity = [(Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10];

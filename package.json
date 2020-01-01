@@ -6,7 +6,7 @@
     "docs-builder",
     "examples/simple",
     "examples/boids",
-    "examples/particle-system"
+    "examples/maggots"
   ],
   "scripts": {
     "build": "yarn workspace flock-ecs build",

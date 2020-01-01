@@ -67,8 +67,8 @@ logSystem.run(world);
 world.maintain();
 ```
 
+[![Image of Maggots example](./examples/maggots/screenshot.gif)](./examples/maggots)
 [![Image of Boids example](./examples/boids/screenshot.gif)](./examples/boids)
-[![Image of Particle System example](./examples/particle-system/screenshot.gif)](./examples/particle-system)
 
 ## Development
 

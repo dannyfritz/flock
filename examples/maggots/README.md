@@ -1,4 +1,4 @@
-# Particle System Example
+# Maggots Example
 
 ![screenshot](./screenshot.gif)
 
@@ -6,5 +6,5 @@
 
 ```sh
 yarn install
-yarn workspace particle-system start
+yarn workspace maggots start
 ```
