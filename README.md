@@ -3,13 +3,11 @@
 [![GitHub](https://img.shields.io/github/license/dannyfritz/flock-ecs?style=for-the-badge)](https://github.com/dannyfritz/flock-ecs/blob/master/LICENSE)
 [![npm badge](https://img.shields.io/npm/v/flock-ecs?style=for-the-badge)](https://www.npmjs.com/package/flock-ecs)
 
-An entity component system (ECS) created with TypeScript in mind.
+An entity component system (ECS).
 
 ## Features
 
 * No dependencies
-* Very good TypeScript typings
-* Simple, but powerful API
 * Designed for performance
 * Struct of Arrays for storing entity component values
 * Entities are queryable by:
@@ -17,7 +15,7 @@ An entity component system (ECS) created with TypeScript in mind.
   * Absence of Component
   * Added Entity
   * Removed Entity
-* Systems can have 1 or more queries
+* Systems can have 1 or more query sets
 
 ## [Roadmap](https://github.com/dannyfritz/flock-ecs/issues/1)
 
@@ -87,8 +85,6 @@ yarn test:dev # Run tests in watch mode
 yarn docs # Build documentation
 yarn docs:dev # Build documentaiton in watch mode
 yarn workspace simple start # Run the Simple example
-yarn workspace boids start # Run the Boids example
-yarn workspace particle-system start # Run the Particle-System example
 ```
 
 ## [Code of Conduct](./CODE_OF_CONDUCT.md)
