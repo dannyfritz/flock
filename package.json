@@ -1,16 +1,43 @@
 {
-  "private": true,
-  "workspaces": [
-    "src",
-    "docs-builder",
-    "test",
-    "examples/boids",
-    "examples/simple"
-  ],
+  "name": "flock-ecs",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "version": "1.0.0",
+  "description": "A performant JS ECS",
+  "main": "dist/index.js",
+  "dependencies": {
+    "lodash.memoize": "^4.1.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "eslint": "^7.18.0",
+    "eslint-config-standard-with-typescript": "^19.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
   "scripts": {
-    "build-examples": "yarn workspace simple build && yarn workspace boids build",
-    "docs": "yarn workspace docs-builder build",
-    "lint": "yarn workspace test lint",
-    "test": "yarn workspace test test"
-  }
+    "example:basic": "node --loader ts-node/esm ./examples/basic.ts",
+    "example:stress": "node --loader ts-node/esm ./examples/stress.ts",
+    "prepare": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannyfritz/flock-ecs.git"
+  },
+  "keywords": [
+    "ecs",
+    "gamedev"
+  ],
+  "author": "Danny Fritz <me@dannyfritz.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dannyfritz/flock-ecs/issues"
+  },
+  "homepage": "https://github.com/dannyfritz/flock-ecs#readme"
 }
