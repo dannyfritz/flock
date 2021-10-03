@@ -1,3 +1,10 @@
+## ⚠️ This Project is Unmaintained
+
+After many rewrites and finally finding a pattern I like, I realized that using TypedArrays is the way forward for a performant ECS in JS/TS.
+There are some patterns and such that were required to do it that are solved in [this branch](https://github.com/dannyfritz/flock-ecs/tree/typedarray-rewrite).
+
+I recommend using this: [bitECS](https://github.com/NateTheGreatt/bitECS). They are maintaining it better than I would and it is basically exactly what I was converging towards for Flock anyways. Plus, Phaser4 is using bitECS.
+
 ![logo](logo.png)
 
 [![GitHub](https://img.shields.io/github/license/dannyfritz/flock-ecs?style=for-the-badge)](https://github.com/dannyfritz/flock-ecs/blob/master/LICENSE)
