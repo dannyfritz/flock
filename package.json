@@ -1,16 +1,19 @@
 {
+  "name": "flock-ecs-monorepo",
   "private": true,
-  "workspaces": [
-    "src",
-    "docs-builder",
-    "test",
-    "examples/boids",
-    "examples/simple"
-  ],
   "scripts": {
-    "build-examples": "yarn workspace simple build && yarn workspace boids build",
-    "docs": "yarn workspace docs-builder build",
-    "lint": "yarn workspace test lint",
-    "test": "yarn workspace test test"
+    "build": "lage build --since origin/master --grouped",
+    "ci": "lage lint:eslint lint:prettier lint:tsc test:mocha --since origin/master --grouped",
+    "format": "lage format --since origin/master --grouped",
+    "lint": "lage lint:eslint lint:prettier lint:tsc --since origin/master --grouped",
+    "preinstall": "npx only-allow pnpm",
+    "publish:check": "lage publish:check --since origin/master --grouped --no-cache",
+    "publish:dev": "pnpm -w run publish:check && lage publish:dev --since origin/master --grouped",
+    "publish:release": "pnpm -w run publish:check && lage publish:release --since origin/master --grouped",
+    "test": "lage test:mocha --since origin/master --grouped"
+  },
+  "devDependencies": {
+    "lage": "1",
+    "pnpm": "6"
   }
 }

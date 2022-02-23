@@ -1,0 +1,20 @@
+{
+  "name": "ts-config",
+  "private": true,
+  "version": "1.0.0",
+  "description": "TSConfig",
+  "files": [
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "format": "prettier --write .",
+    "lint:prettier": "prettier --check ."
+  },
+  "dependencies": {},
+  "peerDepedencies": {
+    "typescript": "4"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}

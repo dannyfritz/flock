@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "strict": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "resolveJsonModule": true
+  }
+}

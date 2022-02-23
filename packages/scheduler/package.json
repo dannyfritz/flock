@@ -1,0 +1,30 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "author": "Danny Fritz <me@dannyfritz.com>",
+  "license": "MIT",
+  "description": "Compute an optimized dependency graph.",
+  "files": [
+    "dist/*"
+  ],
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "pnpm run clean && pnpm run build:microbundle",
+    "build:microbundle": "microbundle --tsconfig tsconfig-build.json --target node --format esm,cjs",
+    "clean": "rimraf ./dist",
+    "format": "prettier --write .",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --check .",
+    "lint:tsc": "tsc"
+  },
+  "devDependencies": {
+    "eslint-config-base": "workspace:^",
+    "microbundle": "^0.14.2",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "ts-config": "workspace:^"
+  }
+}
