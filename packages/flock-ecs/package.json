@@ -1,9 +1,9 @@
 {
-  "name": "scheduler",
-  "version": "1.0.0",
+  "name": "flock-ecs",
+  "version": "0.2.0",
   "author": "Danny Fritz <me@dannyfritz.com>",
   "license": "MIT",
-  "description": "Compute an optimized dependency graph.",
+  "description": "An Entity Component System",
   "files": [
     "dist/*"
   ],
@@ -18,13 +18,15 @@
     "format": "prettier --write .",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
-    "lint:tsc": "tsc"
+    "lint:tsc": "tsc",
+    "test:mocha": "mocha"
   },
   "devDependencies": {
     "eslint-config-base": "workspace:^",
     "microbundle": "^0.14.2",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
-    "ts-config": "workspace:^"
+    "ts-config": "workspace:^",
+    "type-fest": "^2.12.0"
   }
 }
