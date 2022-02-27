@@ -1,0 +1,10 @@
+{
+  "loader": "ts-node/esm/transpile-only",
+  "extensions": ["ts", "tsx"],
+  "spec": [
+    "tests/**/*.spec.*"
+  ],
+  "watch-files": [
+    "src", "tests"
+  ]
+}

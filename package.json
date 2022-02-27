@@ -10,7 +10,7 @@
     "publish:check": "lage publish:check --since origin/master --grouped --no-cache",
     "publish:dev": "pnpm -w run publish:check && lage publish:dev --since origin/master --grouped",
     "publish:release": "pnpm -w run publish:check && lage publish:release --since origin/master --grouped",
-    "test": "lage test:mocha --since origin/master --grouped"
+    "test": "lage test --since origin/master --grouped"
   },
   "devDependencies": {
     "lage": "1",

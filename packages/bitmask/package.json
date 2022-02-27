@@ -1,9 +1,9 @@
 {
-  "name": "flock-ecs",
-  "version": "0.2.0",
+  "name": "bitmask",
+  "version": "0.1.0",
   "author": "Danny Fritz <me@dannyfritz.com>",
   "license": "MIT",
-  "description": "An Entity Component System",
+  "description": "BitMask Functions",
   "files": [
     "dist/*"
   ],
@@ -18,14 +18,22 @@
     "format": "prettier --write .",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
-    "lint:tsc": "tsc"
+    "lint:tsc": "tsc",
+    "test": "mocha"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.21",
+    "chai": "^4.3.6",
     "eslint-config-base": "workspace:^",
     "microbundle": "^0.14.2",
+    "mocha": "^9.2.1",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "ts-config": "workspace:^",
-    "type-fest": "^2.12.0"
+    "ts-node": "^10.5.0",
+    "type-fest": "^2.12.0",
+    "typescript": "^4.4.4"
   }
 }

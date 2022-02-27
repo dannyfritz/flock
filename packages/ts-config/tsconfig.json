@@ -2,10 +2,16 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "esModuleInterop": true,
     "isolatedModules": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "noEmit": true,
-    "resolveJsonModule": true
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "ES2020",
   }
 }

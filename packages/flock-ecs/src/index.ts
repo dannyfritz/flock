@@ -16,11 +16,10 @@ import type { Opaque } from "type-fest";
   // TODO: WebWorkers
 
 type BitMask = null;
-type BitMaskList = Array<BitMask>;
 
 type Storage = null;
 
-type Archetypes = Map<BitMaskList, Storage>;
+type Archetypes = Map<BitMask, Storage>;
 
 const archetypes: Archetypes = new Map();
 
@@ -53,6 +52,10 @@ const sCreate: System = (): CommandBuffer => {
 
 const sMove: QuerySystem = [[cPosition, cVelocity], (query: Query): CommandBuffer => {
   const commands: Commands = null;
+  for (const [position, velocity] of query) {
+    cPosition.x += cVelocity.x;
+    cPosition.y += cVelocity.y;
+  }
   return commands.buffer;
 }];
 
