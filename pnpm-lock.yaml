@@ -23,7 +23,6 @@ importers:
       rimraf: ^3.0.2
       ts-config: workspace:^
       ts-node: ^10.5.0
-      type-fest: ^2.12.0
       typescript: ^4.4.4
     devDependencies:
       '@types/chai': 4.3.0
@@ -37,7 +36,6 @@ importers:
       rimraf: 3.0.2
       ts-config: link:../ts-config
       ts-node: 10.5.0_99a448058f874aec2a353d0e974167cc
-      type-fest: 2.12.0
       typescript: 4.5.5
 
   packages/eslint-config:
