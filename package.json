@@ -1,5 +1,26 @@
 {
-  "name": "flock-ecs",
-  "version": "0.2.0",
-  "type": "module"
+	"name": "flock-ecs",
+	"version": "0.2.0",
+	"type": "module",
+	"engines": {
+		"node": "^22"
+	},
+	"exports": {},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.1",
+		"pnpm": "^9.10.0",
+		"typescript": "~5.6.0",
+		"ultra-runner": "^3.10.5"
+	},
+	"scripts": {
+		"ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format",
+		"test:format": "biome format",
+		"test:lint": "biome lint",
+		"test:types": "tsc --noEmit",
+		"test:unit": "node --experimental-strip-types --test",
+		"test": "ultra --silent ci"
+	},
+	"ultra": {
+		"concurrent": ["ci"]
+	}
 }
