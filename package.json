@@ -1,16 +1,5 @@
 {
-  "private": true,
-  "workspaces": [
-    "src",
-    "docs-builder",
-    "test",
-    "examples/boids",
-    "examples/simple"
-  ],
-  "scripts": {
-    "build-examples": "yarn workspace simple build && yarn workspace boids build",
-    "docs": "yarn workspace docs-builder build",
-    "lint": "yarn workspace test lint",
-    "test": "yarn workspace test test"
-  }
+  "name": "flock-ecs",
+  "version": "0.2.0",
+  "type": "module"
 }
