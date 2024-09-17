@@ -11,9 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: ^1.9.1
         version: 1.9.1
-      pnpm:
-        specifier: ^9.10.0
-        version: 9.10.0
+      '@types/node':
+        specifier: ^22.5.5
+        version: 22.5.5
       typescript:
         specifier: ~5.6.0
         version: 5.6.2
@@ -87,6 +87,9 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@types/node@22.5.5':
+    resolution: {integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA==}
 
   ansi-regex@3.0.1:
     resolution: {integrity: sha512-+O9Jct8wf++lXxxFc4hc8LsjaSq0HFzzL7cVsw8pRDIPdjKD2mT4ytDZlLuSBZ4cLKZFXIrMGO7DbQCtMJJMKw==}
@@ -248,11 +251,6 @@ packages:
   pid-cwd@1.2.0:
     resolution: {integrity: sha512-8QQzIdBmy4bd2l1NKWON1X8flO5TQQRzU2uRDua/XaxSC0iJ+rgbDrlX76t0W3DaJ7OevTYpftyvQ6oMe3hclQ==}
 
-  pnpm@9.10.0:
-    resolution: {integrity: sha512-c6Ka+jag0JLs5Scd5Rd+y/gxjUVOzXATQxMbjrwMGpHEh9pGq3fI5ZbWrPFGHjWUztS+zt+JIbB0+9hlPtcFHA==}
-    engines: {node: '>=18.12'}
-    hasBin: true
-
   ps-list@7.2.0:
     resolution: {integrity: sha512-v4Bl6I3f2kJfr5o80ShABNHAokIgY+wFDTQfE+X3zWYgSGQOCBeYptLZUpoOALBqO5EawmDN/tjTldJesd0ujQ==}
     engines: {node: '>=10'}
@@ -317,6 +315,9 @@ packages:
     resolution: {integrity: sha512-0U2OPII7sbvtbu9rhDlUUkP4Au/DPz2Tzbnawd/XwDuUruDqd+t/Bmel3cLJxl3yMLHf0OY0TMcIx9zzxdlAZw==}
     engines: {node: '>=10.0.0'}
     hasBin: true
+
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -394,6 +395,10 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
+
+  '@types/node@22.5.5':
+    dependencies:
+      undici-types: 6.19.8
 
   ansi-regex@3.0.1: {}
 
@@ -540,8 +545,6 @@ snapshots:
 
   pid-cwd@1.2.0: {}
 
-  pnpm@9.10.0: {}
-
   ps-list@7.2.0: {}
 
   queue-microtask@1.2.3: {}
@@ -608,6 +611,8 @@ snapshots:
       wrap-ansi: 7.0.0
       yamljs: 0.3.0
       yargs: 16.2.0
+
+  undici-types@6.19.8: {}
 
   which@2.0.2:
     dependencies:
