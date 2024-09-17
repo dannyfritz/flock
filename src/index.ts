@@ -1,4 +1,4 @@
-class BaseComponent { }
+class BaseComponent {}
 
 class Entity {
 	components: Map<string, InstanceType<typeof BaseComponent>> = new Map();
@@ -10,15 +10,13 @@ class Entity {
 	): InstanceType<C> | undefined {
 		return this.components.get(component.name) as InstanceType<C> | undefined;
 	}
-	hasComponent(
-		component: typeof BaseComponent,
-	): boolean {
+	hasComponent(component: typeof BaseComponent): boolean {
 		return this.components.has(component.name);
 	}
 	removeComponent(component: BaseComponent) {
 		this.components.delete(component.constructor.name);
 	}
-	destroy() { }
+	destroy() {}
 }
 
 class World {
@@ -29,14 +27,14 @@ class World {
 		return entity;
 	}
 	query(params: Array<QueryParam>): Array<Entity> {
-		return this.entities.filter(entity => {
-			return params.every(param => param.test(entity))
+		return this.entities.filter((entity) => {
+			return params.every((param) => param.test(entity));
 		});
 	}
 }
 
 interface QueryParam {
-	test(entity: Entity): boolean
+	test(entity: Entity): boolean;
 }
 
 class Has implements QueryParam {
