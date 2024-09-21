@@ -1,27 +1,25 @@
 class BaseComponent { }
 
 class Entity {
-	components: Map<string, InstanceType<typeof BaseComponent>> = new Map();
+	components: Map<unknown, InstanceType<typeof BaseComponent>> = new Map();
 	addComponent(component: InstanceType<typeof BaseComponent>) {
-		this.components.set(component.constructor.name, component);
+		this.components.set(component.constructor, component);
 	}
 	getComponent<C extends typeof BaseComponent>(
-		component: C,
+		Component: C,
 	): InstanceType<C> | undefined {
-		return this.components.get(component.name) as InstanceType<C> | undefined;
+		return this.components.get(Component) as InstanceType<C> | undefined;
 	}
-	hasComponent(component: typeof BaseComponent): boolean {
-		return this.components.has(component.name);
+	hasComponent(Component: typeof BaseComponent): boolean {
+		return this.components.has(Component);
 	}
-	removeComponent(component: BaseComponent) {
-		this.components.delete(component.constructor.name);
+	removeComponent(Component: typeof BaseComponent) {
+		this.components.delete(Component);
 	}
-	// TODO: implement
-	destroy() { }
+	destroy(world: World) {
+		world.removeEntity(this);
+	}
 }
-
-// TODO: Resource
-// TODO: Tag
 
 class World {
 	entities: Array<Entity> = [];
@@ -29,6 +27,11 @@ class World {
 		const entity = new Entity();
 		this.entities.push(entity);
 		return entity;
+	}
+	removeEntity(entity: Entity) {
+		const index = this.entities.indexOf(entity);
+		if (!index) return;
+		this.entities.splice(index, 1);
 	}
 	query(params: Array<QueryParam>): Array<Entity> {
 		return this.entities.filter((entity) => {
