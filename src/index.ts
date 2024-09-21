@@ -1,4 +1,4 @@
-class BaseComponent {}
+class BaseComponent { }
 
 class Entity {
 	components: Map<string, InstanceType<typeof BaseComponent>> = new Map();
@@ -16,8 +16,12 @@ class Entity {
 	removeComponent(component: BaseComponent) {
 		this.components.delete(component.constructor.name);
 	}
-	destroy() {}
+	// TODO: implement
+	destroy() { }
 }
+
+// TODO: Resource
+// TODO: Tag
 
 class World {
 	entities: Array<Entity> = [];
@@ -28,23 +32,20 @@ class World {
 	}
 	query(params: Array<QueryParam>): Array<Entity> {
 		return this.entities.filter((entity) => {
-			return params.every((param) => param.test(entity));
+			return params.every((test) => test(entity));
 		});
 	}
 }
 
-interface QueryParam {
-	test(entity: Entity): boolean;
-}
+type QueryParam = (entity: Entity) => boolean;
 
-class Has implements QueryParam {
-	target: typeof BaseComponent;
-	constructor(target: typeof BaseComponent) {
-		this.target = target;
-	}
-	test(entity: Entity): boolean {
-		return entity.hasComponent(this.target);
-	}
-}
+const With = (Component: typeof BaseComponent): QueryParam =>
+	(entity: Entity): boolean => entity.hasComponent(Component);
 
-export { type Entity, World, Has };
+const Without = (Component: typeof BaseComponent): QueryParam =>
+	(entity: Entity): boolean => !entity.hasComponent(Component);
+
+const Or = (left: QueryParam, right: QueryParam): QueryParam =>
+	(entity: Entity): boolean => left(entity) || right(entity);
+
+export { type Entity, World, Without, With, Or };

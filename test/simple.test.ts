@@ -1,6 +1,6 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { World, Has } from "../src/index.ts";
+import { World, With } from "../src/index.ts";
 
 describe("flock", () => {
 	test("create world", () => {
@@ -29,7 +29,7 @@ describe("flock", () => {
 		}
 		const world = new World();
 		{
-			const result = world.query([new Has(Component)]);
+			const result = world.query([With(Component)]);
 			assert.equal(result.length, 0);
 		}
 		{
@@ -37,7 +37,7 @@ describe("flock", () => {
 			entity.addComponent(new Component());
 		}
 		{
-			const result = world.query([new Has(Component)]);
+			const result = world.query([With(Component)]);
 			assert.equal(result.length, 1);
 			const entity = result[0];
 			const component = entity.getComponent(Component);
@@ -55,11 +55,11 @@ describe("flock", () => {
 		}
 		const world = new World();
 		{
-			const result = world.query([new Has(ComponentA)]);
+			const result = world.query([With(ComponentA)]);
 			assert.equal(result.length, 0);
 		}
 		{
-			const result = world.query([new Has(ComponentB)]);
+			const result = world.query([With(ComponentB)]);
 			assert.equal(result.length, 0);
 		}
 		{
@@ -67,11 +67,11 @@ describe("flock", () => {
 			entity.addComponent(new ComponentA());
 		}
 		{
-			const result = world.query([new Has(ComponentA)]);
+			const result = world.query([With(ComponentA)]);
 			assert.equal(result.length, 1);
 		}
 		{
-			const result = world.query([new Has(ComponentB)]);
+			const result = world.query([With(ComponentB)]);
 			assert.equal(result.length, 0);
 		}
 		{
@@ -79,11 +79,11 @@ describe("flock", () => {
 			entity.addComponent(new ComponentB());
 		}
 		{
-			const result = world.query([new Has(ComponentA)]);
+			const result = world.query([With(ComponentA)]);
 			assert.equal(result.length, 1);
 		}
 		{
-			const result = world.query([new Has(ComponentB)]);
+			const result = world.query([With(ComponentB)]);
 			assert.equal(result.length, 1);
 		}
 	});
