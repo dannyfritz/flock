@@ -1,25 +1,25 @@
-class BaseComponent {}
+type Ctor<T = object> = abstract new (...args: never) => T;
 
 class Entity {
-	components: Map<unknown, InstanceType<typeof BaseComponent>> = new Map();
-	addComponent(component: InstanceType<typeof BaseComponent>): Entity {
-		if (this.hasComponent(component.constructor as typeof BaseComponent))
+	components: Map<Ctor<unknown>, object> = new Map();
+	addComponent<T extends object>(component: T): Entity {
+		if (this.hasComponent(component.constructor as Ctor))
 			throw new Error(
 				`Component "${component.constructor.name}" already exists on Entity!`,
 			);
-		this.components.set(component.constructor, component);
+		this.components.set(component.constructor as Ctor, component);
 		return this;
 	}
-	getComponent<C extends typeof BaseComponent>(Component: C): InstanceType<C> {
-		const c = this.components.get(Component) as InstanceType<C>;
+	getComponent<C>(Component: Ctor<C>): C {
+		const c = this.components.get(Component);
 		if (c === undefined)
 			throw new Error(`Component "${Component.name}" doesn't exist on Entity!`);
-		return c;
+		return c as C;
 	}
-	hasComponent(Component: typeof BaseComponent): boolean {
+	hasComponent(Component: Ctor): boolean {
 		return this.components.has(Component);
 	}
-	removeComponent(Component: typeof BaseComponent): Entity {
+	removeComponent(Component: Ctor): Entity {
 		if (!this.hasComponent(Component))
 			throw new Error(`Component "${Component.name}" doesn't exist on Entity!`);
 		this.components.delete(Component);
@@ -56,12 +56,12 @@ const query = (
 type QueryParam = (entity: Entity) => boolean;
 
 const With =
-	(Component: typeof BaseComponent): QueryParam =>
+	(Component: Ctor): QueryParam =>
 	(entity: Entity): boolean =>
 		entity.hasComponent(Component);
 
 const Without =
-	(Component: typeof BaseComponent): QueryParam =>
+	(Component: Ctor): QueryParam =>
 	(entity: Entity): boolean =>
 		!entity.hasComponent(Component);
 

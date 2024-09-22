@@ -194,12 +194,8 @@ describe("flock", () => {
 		class Health {
 			hp = 0;
 		}
-		class Dog {
-			barks = 0;
-		}
-		class Cat {
-			meows = 0;
-		}
+		class Dog {}
+		class Cat {}
 		class Boss {
 			phase = 0;
 		}
