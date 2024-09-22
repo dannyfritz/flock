@@ -5,15 +5,16 @@
 [![GitHub](https://img.shields.io/github/license/dannyfritz/flock-ecs?style=for-the-badge)](https://github.com/dannyfritz/flock-ecs/blob/master/LICENSE)
 [![npm badge](https://img.shields.io/npm/v/flock-ecs?style=for-the-badge)](https://www.npmjs.com/package/flock-ecs)
 
-An entity component system (ECS) created as a reference ECS.
-This is a very minimal and barebones ECS.
+An entity component system (ECS) for learning and toy projects.
 
-## Features
+**Goals:**
+- Simple code
+- Simple API
+- Good types
 
-* Queries: With, Without, Or, And
-* No dependencies
-* Simple API
-* Unoptimized and easy to read code
+**Non-Goals:**
+- Performance
+- Serialization
 
 ## Install
 
@@ -24,7 +25,7 @@ npm install -S flock-ecs
 ## Examples
 
 ```ts
-import { World, And, Or, With, Without, Entity } from "../src/index.ts";
+import { World, And, Or, With, Without, Entity } from "flock-ecs";
 class Health {
 	hp = 0;
 }
