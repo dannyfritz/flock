@@ -219,6 +219,22 @@ describe("flock", () => {
 				.addComponent(new Cat())
 				.addComponent(new Player()),
 		);
+		function initSystem(world: World) {
+			const minionDogs = world.query(And(With(Dog), Without(Boss)));
+			for (const minionDog of minionDogs) {
+				minionDog.getComponent(Health).hp = 10;
+			}
+			const players = world.query(With(Player));
+			for (const player of players) {
+				player.getComponent(Health).hp = 100;
+			}
+			const bosses = world.query(With(Boss));
+			for (const boss of bosses) {
+				boss.getComponent(Health).hp = 100;
+				boss.getComponent(Boss).phase = 1;
+			}
+		}
+		initSystem(world);
 		let minionDogs = world.query(And(With(Dog), Without(Boss)));
 		let players = world.query(With(Player));
 		let thingsWithHealth = world.query(With(Health));
@@ -227,14 +243,12 @@ describe("flock", () => {
 		assert.equal(players.length, 1);
 		assert.equal(thingsWithHealth.length, 4);
 		assert.equal(bosses.length, 1);
-		players[0].getComponent(Health).hp = 100;
-		bosses[0].getComponent(Health).hp = 100;
-		bosses[0].getComponent(Boss).phase = 1;
-		for (const minionDog of minionDogs) {
-			minionDog.getComponent(Health).hp = 10;
+		function fightSystem(world: World) {
+			const minionDogs = world.query(And(With(Dog), Without(Boss)));
+			minionDogs[1].getComponent(Health).hp = 0;
+			world.removeEntity(minionDogs[1]);
 		}
-		minionDogs[1].getComponent(Health).hp = 0;
-		world.removeEntity(minionDogs[1]);
+		fightSystem(world);
 		minionDogs = world.query(And(With(Dog), Without(Boss)));
 		players = world.query(With(Player));
 		thingsWithHealth = world.query(With(Health));
@@ -243,8 +257,11 @@ describe("flock", () => {
 		assert.equal(players.length, 1);
 		assert.equal(thingsWithHealth.length, 3);
 		assert.equal(bosses.length, 1);
-		players[0].getComponent(Health).hp = 0;
-		world.removeEntity(players[0]);
+		function dieSystem(world: World) {
+			players[0].getComponent(Health).hp = 0;
+			world.removeEntity(players[0]);
+		}
+		dieSystem(world);
 		minionDogs = world.query(And(With(Dog), Without(Boss)));
 		players = world.query(With(Player));
 		thingsWithHealth = world.query(With(Health));
