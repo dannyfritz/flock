@@ -1,7 +1,17 @@
 {
-	"name": "flock-ecs",
+	"name": "@dannyfritz/flock",
 	"version": "0.2.0",
 	"type": "module",
+	"exports": {
+		"ecs": {
+			"default": "dist/ecs.js",
+			"types": "dist/ecs.d.js"
+		},
+		"time": {
+			"default": "dist/time.js",
+			"types": "dist/time.d.js"
+		}
+	},
 	"engines": {
 		"node": "^22"
 	},

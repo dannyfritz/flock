@@ -1,11 +1,22 @@
 ![logo](logo.png)
 
-# flock-ecs
+# Flock
 
 [![GitHub](https://img.shields.io/github/license/dannyfritz/flock-ecs?style=for-the-badge)](https://github.com/dannyfritz/flock-ecs/blob/master/LICENSE)
 [![npm badge](https://img.shields.io/npm/v/flock-ecs?style=for-the-badge)](https://www.npmjs.com/package/flock-ecs)
 
-An entity component system (ECS) for learning and toy projects.
+A collection of tools for making interactive experiences in a web browser.
+
+> [!IMPORTANT]  
+> Only intended to work in a modern web browser environment.
+
+**Tools:**
+- Audio
+- ECS
+- Input
+- Math
+- Renderer
+- Time
 
 **Goals:**
 - Simple API
@@ -14,74 +25,97 @@ An entity component system (ECS) for learning and toy projects.
 
 **Non-Goals:**
 - Performance
-- Serialization
 - Parallelization
 
 ## Install
 
 ```sh
-npm install -S flock-ecs
+npm install -S @dannyfritz/flock
 ```
 
-## Examples
+## Tools
+
+### Audio (`@dannyfritz/flock/audio`)
+
+TBD
+
+### ECS (`@dannyfritz/flock/ecs`)
 
 ```ts
-import { World, And, Or, With, Without, Entity } from "flock-ecs";
+import { World, And, Or, With, Without, Entity } from "@dannyfritz/flock/ecs";
 class Health {
 	hp = 0;
 }
-class Dog {}
-class Cat {}
-class Boss {
-	phase = 0;
-}
+class Boss {}
 class Player {}
 const world = new World();
 world.addEntity(
-	new Entity().addComponent(new Health()).addComponent(new Dog()),
+	new Entity().addComponent(new Health()).addComponent(new Player()),
 );
 world.addEntity(
-	new Entity().addComponent(new Health()).addComponent(new Dog()),
-);
-world.addEntity(
-	new Entity()
-		.addComponent(new Health())
-		.addComponent(new Dog())
-		.addComponent(new Boss()),
-);
-world.addEntity(
-	new Entity()
-		.addComponent(new Health())
-		.addComponent(new Cat())
-		.addComponent(new Player()),
+	new Entity().addComponent(new Health()).addComponent(new Boss()),
 );
 function initSystem(world: World) {
-	const minionDogs = world.query(And(With(Dog), Without(Boss)));
-	for (const minionDog of minionDogs) {
-		minionDog.getComponent(Health).hp = 10;
-	}
 	const players = world.query(With(Player));
 	for (const player of players) {
 		player.getComponent(Health).hp = 100;
 	}
 	const bosses = world.query(With(Boss));
 	for (const boss of bosses) {
-		boss.getComponent(Health).hp = 100;
-		boss.getComponent(Boss).phase = 1;
+		boss.getComponent(Health).hp = 500;
 	}
 }
 initSystem(world);
-function fightSystem(world: World) {
-	const minionDogs = world.query(And(With(Dog), Without(Boss)));
-	minionDogs[1].getComponent(Health).hp = 0;
-	world.removeEntity(minionDogs[1]);
-}
-fightSystem(world);
 function dieSystem(world: World) {
 	players[0].getComponent(Health).hp = 0;
 	world.removeEntity(players[0]);
 }
 dieSystem(world);
+```
+
+### Input (`@dannyfritz/flock/input`)
+
+```typescript
+import { Mouse, Keyboard } from "@dannyfritz/flock/input"
+// Mouse
+const mouse = new Mouse(document.querySelector("#game"));
+console.log(mouse.position.x, mouse.position.y);
+console.log(mouse.button1, mouse.button2);
+// Keyboard
+const keyboard = new Keyboard(document.querySelector("#game"));
+keyboard.tick();
+console.log(keyboard.isDown("a"));
+```
+
+### Math (`@dannyfritz/flock/math`)
+
+```typescript
+import { Vector2 } from "@dannyfritz/flock/math"
+
+const position = new Vector2(10, 20);
+console.log(position.x, position.y);
+```
+
+### Renderer (`@dannyfritz/flock/renderer`)
+
+TBD
+
+### Time (`@dannyfritz/flock/time`)
+
+```typescript
+const { Timer, Stopwatch, Alarm } from "@dannyfritz/flock/time"
+// Timer
+const timer = new Timer(30);
+timer.tick();
+console.log(timer.remaining)
+if (timer.isTriggered) {
+	cooldownComplete();
+}
+// Stopwatch
+const stopwatch = new Stopwatch();
+stopwatch.tick();
+console.log(stopwatch.elapsed);
+stopwatch.pause();
 ```
 
 ## [Code of Conduct](./CODE_OF_CONDUCT.md)
