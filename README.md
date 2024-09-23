@@ -15,7 +15,7 @@ A collection of tools for making interactive experiences in a web browser.
 - ECS
 - Input
 - Math
-- Renderer
+- Graphics
 - Time
 
 **Goals:**
@@ -96,26 +96,26 @@ const position = new Vector2(10, 20);
 console.log(position.x, position.y);
 ```
 
-### Renderer (`@dannyfritz/flock/renderer`)
+### Graphics (`@dannyfritz/flock/graphics`)
 
 TBD
 
 ### Time (`@dannyfritz/flock/time`)
 
 ```typescript
-const { Timer, Stopwatch, Alarm } from "@dannyfritz/flock/time"
-// Timer
-const timer = new Timer(30);
-timer.tick();
-console.log(timer.remaining)
-if (timer.isTriggered) {
-	cooldownComplete();
+const { Alarm, Stopwatch } from "@dannyfritz/flock/time"
+// Alarm
+const alarm = new Alarm(60);
+alarm.tick();
+console.log(alarm.remaining)
+while (alarm.isTriggered) {
+	update();
+	alarm.rollover();
 }
 // Stopwatch
 const stopwatch = new Stopwatch();
-stopwatch.tick();
-console.log(stopwatch.elapsed);
-stopwatch.pause();
+stopwatch.tick(30);
+console.log(stopwatch.elapsed); // 30
 ```
 
 ## [Code of Conduct](./CODE_OF_CONDUCT.md)
