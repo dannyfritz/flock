@@ -1,8 +1,8 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { World, And, Or, With, Without, Entity } from "../src/index.ts";
+import { World, And, Or, With, Without, Entity } from "./ecs.ts";
 
-describe("flock", () => {
+describe("ECS", () => {
 	describe("World / Entity", () => {
 		test("new World()", () => {
 			const world = new World();
