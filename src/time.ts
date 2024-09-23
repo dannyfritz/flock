@@ -39,5 +39,3 @@ export class Stopwatch {
 		this.elapsed += dt;
 	}
 }
-
-export class Timer {}

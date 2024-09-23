@@ -1,6 +1,6 @@
 import test, { describe, mock } from "node:test";
 import assert from "node:assert";
-import { Alarm, Stopwatch, Timer } from "./time.ts";
+import { Alarm, Stopwatch } from "./time.ts";
 
 describe("Time", () => {
 	describe("Stopwatch", () => {
