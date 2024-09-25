@@ -1,36 +1,49 @@
 {
-	"name": "@dannyfritz/flock",
-	"version": "0.2.0",
-	"type": "module",
-	"exports": {
-		"ecs": {
-			"default": "dist/ecs.js",
-			"types": "dist/ecs.d.js"
-		},
-		"time": {
-			"default": "dist/time.js",
-			"types": "dist/time.d.js"
-		}
-	},
-	"engines": {
-		"node": "^22"
-	},
-	"packageManager": "pnpm@9.10.0",
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.1",
-		"@types/node": "^22.5.5",
-		"typescript": "~5.6.0",
-		"ultra-runner": "^3.10.5"
-	},
-	"scripts": {
-		"ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format",
-		"test:format": "biome format",
-		"test:lint": "biome lint",
-		"test:types": "tsc --noEmit",
-		"test:unit": "node --experimental-strip-types --test \"**/*.test.?(m)ts\"",
-		"test": "ultra --raw ci"
-	},
-	"ultra": {
-		"concurrent": ["ci"]
-	}
+  "name": "@dannyfritz/flock",
+  "version": "0.2.0",
+  "type": "module",
+  "exports": {
+    "ecs": {
+      "default": "dist/ecs.js",
+      "types": "dist/ecs.d.js"
+    },
+    "time": {
+      "default": "dist/time.js",
+      "types": "dist/time.d.js"
+    }
+  },
+  "engines": {
+    "node": "^22"
+  },
+  "packageManager": "pnpm@9.10.0",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.1",
+    "@chromatic-com/storybook": "^1.9.0",
+    "@storybook/addon-essentials": "^8.3.3",
+    "@storybook/addon-interactions": "^8.3.3",
+    "@storybook/addon-links": "^8.3.3",
+    "@storybook/blocks": "^8.3.3",
+    "@storybook/html": "^8.3.3",
+    "@storybook/html-vite": "^8.3.3",
+    "@storybook/test": "^8.3.3",
+    "@types/node": "^22.5.5",
+    "storybook": "^8.3.3",
+    "typescript": "~5.6.0",
+    "ultra-runner": "^3.10.5"
+  },
+  "scripts": {
+    "ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format",
+    "test:format": "biome format",
+    "test:lint": "biome lint",
+    "test:types": "tsc --noEmit",
+    "test:unit": "node --experimental-strip-types --test \"**/*.test.?(m)ts\"",
+    "test": "ultra --raw ci",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "ultra": {
+    "concurrent": [
+      "ci"
+    ]
+  }
 }
