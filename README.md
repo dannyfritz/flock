@@ -79,9 +79,9 @@ dieSystem(world);
 import { Mouse, Keyboard } from "@dannyfritz/flock/input"
 // Mouse
 const mouse = new Mouse({ target: document.querySelector("#game") });
+console.log(mouse.x, mouse.y);
 mouse.tick();
-console.log(mouse.position.x, mouse.position.y);
-console.log(mouse.button1, mouse.button2);
+console.log(mouse.state(0), mouse.state(1));
 // Keyboard
 const keyboard = new Keyboard({ target: document.querySelector("#game") });
 keyboard.tick();
