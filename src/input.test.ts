@@ -1,134 +1,92 @@
 import test, { describe, beforeEach } from "node:test";
 import assert from "node:assert";
-import { Keyboard, Mouse } from "./input.ts";
-import { JSDOM } from "jsdom";
+import { BUTTON_STATE, Keyboard, Mouse } from "./input.ts";
 
-function KeyDownEvent(dom: JSDOM, code: KeyboardEvent["code"]) {
-	return new dom.window.KeyboardEvent("keydown", { code });
-}
-function KeyUpEvent(dom: JSDOM, code: KeyboardEvent["code"]) {
-	return new dom.window.KeyboardEvent("keyup", { code });
-}
-function PointerDownEvent(dom: JSDOM, button: PointerEvent["button"]) {
-	return new dom.window.PointerEvent("pointerdown", { button });
-}
-function PointerUpEvent(dom: JSDOM, button: PointerEvent["button"]) {
-	return new dom.window.PointerEvent("pointerup", { button });
-}
-// TODO: run in a browser because JSDom doesn't support this
-function PointerMoveEvent(dom: JSDOM, position: { x: number; y: number }) {
-	const event = new dom.window.PointerEvent("pointermove", {
-		offsetX: position.x,
-		offsetY: position.y,
-	});
-	return event;
-}
-
-describe("Input", () => {
-	let dom: JSDOM;
-	let target: HTMLCanvasElement;
-	beforeEach(() => {
-		dom = new JSDOM("<!DOCTYPE html><body><canvas></canvas></body></html>");
-		dom.window.PointerEvent = dom.window.MouseEvent;
-		target = dom.window.document.querySelector("canvas") as HTMLCanvasElement;
-	});
+describe.only("Input", () => {
 	describe("Mouse", () => {
 		test("new Mouse()", () => {
-			new Mouse({ target });
+			new Mouse();
 		});
 		test("state() initial state", async () => {
-			const mouse = new Mouse({ target });
-			assert.equal(mouse.state(0), Mouse.BUTTON_STATE.UP);
+			const mouse = new Mouse();
+			assert.equal(mouse.buttons.get(0), BUTTON_STATE.UP);
 		});
-		test("state() pressed", async () => {
-			const mouse = new Mouse({ target });
-			target.dispatchEvent(PointerDownEvent(dom, 0));
-			assert.equal(mouse.state(0), Mouse.BUTTON_STATE.PRESSED);
+		test("state() register with no tick", async () => {
+			const mouse = new Mouse();
+			mouse.buttons.register(0);
+			assert.equal(mouse.buttons.get(0), BUTTON_STATE.UP);
 		});
-		test("state() down", async () => {
-			const mouse = new Mouse({ target });
-			target.dispatchEvent(PointerDownEvent(dom, 0));
+		test("state() register with tick", async () => {
+			const mouse = new Mouse();
+			mouse.buttons.register(0);
 			mouse.tick();
-			assert.equal(mouse.state(0), Mouse.BUTTON_STATE.DOWN);
+			assert.equal(mouse.buttons.get(0), BUTTON_STATE.PRESSED);
 		});
-		test("state() down persists", async () => {
-			const mouse = new Mouse({ target });
-			target.dispatchEvent(PointerDownEvent(dom, 0));
+		test("state() down after pressed", async () => {
+			const mouse = new Mouse();
+			mouse.buttons.register(0);
 			mouse.tick();
 			mouse.tick();
-			mouse.tick();
-			assert.equal(mouse.state(0), Mouse.BUTTON_STATE.DOWN);
+			assert.equal(mouse.buttons.get(0), BUTTON_STATE.DOWN);
 		});
-		test("state() up", async () => {
-			const mouse = new Mouse({ target });
-			target.dispatchEvent(PointerDownEvent(dom, 0));
-			target.dispatchEvent(PointerUpEvent(dom, 0));
+		test("state() up after an unregistered press", async () => {
+			const mouse = new Mouse();
+			mouse.buttons.register(0);
+			mouse.buttons.unregister(0);
 			mouse.tick();
-			assert.equal(mouse.state(0), Mouse.BUTTON_STATE.UP);
+			assert.equal(mouse.buttons.get(0), BUTTON_STATE.UP);
 		});
 		test("state() up persists", async () => {
-			const mouse = new Mouse({ target });
-			target.dispatchEvent(PointerDownEvent(dom, 0));
-			target.dispatchEvent(PointerUpEvent(dom, 0));
+			const mouse = new Mouse();
+			mouse.buttons.register(0);
+			mouse.buttons.unregister(0);
 			mouse.tick();
 			mouse.tick();
 			mouse.tick();
-			assert.equal(mouse.state(0), Mouse.BUTTON_STATE.UP);
+			assert.equal(mouse.buttons.get(0), BUTTON_STATE.UP);
 		});
-		test.only(".x / .y", async () => {
-			const mouse = new Mouse({ target });
-			assert.equal(mouse.x, Number.NaN);
-			assert.equal(mouse.y, Number.NaN);
-			target.dispatchEvent(PointerMoveEvent(dom, { x: 10, y: 20 }));
-			assert.equal(mouse.x, 10);
-			// assert.equal(mouse.y, 20);
-			// target.dispatchEvent(PointerMoveEvent(dom, { x: 0, y: 0 }));
-			// assert.equal(mouse.x, 0);
-			// assert.equal(mouse.y, 0);
+		test(".x / .y", async () => {
+			const mouse = new Mouse();
+			assert.equal(mouse.position.x, Number.NaN);
+			assert.equal(mouse.position.y, Number.NaN);
+			mouse.position.x = 10;
+			mouse.position.y = 20;
+			assert.equal(mouse.position.x, 10);
+			assert.equal(mouse.position.y, 20);
 		});
 	});
 	describe("Keyboard", () => {
 		test("new Keyboard()", () => {
-			new Keyboard({ target });
+			new Keyboard();
 		});
 		test("state() initial state", async () => {
-			const keyboard = new Keyboard({ target });
-			assert.equal(keyboard.state("KeyA"), Keyboard.KEY_STATE.UP);
+			const keyboard = new Keyboard();
+			assert.equal(keyboard.keys.get("KeyA"), BUTTON_STATE.UP);
 		});
-		test("state() pressed", async () => {
-			const keyboard = new Keyboard({ target });
-			target.dispatchEvent(KeyDownEvent(dom, "KeyA"));
-			assert.equal(keyboard.state("KeyA"), Keyboard.KEY_STATE.PRESSED);
+		test("state() register with no tick", async () => {
+			const keyboard = new Keyboard();
+			keyboard.keys.register("KeyA");
+			assert.equal(keyboard.keys.get("KeyA"), BUTTON_STATE.UP);
 		});
-		test("state() down", async () => {
-			const keyboard = new Keyboard({ target });
-			target.dispatchEvent(KeyDownEvent(dom, "KeyA"));
+		test("state() register with tick", async () => {
+			const keyboard = new Keyboard();
+			keyboard.keys.register("KeyA");
 			keyboard.tick();
-			assert.equal(keyboard.state("KeyA"), Keyboard.KEY_STATE.DOWN);
+			assert.equal(keyboard.keys.get("KeyA"), BUTTON_STATE.PRESSED);
 		});
-		test("state() down persists", async () => {
-			const keyboard = new Keyboard({ target });
-			target.dispatchEvent(KeyDownEvent(dom, "KeyA"));
+		test("state() down after pressed", async () => {
+			const keyboard = new Keyboard();
+			keyboard.keys.register("KeyA");
 			keyboard.tick();
 			keyboard.tick();
-			keyboard.tick();
-			assert.equal(keyboard.state("KeyA"), Keyboard.KEY_STATE.DOWN);
+			assert.equal(keyboard.keys.get("KeyA"), BUTTON_STATE.DOWN);
 		});
-		test("state() up", async () => {
-			const keyboard = new Keyboard({ target });
-			target.dispatchEvent(KeyDownEvent(dom, "KeyA"));
-			target.dispatchEvent(KeyUpEvent(dom, "KeyA"));
+		test("state() up after an unregistered press", async () => {
+			const keyboard = new Keyboard();
+			keyboard.keys.register("KeyA");
+			keyboard.keys.unregister("KeyA");
 			keyboard.tick();
-			assert.equal(keyboard.state("KeyA"), Keyboard.KEY_STATE.UP);
-		});
-		test("state() up persists", async () => {
-			const keyboard = new Keyboard({ target });
-			target.dispatchEvent(KeyDownEvent(dom, "KeyA"));
-			target.dispatchEvent(KeyUpEvent(dom, "KeyA"));
-			keyboard.tick();
-			keyboard.tick();
-			keyboard.tick();
-			assert.equal(keyboard.state("KeyA"), Keyboard.KEY_STATE.UP);
+			assert.equal(keyboard.keys.get("KeyA"), BUTTON_STATE.UP);
 		});
 	});
 });
