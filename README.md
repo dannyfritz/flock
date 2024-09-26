@@ -78,13 +78,14 @@ dieSystem(world);
 ```typescript
 import { Mouse, Keyboard } from "@dannyfritz/flock/input"
 // Mouse
-const mouse = new Mouse(document.querySelector("#game"));
+const mouse = new Mouse({ target: document.querySelector("#game") });
+mouse.tick();
 console.log(mouse.position.x, mouse.position.y);
 console.log(mouse.button1, mouse.button2);
 // Keyboard
-const keyboard = new Keyboard(document.querySelector("#game"));
+const keyboard = new Keyboard({ target: document.querySelector("#game") });
 keyboard.tick();
-console.log(keyboard.isDown("a"));
+console.log(keyboard.state("KeyA"));
 ```
 
 ### Math (`@dannyfritz/flock/math`)
