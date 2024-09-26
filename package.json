@@ -31,19 +31,15 @@
 			"import": "./dist/time.js"
 		}
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"packageManager": "pnpm@9.10.0",
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.1",
-		"@storybook/addon-docs": "^8.3.3",
-		"@storybook/addon-interactions": "^8.3.3",
-		"@storybook/blocks": "^8.3.3",
-		"@storybook/html": "^8.3.3",
-		"@storybook/html-vite": "^8.3.3",
-		"@storybook/test": "^8.3.3",
-		"@storybook/test-runner": "^0.19.1",
+		"@types/jsdom": "^21.1.7",
 		"@types/node": "^22.5.5",
-		"storybook": "^8.3.3",
+		"jsdom": "^25.0.1",
 		"tsup": "^8.3.0",
 		"typescript": "~5.6.0",
 		"ultra-runner": "^3.10.5"
@@ -57,11 +53,11 @@
 		"test:types": "tsc --noEmit",
 		"test:unit": "node --experimental-strip-types --test \"**/*.test.?(m)ts\"",
 		"test:build": "pnpm run prepack",
-		"test": "ultra --raw ci",
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"test": "ultra --raw ci"
 	},
 	"ultra": {
-		"concurrent": ["ci"]
+		"concurrent": [
+			"ci"
+		]
 	}
 }
