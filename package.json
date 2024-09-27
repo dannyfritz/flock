@@ -1,62 +1,71 @@
 {
-	"name": "@dannyfritz/flock",
-	"version": "0.2.0",
-	"engines": {
-		"node": "^22"
-	},
-	"type": "module",
-	"exports": {
-		"./audio": {
-			"types": "./dist/audio.d.ts",
-			"import": "./dist/audio.js"
-		},
-		"./ecs": {
-			"types": "./dist/ecs.d.ts",
-			"import": "./dist/ecs.js"
-		},
-		"./graphics": {
-			"types": "./dist/graphics.d.ts",
-			"import": "./dist/graphics.js"
-		},
-		"./input": {
-			"types": "./dist/input.d.ts",
-			"import": "./dist/input.js"
-		},
-		"./math": {
-			"types": "./dist/math.d.ts",
-			"import": "./dist/math.js"
-		},
-		"./time": {
-			"types": "./dist/time.d.ts",
-			"import": "./dist/time.js"
-		}
-	},
-	"files": [
-		"dist"
-	],
-	"packageManager": "pnpm@9.10.0",
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.1",
-		"@types/jsdom": "^21.1.7",
-		"@types/node": "^22.5.5",
-		"tsup": "^8.3.0",
-		"typescript": "~5.6.0",
-		"ultra-runner": "^3.10.5"
-	},
-	"scripts": {
-		"ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format && pnpm run test:build",
-		"format": "biome format --write",
-		"prepack": "tsup src/audio.ts src/ecs.ts src/graphics.ts src/input.ts src/math.ts src/time.ts --dts --sourcemap --format esm",
-		"test:format": "biome format",
-		"test:lint": "biome lint",
-		"test:types": "tsc --noEmit",
-		"test:unit": "node --experimental-strip-types --test \"**/*.test.?(m)ts\"",
-		"test:build": "pnpm run prepack",
-		"test": "ultra --raw ci"
-	},
-	"ultra": {
-		"concurrent": [
-			"ci"
-		]
-	}
+  "name": "@dannyfritz/flock",
+  "version": "0.2.0",
+  "engines": {
+    "node": "^22"
+  },
+  "type": "module",
+  "exports": {
+    "./audio": {
+      "types": "./dist/audio.d.ts",
+      "import": "./dist/audio.js"
+    },
+    "./ecs": {
+      "types": "./dist/ecs.d.ts",
+      "import": "./dist/ecs.js"
+    },
+    "./graphics": {
+      "types": "./dist/graphics.d.ts",
+      "import": "./dist/graphics.js"
+    },
+    "./input": {
+      "types": "./dist/input.d.ts",
+      "import": "./dist/input.js"
+    },
+    "./math": {
+      "types": "./dist/math.d.ts",
+      "import": "./dist/math.js"
+    },
+    "./time": {
+      "types": "./dist/time.d.ts",
+      "import": "./dist/time.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "packageManager": "pnpm@9.10.0",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.1",
+    "@storybook/addon-essentials": "^8.3.3",
+    "@storybook/blocks": "^8.3.3",
+    "@storybook/html": "^8.3.3",
+    "@storybook/html-vite": "^8.3.3",
+    "@storybook/test": "^8.3.3",
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^22.5.5",
+    "pixi.js": "^8.4.1",
+    "storybook": "^8.3.3",
+    "tsup": "^8.3.0",
+    "typescript": "~5.6.0",
+    "ultra-runner": "^3.10.5"
+  },
+  "scripts": {
+    "ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format && pnpm run test:build",
+    "format": "biome format --write",
+    "prepack": "tsup src/audio.ts src/ecs.ts src/graphics.ts src/input.ts src/math.ts src/time.ts --dts --sourcemap --format esm",
+    "test:format": "biome format",
+    "test:lint": "biome lint",
+    "test:types": "tsc --noEmit",
+    "test:unit": "node --experimental-strip-types --test \"**/*.test.?(m)ts\"",
+    "test:build": "pnpm run prepack",
+    "test": "ultra --raw ci",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "ultra": {
+    "concurrent": [
+      "ci"
+    ]
+  }
 }
