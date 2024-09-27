@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/html";
 import { Matrix } from "pixi.js";
 import image from "../static/extra_character_a.png";
 import { Graphics } from "./graphics.ts";
-import { Vector2 } from "./math.ts";
 
 const meta: Meta = {
 	title: "Graphics",
@@ -13,7 +12,6 @@ const meta: Meta = {
 				antialias: true,
 			});
 			const sprite = await Graphics.loadTexture(image);
-			console.log(sprite);
 			return {
 				graphics,
 				sprite,

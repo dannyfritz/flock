@@ -4,7 +4,7 @@ export const BUTTON_STATE = {
 	PRESSED: "PRESSED",
 	DOWN: "DOWN",
 } as const;
-export type MouseButton = 0 | 1 | 2 | 3 | 4;
+export type MouseButton = number;
 type UpperCaseCharacters =
 	| "A"
 	| "B"
