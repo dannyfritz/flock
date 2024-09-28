@@ -21,7 +21,6 @@ export class CursorApp {
 		this.graphics.el.addEventListener("pointerup", (event) => {
 			this.mouse.buttons.unregister(event.button);
 		});
-		return;
 	}
 	render() {
 		this.mouse.tick();

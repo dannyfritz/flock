@@ -24,7 +24,6 @@ export class KeyboardApp {
 			this.keyboard.keys.unregister(event.code as KeyCode);
 			event.preventDefault();
 		});
-		return;
 	}
 	render() {
 		this.keyboard.tick();
