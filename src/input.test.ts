@@ -2,7 +2,7 @@ import test, { describe, beforeEach } from "node:test";
 import assert from "node:assert";
 import { BUTTON_STATE, Keyboard, Mouse } from "./input.ts";
 
-describe.only("Input", () => {
+describe("Input", () => {
 	describe("Mouse", () => {
 		test("new Mouse()", () => {
 			new Mouse();

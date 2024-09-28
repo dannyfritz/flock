@@ -13,7 +13,6 @@ import {
 	type WebGLOptions,
 	WebGLRenderer,
 } from "pixi.js";
-import type { Vector2 } from "./math.ts";
 
 export class Graphics {
 	static loadTexture(src: string): Promise<Texture> {
@@ -28,8 +27,9 @@ export class Graphics {
 		this.renderer = new WebGLRenderer();
 		this.stage = new Container();
 	}
-	init(options?: Partial<WebGLOptions>): Promise<void> {
-		return this.renderer.init(options);
+	async init(options?: Partial<WebGLOptions>): Promise<void> {
+		await this.renderer.init(options);
+		this.renderer.canvas.tabIndex = -1;
 	}
 	circle(
 		radius: number,
@@ -73,7 +73,7 @@ export class Graphics {
 		this.renderer.render(this.stage);
 		this.stage = new Container();
 	}
-	sprite(texture: Texture, matrix: Matrix): Sprite {
+	sprite(texture: Texture | undefined, matrix: Matrix): Sprite {
 		const sprite = new Sprite(texture);
 		sprite.setFromMatrix(matrix);
 		this.stage.addChild(sprite);

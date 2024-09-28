@@ -2,7 +2,7 @@ import { Matrix } from "pixi.js";
 import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
 
-export class Cursor {
+export class CursorApp {
 	graphics: Graphics;
 	mouse: Mouse;
 	constructor() {

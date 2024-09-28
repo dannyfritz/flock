@@ -1,8 +1,8 @@
 export type ButtonState = (typeof BUTTON_STATE)[keyof typeof BUTTON_STATE];
 export const BUTTON_STATE = {
-	UP: "UP",
-	PRESSED: "PRESSED",
-	DOWN: "DOWN",
+	UP: 0,
+	DOWN: 1,
+	PRESSED: 2,
 } as const;
 export type MouseButton = number;
 type UpperCaseCharacters =
@@ -60,7 +60,7 @@ export type KeyCode =
 	| "Tab"
 	| `F${Digit | "10" | "11" | "12"}`
 	| `${Modifier}${Side}`
-	| `Array${Direction}`
+	| `Arrow${Direction}`
 	| `Bracket${Side}`
 	| `Digit${Digit}`
 	| `Key${UpperCaseCharacters}`
@@ -78,10 +78,10 @@ class State<T> {
 		return this.state.get(key) ?? BUTTON_STATE.UP;
 	}
 	register(key: T): void {
-		this.queue.push([key, BUTTON_STATE.PRESSED])
+		this.queue.push([key, BUTTON_STATE.PRESSED]);
 	}
 	unregister(key: T): void {
-		this.queue.push([key, BUTTON_STATE.UP])
+		this.queue.push([key, BUTTON_STATE.UP]);
 	}
 	tick(): void {
 		for (const [key, state] of this.state) {
@@ -91,7 +91,7 @@ class State<T> {
 		}
 		for (const [key, qState] of this.queue) {
 			const state = this.state.get(key);
-			if (qState === BUTTON_STATE.PRESSED) {
+			if (qState === BUTTON_STATE.PRESSED && state !== BUTTON_STATE.DOWN) {
 				this.state.set(key, BUTTON_STATE.PRESSED);
 			}
 			if (qState === BUTTON_STATE.UP) {
