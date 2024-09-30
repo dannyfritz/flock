@@ -63,6 +63,7 @@ export const Particles: Story = {
 	],
 	render: (_, { loaded: { app } }) => {
 		function tick() {
+			app.update();
 			app.render();
 			requestAnimationFrame(tick);
 		}

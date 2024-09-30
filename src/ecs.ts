@@ -1,3 +1,5 @@
+import memoize from "memoize";
+import ManyKeysMap from "many-keys-map";
 type Ctor<T = object> = abstract new (...args: never) => T;
 
 class Entity {
@@ -30,13 +32,13 @@ class Entity {
 class World {
 	entities: Array<Entity> = [];
 	addEntity(entity: Entity): World {
-		this.entities.push(entity);
+		this.entities = [...this.entities, entity];
 		return this;
 	}
 	removeEntity(entity: Entity): World {
 		const index = this.entities.indexOf(entity);
 		if (index === undefined) return this;
-		this.entities.splice(index, 1);
+		this.entities = this.entities.toSpliced(index, 1);
 		return this;
 	}
 	query(queryParam: QueryParam): Array<Entity> {
@@ -44,35 +46,42 @@ class World {
 	}
 }
 
-const query = (
-	entities: Array<Entity>,
-	queryParam: QueryParam,
-): Array<Entity> => {
-	return entities.filter((entity) => {
-		return queryParam(entity);
-	});
-};
+const query = memoize(
+	(entities: Array<Entity>, queryParam: QueryParam): Array<Entity> => {
+		return entities.filter((entity) => {
+			return queryParam(entity);
+		});
+	},
+	{
+		cacheKey: (args) => args,
+		cache: new ManyKeysMap(),
+	},
+);
 
 type QueryParam = (entity: Entity) => boolean;
 
-const With =
+const With = memoize(
 	(Component: Ctor): QueryParam =>
-	(entity: Entity): boolean =>
-		entity.hasComponent(Component);
+		(entity: Entity): boolean =>
+			entity.hasComponent(Component),
+);
 
-const Without =
+const Without = memoize(
 	(Component: Ctor): QueryParam =>
-	(entity: Entity): boolean =>
-		!entity.hasComponent(Component);
+		(entity: Entity): boolean =>
+			!entity.hasComponent(Component),
+);
 
-const And =
+const And = memoize(
 	(...params: Array<QueryParam>): QueryParam =>
-	(entity: Entity): boolean =>
-		params.every((param) => param(entity));
+		(entity: Entity): boolean =>
+			params.every((param) => param(entity)),
+);
 
-const Or =
+const Or = memoize(
 	(...params: Array<QueryParam>): QueryParam =>
-	(entity: Entity): boolean =>
-		params.some((param) => param(entity));
+		(entity: Entity): boolean =>
+			params.some((param) => param(entity)),
+);
 
 export { Entity, World, query, Without, With, And, Or };

@@ -89,18 +89,15 @@ keyboard.tick();
 console.log(keyboard.keys.get("KeyA"));
 ```
 
-### Math (`@dannyfritz/flock/math`)
-
-```typescript
-import { Vector2 } from "@dannyfritz/flock/math"
-
-const position = new Vector2(10, 20);
-console.log(position.x, position.y);
-```
-
 ### Graphics (`@dannyfritz/flock/graphics`)
 
-TBD
+```typescript
+const graphics = new Graphics();
+const matrix = new Matrix();
+matrix.translate(100, 200);
+this.graphics.circle(5, matrix, { stroke: "#FFFFFF" });
+graphics.render();
+```
 
 ### Time (`@dannyfritz/flock/time`)
 

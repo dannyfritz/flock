@@ -4,15 +4,43 @@ import {
 	Container,
 	type FillInput,
 	Graphics as PixiGraphics,
-	type Matrix,
+	Matrix,
 	Sprite,
 	type StrokeInput,
 	Text,
-	type TextStyle,
 	type Texture,
 	type WebGLOptions,
 	WebGLRenderer,
+	type TextOptions,
 } from "pixi.js";
+
+export class Pool<T> {
+	pool: Array<T>;
+	index: number;
+	createFn: () => T;
+	resetFn: (value: T) => T = (value: T) => value;
+	constructor(createFn: () => T, resetFn: (value: T) => T) {
+		this.pool = [];
+		this.index = -1;
+		this.createFn = createFn;
+		if (resetFn) {
+			this.resetFn = resetFn;
+		}
+	}
+	get(): T {
+		this.index += 1;
+		let value = this.pool[this.index];
+		if (value !== undefined) {
+			return this.resetFn(value);
+		}
+		value = this.createFn();
+		this.pool[this.index] = value;
+		return value;
+	}
+	reset(): void {
+		this.index = -1;
+	}
+}
 
 export class Graphics {
 	static loadTexture(src: string): Promise<Texture> {
@@ -23,9 +51,27 @@ export class Graphics {
 	}
 	renderer: WebGLRenderer;
 	stage: Container;
+	pixiGraphicsPool: Pool<PixiGraphics>;
+	matrixPool: Pool<Matrix>;
+	containerPool: Pool<Container>;
 	constructor() {
 		this.renderer = new WebGLRenderer();
 		this.stage = new Container();
+		this.pixiGraphicsPool = new Pool(
+			() => new PixiGraphics(),
+			(pg) => pg.clear(),
+		);
+		this.matrixPool = new Pool(
+			() => new Matrix(),
+			(m) => m.copyFrom(Matrix.IDENTITY),
+		);
+		this.containerPool = new Pool(
+			() => new Container(),
+			(c) => {
+				c.removeChildren();
+				return c;
+			},
+		);
 	}
 	async init(options?: Partial<WebGLOptions>): Promise<void> {
 		await this.renderer.init(options);
@@ -36,20 +82,17 @@ export class Graphics {
 		matrix: Matrix,
 		options?: { fill?: FillInput; stroke?: StrokeInput },
 	): PixiGraphics {
-		const graphics = new PixiGraphics();
-		graphics.circle(0, 0, radius);
+		const pixiGraphics = this.pixiGraphicsPool.get();
+		pixiGraphics.circle(0, 0, radius);
 		if (options?.fill) {
-			graphics.fill(options.fill);
+			pixiGraphics.fill(options.fill);
 		}
 		if (options?.stroke) {
-			graphics.stroke(options.stroke);
+			pixiGraphics.stroke(options.stroke);
 		}
-		graphics.setFromMatrix(matrix);
-		this.stage.addChild(graphics);
-		return graphics;
-	}
-	clear(options?: ClearOptions) {
-		this.renderer.clear(options);
+		pixiGraphics.setFromMatrix(matrix);
+		this.stage.addChild(pixiGraphics);
+		return pixiGraphics;
 	}
 	rectangle(
 		width: number,
@@ -57,21 +100,29 @@ export class Graphics {
 		matrix: Matrix,
 		options?: { fill?: FillInput; stroke?: StrokeInput },
 	) {
-		const graphics = new PixiGraphics();
-		graphics.rect(0, 0, width, height);
+		const pixiGraphics = this.pixiGraphicsPool.get();
+		pixiGraphics.rect(0, 0, width, height);
 		if (options?.fill) {
-			graphics.fill(options.fill);
+			pixiGraphics.fill(options.fill);
 		}
 		if (options?.stroke) {
-			graphics.stroke(options.stroke);
+			pixiGraphics.stroke(options.stroke);
 		}
-		graphics.setFromMatrix(matrix);
-		this.stage.addChild(graphics);
-		return graphics;
+		pixiGraphics.setFromMatrix(matrix);
+		this.stage.addChild(pixiGraphics);
+		return pixiGraphics;
 	}
-	render() {
+	render(doNotReset = false) {
 		this.renderer.render(this.stage);
-		this.stage = new Container();
+		if (!doNotReset) {
+			this.reset();
+		}
+	}
+	reset() {
+		this.stage.removeChildren();
+		this.pixiGraphicsPool.reset();
+		this.matrixPool.reset();
+		this.containerPool.reset();
 	}
 	sprite(texture: Texture | undefined, matrix: Matrix): Sprite {
 		const sprite = new Sprite(texture);
@@ -79,10 +130,12 @@ export class Graphics {
 		this.stage.addChild(sprite);
 		return sprite;
 	}
-	text(string: string, style: TextStyle, matrix: Matrix): Text {
+	text(string: string, matrix: Matrix, style: TextOptions["style"]): Text {
 		const text = new Text({ text: string, style });
-		text.setFromMatrix(matrix);
-		this.stage.addChild(text);
+		const container = this.containerPool.get();
+		container.addChild(text);
+		container.setFromMatrix(matrix);
+		this.stage.addChild(container);
 		return text;
 	}
 }

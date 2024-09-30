@@ -71,7 +71,7 @@ export const Text: Story = {
 	render: (_, { loaded: { graphics, sprite } }) => {
 		const matrix = new Matrix();
 		matrix.translate(100, 200);
-		graphics.text("Hello World!", { fill: "FF0000" }, matrix);
+		graphics.text("Hello World!", matrix, { fill: "FF0000" });
 		graphics.render();
 		return graphics.el;
 	},

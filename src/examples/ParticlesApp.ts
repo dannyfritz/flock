@@ -1,14 +1,12 @@
 import { Matrix, Point, type Texture } from "pixi.js";
-import "pixi.js/math-extras"
+import "pixi.js/math-extras";
 import { Graphics } from "../graphics.ts";
 import { And, Entity, With, World, query } from "../ecs.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
 
 class Planet {}
 class Satellite {}
-
 class Position extends Point {}
-
 class Velocity extends Point {}
 
 export class ParticlesApp {
@@ -41,7 +39,8 @@ export class ParticlesApp {
 			this.mouse.buttons.unregister(event.button);
 		});
 	}
-	render() {
+	update() {
+		const MAX_SPEED = 5;
 		this.mouse.tick();
 		if (this.mouse.buttons.get(0) === BUTTON_STATE.DOWN) {
 			const entity = new Entity();
@@ -49,10 +48,13 @@ export class ParticlesApp {
 				this.mouse.position.x,
 				this.mouse.position.y,
 			);
-			console.log(position);
 			entity.addComponent(position);
 			entity.addComponent(new Satellite());
-			entity.addComponent(new Velocity(0, 0));
+			const angle = Math.random() * 2 * Math.PI;
+			const radius = Math.sqrt(Math.random() * MAX_SPEED);
+			entity.addComponent(
+				new Velocity(radius * Math.cos(angle), radius * Math.sin(angle)),
+			);
 			this.world.addEntity(entity);
 		}
 		if (this.mouse.buttons.get(2) === BUTTON_STATE.PRESSED) {
@@ -67,29 +69,44 @@ export class ParticlesApp {
 		}
 		const satellites = query(this.world.entities, With(Satellite));
 		const planets = query(this.world.entities, With(Planet));
-		for (const entity of satellites) {
-			const position = entity.getComponent(Position);
-			const velocity = entity.getComponent(Velocity);
+		for (const satellite of satellites) {
+			const position = satellite.getComponent(Position);
+			const velocity = satellite.getComponent(Velocity);
+			const displacement = new Point();
 			for (const planet of planets) {
-				// TODO: Perform gravity
-				// Find direction towards planet
-				// Find distnace to planet
-				// Add to velocity in that direction
+				planet.getComponent(Position).subtract(position, displacement);
+				const distance = displacement.magnitude();
+				displacement.multiplyScalar(2 / distance ** 2, displacement);
+				velocity.add(displacement, velocity);
 			}
-			position.add(velocity);
+			const speed = velocity.magnitude();
+			if (speed > MAX_SPEED) {
+				velocity.multiplyScalar(MAX_SPEED / speed, velocity);
+			}
+			position.add(velocity, position);
 		}
+	}
+	render() {
+		const satellites = query(this.world.entities, With(Satellite));
+		const planets = query(this.world.entities, With(Planet));
 		for (const entity of satellites) {
 			const position = entity.getComponent(Position);
-			const matrix = new Matrix();
+			const matrix = this.graphics.matrixPool.get();
 			matrix.translate(position.x, position.y);
 			this.graphics.circle(5, matrix, { stroke: "#FFFFFF" });
 		}
 		for (const entity of planets) {
 			const position = entity.getComponent(Position);
-			const matrix = new Matrix();
+			const matrix = this.graphics.matrixPool.get();
 			matrix.translate(position.x, position.y);
 			this.graphics.circle(15, matrix, { stroke: "#FF0000" });
 		}
+		const matrix = this.graphics.matrixPool.get();
+		this.graphics.text(
+			`Planets: ${planets.length}\nSatellites: ${satellites.length}`,
+			matrix,
+			{ fill: "#FFFFFFFF" },
+		);
 		this.graphics.render();
 	}
 }
