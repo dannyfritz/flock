@@ -94,6 +94,25 @@ export class Graphics {
 		this.stage.addChild(pixiGraphics);
 		return pixiGraphics;
 	}
+	line(
+		x1: number,
+		y1: number,
+		x2: number,
+		y2: number,
+		matrix: Matrix,
+		options?: { stroke?: StrokeInput },
+	): PixiGraphics {
+		const pixiGraphics = this.pixiGraphicsPool.get();
+		pixiGraphics.beginPath();
+		pixiGraphics.moveTo(x1, y1);
+		pixiGraphics.lineTo(x2, y2);
+		if (options?.stroke) {
+			pixiGraphics.stroke(options.stroke);
+		}
+		pixiGraphics.setFromMatrix(matrix);
+		this.stage.addChild(pixiGraphics);
+		return pixiGraphics;
+	}
 	rectangle(
 		width: number,
 		height: number,

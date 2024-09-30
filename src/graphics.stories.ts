@@ -55,6 +55,43 @@ export const Rectangle: Story = {
 	},
 };
 
+export const Line: Story = {
+	render: (_, { loaded: { graphics, sprite } }) => {
+		const matrix = new Matrix();
+		graphics.line(0, 0, 800 / 3, 200, matrix.clone(), { stroke: "FF0000" });
+		matrix.translate(800 / 3, 600 / 3);
+		graphics.line(0, 0, 800 / 3, 200, matrix.clone(), { stroke: "00FF00" });
+		matrix.translate(800 / 3, 600 / 3);
+		graphics.line(0, 0, 800 / 3, 200, matrix.clone(), { stroke: "0000FF" });
+		graphics.line(
+			(800 * 3) / 3,
+			(600 * 0) / 3,
+			(800 * 2) / 3,
+			(600 * 1) / 3,
+			Matrix.IDENTITY,
+			{ stroke: "FF0000" },
+		);
+		graphics.line(
+			(800 * 2) / 3,
+			(600 * 1) / 3,
+			(800 * 1) / 3,
+			(600 * 2) / 3,
+			Matrix.IDENTITY,
+			{ stroke: "00FF00" },
+		);
+		graphics.line(
+			(800 * 1) / 3,
+			(600 * 2) / 3,
+			(800 * 0) / 3,
+			(600 * 3) / 3,
+			Matrix.IDENTITY,
+			{ stroke: "0000FF" },
+		);
+		graphics.render();
+		return graphics.el;
+	},
+};
+
 export const Sprite: Story = {
 	render: (_, { loaded: { graphics, sprite } }) => {
 		const matrix = new Matrix();
