@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/html";
 import { Matrix } from "pixi.js";
 import { CursorApp } from "./cursorApp.ts";
 import { KeyboardApp } from "./keyboardApp.ts";
-import { ParticlesApp } from "./ParticlesApp.ts";
+import { ParticlesApp } from "./particlesApp.ts";
 
 const meta: Meta = {
 	title: "Examples",
