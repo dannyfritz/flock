@@ -11,19 +11,21 @@ A collection of tools for making interactive experiences in a web browser.
 > Only intended to work in a modern web browser environment.
 
 **Tools:**
-- Audio
+
 - ECS
+- Graphics
 - Input
 - Math
-- Graphics
 - Time
 
 **Goals:**
+
 - Simple API
 - Good typescript types
 - Simple code
 
 **Non-Goals:**
+
 - Performance
 - Parallelization
 
@@ -34,10 +36,6 @@ npm install -S @dannyfritz/flock
 ```
 
 ## Tools
-
-### Audio (`@dannyfritz/flock/audio`)
-
-TBD
 
 ### ECS (`@dannyfritz/flock/ecs`)
 
@@ -76,7 +74,7 @@ dieSystem(world);
 ### Input (`@dannyfritz/flock/input`)
 
 ```typescript
-import { Mouse, Keyboard } from "@dannyfritz/flock/input"
+import { Mouse, Keyboard } from "@dannyfritz/flock/input";
 // Mouse
 const mouse = new Mouse();
 mouse.buttons.register(0);
@@ -97,6 +95,16 @@ const matrix = new Matrix();
 matrix.translate(100, 200);
 this.graphics.circle(5, matrix, { stroke: "#FFFFFF" });
 graphics.render();
+```
+
+### Pool (`@dannyfritz/flock/pool`)
+
+```typescript
+class Item { value = 0 }
+const pool = new Pool(() => new Item, (item) { item.value = 0; return item; });
+const item1 = pool.get();
+pool.reset();
+console.log(item1 === pool.get());
 ```
 
 ### Time (`@dannyfritz/flock/time`)

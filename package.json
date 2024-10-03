@@ -6,10 +6,6 @@
 	},
 	"type": "module",
 	"exports": {
-		"./audio": {
-			"types": "./dist/audio.d.ts",
-			"import": "./dist/audio.js"
-		},
 		"./ecs": {
 			"types": "./dist/ecs.d.ts",
 			"import": "./dist/ecs.js"
@@ -26,14 +22,16 @@
 			"types": "./dist/math.d.ts",
 			"import": "./dist/math.js"
 		},
+		"./pool": {
+			"types": "./dist/pool.d.ts",
+			"import": "./dist/pool.js"
+		},
 		"./time": {
 			"types": "./dist/time.d.ts",
 			"import": "./dist/time.js"
 		}
 	},
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"packageManager": "pnpm@9.10.0",
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.1",
@@ -48,7 +46,7 @@
 	"scripts": {
 		"ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format && pnpm run test:build",
 		"format": "biome format --write",
-		"prepack": "tsup src/audio.ts src/ecs.ts src/graphics.ts src/input.ts src/math.ts src/time.ts --dts --sourcemap --format esm",
+		"prepack": "tsup src/ecs.ts src/graphics.ts src/input.ts src/math.ts src/pool.ts src/time.ts --dts --sourcemap --format esm",
 		"test:format": "biome format",
 		"test:lint": "biome lint",
 		"test:types": "tsc --noEmit",
@@ -59,9 +57,7 @@
 		"build-storybook": "storybook build"
 	},
 	"ultra": {
-		"concurrent": [
-			"ci"
-		]
+		"concurrent": ["ci"]
 	},
 	"dependencies": {
 		"many-keys-map": "^2.0.1",
