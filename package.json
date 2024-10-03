@@ -10,10 +10,6 @@
 			"types": "./dist/ecs.d.ts",
 			"import": "./dist/ecs.js"
 		},
-		"./events": {
-			"types": "./dist/events.d.ts",
-			"import": "./dist/events.js"
-		},
 		"./graphics": {
 			"types": "./dist/graphics.d.ts",
 			"import": "./dist/graphics.js"
@@ -52,7 +48,7 @@
 	"scripts": {
 		"ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format && pnpm run test:build",
 		"format": "biome format --write",
-		"prepack": "tsup src/ecs.ts src/events.ts src/graphics.ts src/input.ts src/math.ts src/pool.ts src/time.ts --dts --sourcemap --format esm",
+		"prepack": "tsup src/ecs.ts src/graphics.ts src/input.ts src/math.ts src/pool.ts src/time.ts --dts --sourcemap --format esm",
 		"test:format": "biome format",
 		"test:lint": "biome lint",
 		"test:types": "tsc --noEmit",

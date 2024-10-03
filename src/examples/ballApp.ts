@@ -1,7 +1,6 @@
 import { Howl } from "howler";
 import { Matrix, Point } from "pixi.js";
 import { And, Entity, With, World } from "../ecs.ts";
-import { Events } from "../events.ts";
 import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
 import blipSoundFile from "../../static/blip.wav";
@@ -27,7 +26,7 @@ type E = { type: "Start" } | { type: "Bounce"; volume: number };
 export class BallApp {
 	graphics = new Graphics();
 	world = new World();
-	events = new Events<E>();
+	events: Array<E> = [];
 	mouse = new Mouse();
 	isStarted = false;
 	async init() {
@@ -48,7 +47,7 @@ export class BallApp {
 		this.mouse.tick();
 		if (!this.isStarted) {
 			if (this.mouse.buttons.get(0) === BUTTON_STATE.PRESSED) {
-				this.events.add({ type: "Start" });
+				this.events.push({ type: "Start" });
 			}
 			return;
 		}
@@ -63,7 +62,7 @@ export class BallApp {
 				velocity.y = -velocity.y * 0.8;
 				velocity.x = velocity.x * 0.8;
 				if (Math.abs(velocity.y) > 0.1) {
-					this.events.add({
+					this.events.push({
 						type: "Bounce",
 						volume: (Math.min(velocity.magnitude(), 14) / 14) * 0.5,
 					});
@@ -71,7 +70,7 @@ export class BallApp {
 			}
 			if (position.x > 800 - 20 || position.x < 20) {
 				velocity.x = -velocity.x;
-				this.events.add({
+				this.events.push({
 					type: "Bounce",
 					volume: (Math.min(velocity.magnitude(), 14) / 14) * 0.5,
 				});
@@ -86,7 +85,7 @@ export class BallApp {
 		}
 	}
 	render() {
-		for (const event of this.events.get()) {
+		for (const event of this.events) {
 			switch (event.type) {
 				case "Start": {
 					coinSound.play();
@@ -100,6 +99,7 @@ export class BallApp {
 				}
 			}
 		}
+		this.events = [];
 		if (!this.isStarted) {
 			const matrix = this.graphics.matrixPool.get().translate(325, 280);
 			this.graphics.text("Click to start!", matrix, { fill: "white" });
