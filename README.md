@@ -71,6 +71,17 @@ function dieSystem(world: World) {
 dieSystem(world);
 ```
 
+### Events (`@dannyfritz/flock/events`)
+
+```typescript
+import { Events } from "@dannyfritz/flock/events";
+type E = "BEGIN" | "END";
+const events = new Events<E>()
+events.add("BEGIN");
+console.log(events.get());
+console.log(mouse.buttons.get(0));
+```
+
 ### Input (`@dannyfritz/flock/input`)
 
 ```typescript

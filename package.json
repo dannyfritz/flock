@@ -10,6 +10,10 @@
 			"types": "./dist/ecs.d.ts",
 			"import": "./dist/ecs.js"
 		},
+		"./events": {
+			"types": "./dist/events.d.ts",
+			"import": "./dist/events.js"
+		},
 		"./graphics": {
 			"types": "./dist/graphics.d.ts",
 			"import": "./dist/graphics.js"
@@ -37,7 +41,9 @@
 		"@biomejs/biome": "^1.9.1",
 		"@storybook/html": "^8.3.3",
 		"@storybook/html-vite": "^8.3.3",
+		"@types/howler": "^2.2.12",
 		"@types/node": "^22.5.5",
+		"howler": "^2.2.4",
 		"storybook": "^8.3.3",
 		"tsup": "^8.3.0",
 		"typescript": "~5.6.0",
@@ -46,7 +52,7 @@
 	"scripts": {
 		"ci": "pnpm run test:types && pnpm run test:unit && pnpm run test:lint && pnpm run test:format && pnpm run test:build",
 		"format": "biome format --write",
-		"prepack": "tsup src/ecs.ts src/graphics.ts src/input.ts src/math.ts src/pool.ts src/time.ts --dts --sourcemap --format esm",
+		"prepack": "tsup src/ecs.ts src/events.ts src/graphics.ts src/input.ts src/math.ts src/pool.ts src/time.ts --dts --sourcemap --format esm",
 		"test:format": "biome format",
 		"test:lint": "biome lint",
 		"test:types": "tsc --noEmit",

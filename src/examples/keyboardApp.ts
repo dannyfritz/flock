@@ -4,15 +4,10 @@ import { BUTTON_STATE, Keyboard, type KeyCode } from "../input.ts";
 import spriteFile from "../../static/extra_character_a.png";
 
 export class KeyboardApp {
-	graphics: Graphics;
-	keyboard: Keyboard;
+	graphics = new Graphics();
+	keyboard = new Keyboard();
 	texture: Texture | undefined;
-	position: { x: number; y: number };
-	constructor() {
-		this.graphics = new Graphics();
-		this.keyboard = new Keyboard();
-		this.position = { x: 0, y: 0 };
-	}
+	position = { x: 0, y: 0 };
 	async init(): Promise<void> {
 		await this.graphics.init();
 		this.texture = await Graphics.loadTexture(spriteFile);
