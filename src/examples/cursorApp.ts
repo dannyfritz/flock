@@ -11,16 +11,7 @@ export class CursorApp {
 	}
 	async init(): Promise<void> {
 		await this.graphics.init();
-		this.graphics.el.addEventListener("pointermove", (event) => {
-			this.mouse.position.x = event.offsetX;
-			this.mouse.position.y = event.offsetY;
-		});
-		this.graphics.el.addEventListener("pointerdown", (event) => {
-			this.mouse.buttons.register(event.button);
-		});
-		this.graphics.el.addEventListener("pointerup", (event) => {
-			this.mouse.buttons.unregister(event.button);
-		});
+		this.mouse.bind(this.graphics);
 	}
 	render() {
 		this.mouse.tick();

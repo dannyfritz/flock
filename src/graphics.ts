@@ -13,6 +13,7 @@ import {
 	WebGLRenderer,
 	type TextOptions,
 } from "pixi.js";
+import "pixi.js/math-extras";
 import { Pool } from "./pool.ts";
 
 export class Graphics {

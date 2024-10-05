@@ -1,9 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/html";
-import { Matrix } from "pixi.js";
-import { CursorApp } from "./cursorApp.ts";
-import { KeyboardApp } from "./keyboardApp.ts";
-import { ParticlesApp } from "./particlesApp.ts";
-import { BallApp } from "./ballApp.ts";
 
 const meta: Meta = {
 	title: "Examples",
@@ -15,6 +10,7 @@ type Story = StoryObj;
 export const Ball: Story = {
 	loaders: [
 		async () => {
+			const { BallApp } = await import("./ballApp.ts");
 			const app = new BallApp();
 			await app.init();
 			return {
@@ -36,6 +32,7 @@ export const Ball: Story = {
 export const Cursor: Story = {
 	loaders: [
 		async () => {
+			const { CursorApp } = await import("./cursorApp.ts");
 			const app = new CursorApp();
 			await app.init();
 			return {
@@ -56,6 +53,7 @@ export const Cursor: Story = {
 export const Keyboard: Story = {
 	loaders: [
 		async () => {
+			const { KeyboardApp } = await import("./keyboardApp.ts");
 			const app = new KeyboardApp();
 			await app.init();
 			return {
@@ -73,9 +71,32 @@ export const Keyboard: Story = {
 	},
 };
 
+export const Mushroom: Story = {
+	loaders: [
+		async () => {
+			const { MushroomApp } = await import("./mushroomApp.ts");
+			const app = new MushroomApp();
+			await app.init();
+			return {
+				app,
+			};
+		},
+	],
+	render: (_, { loaded: { app } }) => {
+		function tick() {
+			app.update();
+			app.render();
+			requestAnimationFrame(tick);
+		}
+		requestAnimationFrame(tick);
+		return app.graphics.el;
+	},
+}
+
 export const Particles: Story = {
 	loaders: [
 		async () => {
+			const { ParticlesApp } = await import("./particlesApp.ts");
 			const app = new ParticlesApp();
 			await app.init();
 			return {

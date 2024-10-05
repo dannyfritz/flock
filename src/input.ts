@@ -1,3 +1,5 @@
+import { Graphics } from "./graphics.ts";
+
 export type ButtonState = (typeof BUTTON_STATE)[keyof typeof BUTTON_STATE];
 export const BUTTON_STATE = {
 	UP: 0,
@@ -112,6 +114,22 @@ export class Mouse {
 		this.buttons = new State();
 		this.position = { x: Number.NaN, y: Number.NaN };
 	}
+	bind(graphics: Graphics): void {
+		graphics.el.addEventListener("pointermove", (event) => {
+			this.position.x = event.offsetX;
+			this.position.y = event.offsetY;
+		});
+		graphics.el.addEventListener("pointerdown", (event) => {
+			this.buttons.register(event.button);
+		});
+		graphics.el.addEventListener("pointerup", (event) => {
+			this.buttons.unregister(event.button);
+		});
+		graphics.el.addEventListener("contextmenu", (event) => {
+			event.preventDefault();
+			return false;
+		});
+	}
 	tick(): void {
 		this.buttons.tick();
 	}
@@ -122,6 +140,16 @@ export class Keyboard {
 	keys: State<KeyCode>;
 	constructor() {
 		this.keys = new State();
+	}
+	bind(graphics: Graphics): void {
+				this.graphics.el.addEventListener("keydown", (event) => {
+			this.keyboard.keys.register(event.code as KeyCode);
+			event.preventDefault();
+		});
+		this.graphics.el.addEventListener("keyup", (event) => {
+			this.keyboard.keys.unregister(event.code as KeyCode);
+			event.preventDefault();
+		});
 	}
 	tick(): void {
 		this.keys.tick();

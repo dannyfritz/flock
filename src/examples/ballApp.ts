@@ -36,12 +36,7 @@ export class BallApp {
 		entity.addComponent(new Position(400, 50));
 		entity.addComponent(new Velocity(5, 0));
 		this.world.addEntity(entity);
-		this.graphics.el.addEventListener("pointerdown", (event) => {
-			this.mouse.buttons.register(event.button);
-		});
-		this.graphics.el.addEventListener("pointerup", (event) => {
-			this.mouse.buttons.unregister(event.button);
-		});
+		this.mouse.bind(this.graphics);
 	}
 	update() {
 		this.mouse.tick();
@@ -51,7 +46,7 @@ export class BallApp {
 			}
 			return;
 		}
-		const balls = this.world.query(And(With(Ball), With(Position)));
+		const balls = this.world.query(And(With(Ball), With(Position), With(Velocity)));
 		for (const entity of balls) {
 			const position = entity.getComponent(Position);
 			const velocity = entity.getComponent(Velocity);

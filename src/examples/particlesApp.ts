@@ -1,5 +1,4 @@
 import { Matrix, Point, type Texture } from "pixi.js";
-import "pixi.js/math-extras";
 import { Graphics } from "../graphics.ts";
 import { And, Entity, With, World, query } from "../ecs.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
@@ -21,23 +20,7 @@ export class ParticlesApp {
 	}
 	async init(): Promise<void> {
 		await this.graphics.init();
-		this.graphics.el.addEventListener("pointermove", (event) => {
-			this.mouse.position.x = event.offsetX;
-			this.mouse.position.y = event.offsetY;
-		});
-		this.graphics.el.addEventListener("contextmenu", (event) => {
-			event.preventDefault();
-			return false;
-		});
-		this.graphics.el.addEventListener("pointerdown", (event) => {
-			event.stopPropagation();
-			event.stopImmediatePropagation();
-			event.preventDefault();
-			this.mouse.buttons.register(event.button);
-		});
-		this.graphics.el.addEventListener("pointerup", (event) => {
-			this.mouse.buttons.unregister(event.button);
-		});
+		this.mouse.bind(this.graphics);
 	}
 	update() {
 		const MAX_SPEED = 5;
