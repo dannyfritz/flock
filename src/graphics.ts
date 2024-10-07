@@ -13,9 +13,20 @@ import {
 	WebGLRenderer,
 	type TextOptions,
 	Point,
+	type ShapePrimitive,
+	Polygon,
 } from "pixi.js";
 import "pixi.js/math-extras";
 import { Pool } from "./pool.ts";
+
+function chunk<T>(array: Array<T>, size: number): Array<Array<T>> {
+	const chunkedArray = [];
+	for (let i = 0; i < array.length; i += size)
+		chunkedArray.push(array.slice(i, i + size));
+	return chunkedArray;
+}
+
+type ShapeOptions = { fill?: FillInput, stroke?: StrokeInput };
 
 export class Graphics {
 	static loadTexture(src: string): Promise<Texture> {
@@ -40,7 +51,7 @@ export class Graphics {
 		this.pointPool = new Pool(
 			() => new Point(),
 			(p) => p,
-		)
+		);
 		this.matrixPool = new Pool(
 			() => new Matrix(),
 			(m) => m.copyFrom(Matrix.IDENTITY),
@@ -60,7 +71,7 @@ export class Graphics {
 	circle(
 		radius: number,
 		matrix: Matrix,
-		options?: { fill?: FillInput; stroke?: StrokeInput },
+		options?: ShapeOptions,
 	): PixiGraphics {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.circle(0, 0, radius);
@@ -78,7 +89,7 @@ export class Graphics {
 		point1: Point,
 		point2: Point,
 		matrix: Matrix,
-		options?: { stroke?: StrokeInput },
+		options?: Pick<ShapeOptions, "stroke">,
 	): PixiGraphics {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.beginPath();
@@ -94,7 +105,7 @@ export class Graphics {
 	poly(
 		points: Array<Point>,
 		matrix: Matrix,
-		options?: { fill?: FillInput; stroke?: StrokeInput },
+		options?: ShapeOptions,
 	) {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.poly(points, true);
@@ -112,7 +123,7 @@ export class Graphics {
 		width: number,
 		height: number,
 		matrix: Matrix,
-		options?: { fill?: FillInput; stroke?: StrokeInput },
+		options?: ShapeOptions,
 	) {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.rect(0, 0, width, height);
@@ -137,6 +148,30 @@ export class Graphics {
 		this.pixiGraphicsPool.reset();
 		this.matrixPool.reset();
 		this.containerPool.reset();
+	}
+	shape(
+		shapePrimitive: ShapePrimitive,
+		matrix: Matrix,
+		options?: ShapeOptions,
+	) {
+		const pixiGraphics = this.pixiGraphicsPool.get();
+		if (shapePrimitive instanceof Polygon && shapePrimitive.closePath) {
+			this.poly(
+				chunk(shapePrimitive.points, 2).map(([x, y]) => {
+					const point = this.pointPool.get();
+					point.x = x;
+					point.y = y;
+					return point;
+				}),
+				matrix,
+				options,
+			);
+		} else {
+			throw new Error(`Draw for ShapePrimitive unsupported: ${shapePrimitive.type}`);
+		}
+		pixiGraphics.setFromMatrix(matrix);
+		this.stage.addChild(pixiGraphics);
+		return pixiGraphics;
 	}
 	sprite(texture: Texture | undefined, matrix: Matrix): Sprite {
 		const sprite = new Sprite(texture);

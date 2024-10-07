@@ -1,5 +1,4 @@
 import { Point, Polygon, type ShapePrimitive } from "pixi.js";
-import _ from "lodash";
 import { And, Entity, With, World } from "../ecs.ts";
 import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
@@ -30,7 +29,11 @@ export class MushroomApp {
 		entity.addComponent(new Position(400, 300));
 		entity.addComponent(
 			new Trigger(
-				new Polygon([new Point(100, 100), new Point(200, 100), new Point(100, 200)]),
+				new Polygon([
+					new Point(100, 100),
+					new Point(200, 100),
+					new Point(100, 200),
+				]),
 			),
 		);
 		this.world.addEntity(entity);
@@ -65,8 +68,8 @@ export class MushroomApp {
 				const trigger = entity.getComponent(Trigger);
 				const color = trigger.active ? "red" : trigger.hover ? "blue" : "green";
 				if (trigger.shape instanceof Polygon) {
-					this.graphics.poly(
-						_.chunk(trigger.shape.points, 2).map(([x, y]) => new Point(x, y)),
+					this.graphics.shape(
+						trigger.shape,
 						this.graphics.matrixPool.get(),
 						{ stroke: color },
 					);
