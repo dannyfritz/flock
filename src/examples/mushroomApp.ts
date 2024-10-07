@@ -1,4 +1,10 @@
-import { Matrix, Point, Polygon, Rectangle, type ShapePrimitive } from "pixi.js";
+import {
+	Matrix,
+	Point,
+	Polygon,
+	Rectangle,
+	type ShapePrimitive,
+} from "pixi.js";
 import { And, Entity, With, World } from "../ecs.ts";
 import { chunk, Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
@@ -68,6 +74,9 @@ export class MushroomApp {
 		for (const entity of this.world.query(With(Alarm))) {
 			const alarm = entity.getComponent(Alarm);
 			alarm.tick(1);
+		}
+		for (const entity of this.world.query(And(With(Alarm), With(Spore)))) {
+			const alarm = entity.getComponent(Alarm);
 			if (alarm.isTriggered) {
 				this.world.removeEntity(entity);
 			}
@@ -80,11 +89,17 @@ export class MushroomApp {
 			if (trigger.active) {
 				const sporeEntity = new Entity();
 				sporeEntity.addComponent(new Spore());
-				sporeEntity.addComponent(new Transform().copyFrom(transform));
+				sporeEntity.addComponent(
+					new Transform()
+						.copyFrom(transform)
+						.translate(Math.random() * 100 - 50, Math.random() * -50),
+				);
 				sporeEntity.addComponent(new Alarm(200));
 				const velocity = new Velocity();
-				velocity.x = Math.random() * 2 - 1;
-				velocity.y = Math.random() * 2 - 1;
+				velocity.x = Math.random() - 0.5;
+				velocity.y = Math.random() - 0.5;
+				velocity.normalize(velocity);
+				velocity.multiplyScalar(Math.random(), velocity)
 				sporeEntity.addComponent(velocity);
 				this.world.addEntity(sporeEntity);
 			}
@@ -120,9 +135,14 @@ export class MushroomApp {
 				const transform = entity.getComponent(Transform);
 				const velocity = entity.getComponent(Velocity);
 				if (velocity) {
-					this.graphics.line(new Point(0, 0), velocity.multiplyScalar(5), transform, {
-						stroke: "blue",
-					});
+					this.graphics.line(
+						new Point(0, 0),
+						velocity.multiplyScalar(5),
+						transform,
+						{
+							stroke: "blue",
+						},
+					);
 				}
 			}
 			const color =

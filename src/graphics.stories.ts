@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/html";
-import { Matrix } from "pixi.js";
+import { Matrix, Point } from "pixi.js";
 import image from "../static/extra_character_a.png";
 import { Graphics } from "./graphics.ts";
 
@@ -58,32 +58,32 @@ export const Rectangle: Story = {
 export const Line: Story = {
 	render: (_, { loaded: { graphics, sprite } }) => {
 		const matrix = new Matrix();
-		graphics.line(0, 0, 800 / 3, 200, matrix.clone(), { stroke: "FF0000" });
+		graphics.line(new Point(0, 0), new Point(800 / 3, 200), matrix.clone(), {
+			stroke: "FF0000",
+		});
 		matrix.translate(800 / 3, 600 / 3);
-		graphics.line(0, 0, 800 / 3, 200, matrix.clone(), { stroke: "00FF00" });
+		graphics.line(new Point(0, 0), new Point(800 / 3, 200), matrix.clone(), {
+			stroke: "00FF00",
+		});
 		matrix.translate(800 / 3, 600 / 3);
-		graphics.line(0, 0, 800 / 3, 200, matrix.clone(), { stroke: "0000FF" });
+		graphics.line(new Point(0, 0), new Point(800 / 3, 200), matrix.clone(), {
+			stroke: "0000FF",
+		});
 		graphics.line(
-			(800 * 3) / 3,
-			(600 * 0) / 3,
-			(800 * 2) / 3,
-			(600 * 1) / 3,
+			new Point((800 * 3) / 3, (600 * 0) / 3),
+			new Point((800 * 2) / 3, (600 * 1) / 3),
 			Matrix.IDENTITY,
 			{ stroke: "FF0000" },
 		);
 		graphics.line(
-			(800 * 2) / 3,
-			(600 * 1) / 3,
-			(800 * 1) / 3,
-			(600 * 2) / 3,
+			new Point((800 * 2) / 3, (600 * 1) / 3),
+			new Point((800 * 1) / 3, (600 * 2) / 3),
 			Matrix.IDENTITY,
 			{ stroke: "00FF00" },
 		);
 		graphics.line(
-			(800 * 1) / 3,
-			(600 * 2) / 3,
-			(800 * 0) / 3,
-			(600 * 3) / 3,
+			new Point((800 * 1) / 3, (600 * 2) / 3),
+			new Point((800 * 0) / 3, (600 * 3) / 3),
 			Matrix.IDENTITY,
 			{ stroke: "0000FF" },
 		);
