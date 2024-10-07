@@ -1,4 +1,4 @@
-import { Matrix, Point, Polygon, type ShapePrimitive } from "pixi.js";
+import { Matrix, Point, Polygon, Rectangle, type ShapePrimitive } from "pixi.js";
 import { And, Entity, With, World } from "../ecs.ts";
 import { chunk, Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
@@ -42,6 +42,7 @@ export class MushroomApp {
 					new Point(50, 150),
 					new Point(50, -50),
 				]),
+				new Rectangle(-100, -50, 200, 50),
 			]),
 		);
 		this.world.addEntity(entity);
@@ -97,8 +98,6 @@ export class MushroomApp {
 		}
 	}
 	render() {
-		for (const mushroom of this.world.query(And(With(Mushroom)))) {
-		}
 		if (DEBUG) {
 			for (const entity of this.world.query(
 				And(With(Trigger), With(TriggerShapes), With(Transform)),

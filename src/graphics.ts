@@ -15,6 +15,7 @@ import {
 	Point,
 	type ShapePrimitive,
 	Polygon,
+	Rectangle,
 } from "pixi.js";
 import "pixi.js/math-extras";
 import { Pool } from "./pool.ts";
@@ -26,7 +27,7 @@ export function chunk<T>(array: Array<T>, size: number): Array<Array<T>> {
 	return chunkedArray;
 }
 
-type ShapeOptions = { fill?: FillInput, stroke?: StrokeInput };
+type ShapeOptions = { fill?: FillInput; stroke?: StrokeInput };
 
 export class Graphics {
 	static loadTexture(src: string): Promise<Texture> {
@@ -68,11 +69,7 @@ export class Graphics {
 		await this.renderer.init(options);
 		this.renderer.canvas.tabIndex = -1;
 	}
-	circle(
-		radius: number,
-		matrix: Matrix,
-		options?: ShapeOptions,
-	): PixiGraphics {
+	circle(radius: number, matrix: Matrix, options?: ShapeOptions): PixiGraphics {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.circle(0, 0, radius);
 		if (options?.fill) {
@@ -102,11 +99,7 @@ export class Graphics {
 		this.stage.addChild(pixiGraphics);
 		return pixiGraphics;
 	}
-	poly(
-		points: Array<Point>,
-		matrix: Matrix,
-		options?: ShapeOptions,
-	) {
+	poly(points: Array<Point>, matrix: Matrix, options?: ShapeOptions) {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.poly(points, true);
 		if (options?.fill) {
@@ -166,8 +159,17 @@ export class Graphics {
 				matrix,
 				options,
 			);
+		} else if (shapePrimitive instanceof Rectangle) {
+			this.rectangle(
+				shapePrimitive.width,
+				shapePrimitive.height,
+				matrix.clone().translate(shapePrimitive.x, shapePrimitive.y),
+				options,
+			);
 		} else {
-			throw new Error(`Draw for ShapePrimitive unsupported: ${shapePrimitive.type}`);
+			throw new Error(
+				`Draw for ShapePrimitive unsupported: ${shapePrimitive.type}`,
+			);
 		}
 		pixiGraphics.setFromMatrix(matrix);
 		this.stage.addChild(pixiGraphics);
