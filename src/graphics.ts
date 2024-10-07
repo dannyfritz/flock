@@ -12,6 +12,7 @@ import {
 	type WebGLOptions,
 	WebGLRenderer,
 	type TextOptions,
+	Point,
 } from "pixi.js";
 import "pixi.js/math-extras";
 import { Pool } from "./pool.ts";
@@ -26,6 +27,7 @@ export class Graphics {
 	renderer: WebGLRenderer;
 	stage: Container;
 	pixiGraphicsPool: Pool<PixiGraphics>;
+	pointPool: Pool<Point>;
 	matrixPool: Pool<Matrix>;
 	containerPool: Pool<Container>;
 	constructor() {
@@ -35,6 +37,10 @@ export class Graphics {
 			() => new PixiGraphics(),
 			(pg) => pg.clear(),
 		);
+		this.pointPool = new Pool(
+			() => new Point(),
+			(p) => p,
+		)
 		this.matrixPool = new Pool(
 			() => new Matrix(),
 			(m) => m.copyFrom(Matrix.IDENTITY),
@@ -69,17 +75,32 @@ export class Graphics {
 		return pixiGraphics;
 	}
 	line(
-		x1: number,
-		y1: number,
-		x2: number,
-		y2: number,
+		point1: Point,
+		point2: Point,
 		matrix: Matrix,
 		options?: { stroke?: StrokeInput },
 	): PixiGraphics {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.beginPath();
-		pixiGraphics.moveTo(x1, y1);
-		pixiGraphics.lineTo(x2, y2);
+		pixiGraphics.moveTo(point1.x, point1.y);
+		pixiGraphics.lineTo(point2.x, point2.y);
+		if (options?.stroke) {
+			pixiGraphics.stroke(options.stroke);
+		}
+		pixiGraphics.setFromMatrix(matrix);
+		this.stage.addChild(pixiGraphics);
+		return pixiGraphics;
+	}
+	poly(
+		points: Array<Point>,
+		matrix: Matrix,
+		options?: { fill?: FillInput; stroke?: StrokeInput },
+	) {
+		const pixiGraphics = this.pixiGraphicsPool.get();
+		pixiGraphics.poly(points, true);
+		if (options?.fill) {
+			pixiGraphics.fill(options.fill);
+		}
 		if (options?.stroke) {
 			pixiGraphics.stroke(options.stroke);
 		}

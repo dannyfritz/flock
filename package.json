@@ -31,15 +31,19 @@
 			"import": "./dist/time.js"
 		}
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"packageManager": "pnpm@9.10.0",
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.1",
 		"@storybook/html": "^8.3.3",
 		"@storybook/html-vite": "^8.3.3",
 		"@types/howler": "^2.2.12",
+		"@types/lodash": "^4.17.10",
 		"@types/node": "^22.5.5",
 		"howler": "^2.2.4",
+		"lodash": "^4.17.21",
 		"storybook": "^8.3.3",
 		"tsup": "^8.3.0",
 		"typescript": "~5.6.0",
@@ -59,7 +63,9 @@
 		"build-storybook": "storybook build"
 	},
 	"ultra": {
-		"concurrent": ["ci"]
+		"concurrent": [
+			"ci"
+		]
 	},
 	"dependencies": {
 		"many-keys-map": "^2.0.1",
