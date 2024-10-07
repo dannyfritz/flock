@@ -19,7 +19,7 @@ import {
 import "pixi.js/math-extras";
 import { Pool } from "./pool.ts";
 
-function chunk<T>(array: Array<T>, size: number): Array<Array<T>> {
+export function chunk<T>(array: Array<T>, size: number): Array<Array<T>> {
 	const chunkedArray = [];
 	for (let i = 0; i < array.length; i += size)
 		chunkedArray.push(array.slice(i, i + size));
