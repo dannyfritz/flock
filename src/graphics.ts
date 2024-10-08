@@ -51,7 +51,11 @@ export class Graphics {
 		);
 		this.pointPool = new Pool(
 			() => new Point(),
-			(p) => p,
+			(p) => {
+				p.x = 0;
+				p.y = 0;
+				return p;
+			},
 		);
 		this.matrixPool = new Pool(
 			() => new Matrix(),

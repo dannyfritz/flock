@@ -16,18 +16,23 @@ A collection of tools for making interactive experiences in a web browser.
 - Graphics
 - Input
 - Math
+- Pool
 - Time
 
 **Goals:**
 
 - Simple API
-- Good typescript types
-- Simple code
+- Good TypeScript types
 
 **Non-Goals:**
 
 - Performance
 - Parallelization
+
+### Inspiration
+
+- [LÖVE](https://love2d.org/)
+- [Bevy Engine](https://bevyengine.org/)
 
 ## Install
 
@@ -40,12 +45,22 @@ npm install -S @dannyfritz/flock
 ### ECS (`@dannyfritz/flock/ecs`)
 
 ```ts
-import { World, And, Or, With, Without, Entity } from "@dannyfritz/flock/ecs";
-class Health {
-	hp = 0;
-}
+import { World, With, Entity } from "@dannyfritz/flock/ecs";
+class Health { hp = 0 }
 class Boss {}
 class Player {}
+function initSystem(world: World) {
+	for (const player of world.query(With(Player))) {
+		player.getComponent(Health).hp = 100;
+	}
+	for (const boss of world.query(With(Boss))) {
+		boss.getComponent(Health).hp = 500;
+	}
+}
+function dieSystem(world: World) {
+	players[0].getComponent(Health).hp = 0;
+	world.removeEntity(players[0]);
+}
 const world = new World();
 world.addEntity(
 	new Entity().addComponent(new Health()).addComponent(new Player()),
@@ -53,33 +68,8 @@ world.addEntity(
 world.addEntity(
 	new Entity().addComponent(new Health()).addComponent(new Boss()),
 );
-function initSystem(world: World) {
-	const players = world.query(With(Player));
-	for (const player of players) {
-		player.getComponent(Health).hp = 100;
-	}
-	const bosses = world.query(With(Boss));
-	for (const boss of bosses) {
-		boss.getComponent(Health).hp = 500;
-	}
-}
 initSystem(world);
-function dieSystem(world: World) {
-	players[0].getComponent(Health).hp = 0;
-	world.removeEntity(players[0]);
-}
 dieSystem(world);
-```
-
-### Events (`@dannyfritz/flock/events`)
-
-```typescript
-import { Events } from "@dannyfritz/flock/events";
-type E = "BEGIN" | "END";
-const events = new Events<E>()
-events.add("BEGIN");
-console.log(events.get());
-console.log(mouse.buttons.get(0));
 ```
 
 ### Input (`@dannyfritz/flock/input`)
@@ -121,14 +111,16 @@ console.log(item1 === pool.get());
 ### Time (`@dannyfritz/flock/time`)
 
 ```typescript
-const { Alarm, Stopwatch } from "@dannyfritz/flock/time"
-// Alarm
-const alarm = new Alarm(60);
-alarm.tick();
-console.log(alarm.remaining)
-while (alarm.isTriggered) {
+const { Timer, Stopwatch } from "@dannyfritz/flock/time"
+// Timer
+const timer = new Timer(60);
+timer.tick();
+console.log(timer.remaining)
+while (true) {
 	update();
-	alarm.rollover();
+	if (timer.isFinished) {
+		timer.rollover();
+	}
 }
 // Stopwatch
 const stopwatch = new Stopwatch();

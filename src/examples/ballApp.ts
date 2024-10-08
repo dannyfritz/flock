@@ -46,7 +46,9 @@ export class BallApp {
 			}
 			return;
 		}
-		const balls = this.world.query(And(With(Ball), With(Position), With(Velocity)));
+		const balls = this.world.query(
+			And(With(Ball), With(Position), With(Velocity)),
+		);
 		for (const entity of balls) {
 			const position = entity.getComponent(Position);
 			const velocity = entity.getComponent(Velocity);

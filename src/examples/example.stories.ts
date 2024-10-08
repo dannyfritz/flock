@@ -91,7 +91,7 @@ export const Mushroom: Story = {
 		requestAnimationFrame(tick);
 		return app.graphics.el;
 	},
-}
+};
 
 export const Particles: Story = {
 	loaders: [

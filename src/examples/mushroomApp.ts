@@ -8,7 +8,7 @@ import {
 import { And, Entity, With, World } from "../ecs.ts";
 import { chunk, Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
-import { Alarm, Stopwatch } from "../time.ts";
+import { Timer, Stopwatch } from "../time.ts";
 
 const DEBUG = true;
 class Trigger {
@@ -71,13 +71,13 @@ export class MushroomApp {
 				}
 			}
 		}
-		for (const entity of this.world.query(With(Alarm))) {
-			const alarm = entity.getComponent(Alarm);
+		for (const entity of this.world.query(With(Timer))) {
+			const alarm = entity.getComponent(Timer);
 			alarm.tick(1);
 		}
-		for (const entity of this.world.query(And(With(Alarm), With(Spore)))) {
-			const alarm = entity.getComponent(Alarm);
-			if (alarm.isTriggered) {
+		for (const entity of this.world.query(And(With(Timer), With(Spore)))) {
+			const alarm = entity.getComponent(Timer);
+			if (alarm.isFinished) {
 				this.world.removeEntity(entity);
 			}
 		}
@@ -94,12 +94,12 @@ export class MushroomApp {
 						.copyFrom(transform)
 						.translate(Math.random() * 100 - 50, Math.random() * -50),
 				);
-				sporeEntity.addComponent(new Alarm(200));
+				sporeEntity.addComponent(new Timer(200));
 				const velocity = new Velocity();
 				velocity.x = Math.random() - 0.5;
 				velocity.y = Math.random() - 0.5;
 				velocity.normalize(velocity);
-				velocity.multiplyScalar(Math.random(), velocity)
+				velocity.multiplyScalar(Math.random(), velocity);
 				sporeEntity.addComponent(velocity);
 				this.world.addEntity(sporeEntity);
 			}
@@ -136,8 +136,8 @@ export class MushroomApp {
 				const velocity = entity.getComponent(Velocity);
 				if (velocity) {
 					this.graphics.line(
-						new Point(0, 0),
-						velocity.multiplyScalar(5),
+						this.graphics.pointPool.get(),
+						velocity.multiplyScalar(10),
 						transform,
 						{
 							stroke: "blue",

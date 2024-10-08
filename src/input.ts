@@ -1,4 +1,4 @@
-import { Graphics } from "./graphics.ts";
+import type { Graphics } from "./graphics.ts";
 
 export type ButtonState = (typeof BUTTON_STATE)[keyof typeof BUTTON_STATE];
 export const BUTTON_STATE = {
@@ -142,12 +142,12 @@ export class Keyboard {
 		this.keys = new State();
 	}
 	bind(graphics: Graphics): void {
-				this.graphics.el.addEventListener("keydown", (event) => {
-			this.keyboard.keys.register(event.code as KeyCode);
+		graphics.el.addEventListener("keydown", (event) => {
+			this.keys.register(event.code as KeyCode);
 			event.preventDefault();
 		});
-		this.graphics.el.addEventListener("keyup", (event) => {
-			this.keyboard.keys.unregister(event.code as KeyCode);
+		graphics.el.addEventListener("keyup", (event) => {
+			this.keys.unregister(event.code as KeyCode);
 			event.preventDefault();
 		});
 	}

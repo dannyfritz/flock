@@ -1,18 +1,21 @@
-export class Alarm {
-	constructor(start: number) {
-		this.start = start;
+export class Timer {
+	constructor(duration: number) {
+		this.duration = duration;
 		this.stopwatch = new Stopwatch();
 	}
 	get elapsed(): number {
 		return this.stopwatch.elapsed;
 	}
-	get remaining(): number {
-		return this.start - this.stopwatch.elapsed;
+	get fraction(): number {
+		return this.elapsed / this.duration;
 	}
-	get isTriggered(): boolean {
+	get remaining(): number {
+		return this.duration - this.stopwatch.elapsed;
+	}
+	get isFinished(): boolean {
 		return this.remaining <= 0;
 	}
-	start: number;
+	duration: number;
 	stopwatch: Stopwatch;
 	reset() {
 		this.stopwatch.reset();
