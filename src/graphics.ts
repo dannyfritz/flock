@@ -1,21 +1,20 @@
 import {
 	Assets,
-	type ClearOptions,
 	Container,
 	type FillInput,
-	Graphics as PixiGraphics,
 	Matrix,
+	Graphics as PixiGraphics,
+	Point,
+	Polygon,
+	Rectangle,
+	type ShapePrimitive,
 	Sprite,
 	type StrokeInput,
 	Text,
+	type TextOptions,
 	type Texture,
 	type WebGLOptions,
 	WebGLRenderer,
-	type TextOptions,
-	Point,
-	type ShapePrimitive,
-	Polygon,
-	Rectangle,
 } from "pixi.js";
 import "pixi.js/math-extras";
 import { Pool } from "./pool.ts";

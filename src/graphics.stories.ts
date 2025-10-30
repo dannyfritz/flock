@@ -56,7 +56,7 @@ export const Rectangle: Story = {
 };
 
 export const Line: Story = {
-	render: (_, { loaded: { graphics, sprite } }) => {
+	render: (_, { loaded: { graphics } }) => {
 		const matrix = new Matrix();
 		graphics.line(new Point(0, 0), new Point(800 / 3, 200), matrix.clone(), {
 			stroke: "FF0000",
@@ -105,7 +105,7 @@ export const Sprite: Story = {
 };
 
 export const Text: Story = {
-	render: (_, { loaded: { graphics, sprite } }) => {
+	render: (_, { loaded: { graphics } }) => {
 		const matrix = new Matrix();
 		matrix.translate(100, 200);
 		graphics.text("Hello World!", matrix, { fill: "FF0000" });

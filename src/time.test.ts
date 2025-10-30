@@ -1,4 +1,4 @@
-import test, { describe, mock } from "node:test";
+import test, { describe } from "node:test";
 import assert from "node:assert";
 import { Timer, Stopwatch } from "./time.ts";
 
@@ -62,6 +62,17 @@ describe("Time", () => {
 			timer.tick(60);
 			timer.rollover();
 			assert.equal(timer.elapsed, 30);
+			timer.tick(1);
+			timer.rollover();
+			assert.equal(timer.elapsed, 1);
+		});
+		test(".canRollover", () => {
+			const timer = new Timer(30);
+			timer.tick(61);
+			while (timer.canRollover) {
+				timer.rollover();
+			}
+			assert.equal(timer.elapsed, 1);
 		});
 	});
 });

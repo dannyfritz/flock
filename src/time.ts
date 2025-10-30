@@ -3,10 +3,13 @@ export class Timer {
 		this.duration = duration;
 		this.stopwatch = new Stopwatch();
 	}
+	get canRollover(): boolean {
+		return this.stopwatch.elapsed >= this.duration;
+	}
 	get elapsed(): number {
 		return this.stopwatch.elapsed;
 	}
-	get fraction(): number {
+	get percent_elapsed(): number {
 		return this.elapsed / this.duration;
 	}
 	get remaining(): number {
@@ -21,9 +24,7 @@ export class Timer {
 		this.stopwatch.reset();
 	}
 	rollover() {
-		const remaining = Math.max(Math.abs(this.remaining), 0);
-		this.stopwatch.reset();
-		this.stopwatch.tick(remaining);
+		this.stopwatch.elapsed -= this.duration;
 	}
 	tick(dt: number) {
 		this.stopwatch.tick(dt);

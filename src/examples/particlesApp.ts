@@ -1,6 +1,6 @@
-import { Matrix, Point, type Texture } from "pixi.js";
+import { Point, type Texture } from "pixi.js";
+import { Entity, query, With, World } from "../ecs.ts";
 import { Graphics } from "../graphics.ts";
-import { And, Entity, With, World, query } from "../ecs.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
 
 class Planet {}

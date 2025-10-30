@@ -114,3 +114,24 @@ export const Particles: Story = {
 		return app.graphics.el;
 	},
 };
+
+export const Find: Story = {
+	loaders: [
+		async () => {
+			const { FindApp } = await import("./findApp.ts");
+			const app = new FindApp();
+			await app.init();
+			return {
+				app,
+			};
+		},
+	],
+	render: (_, { loaded: { app } }) => {
+		function tick(elapsed: DOMHighResTimeStamp) {
+			app.tick(elapsed);
+			requestAnimationFrame(tick);
+		}
+		requestAnimationFrame(tick);
+		return app.graphics.el;
+	},
+};

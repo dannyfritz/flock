@@ -1,5 +1,6 @@
-import memoize from "memoize";
 import ManyKeysMap from "many-keys-map";
+import memoize from "memoize";
+
 type Ctor<T = object> = abstract new (...args: never) => T;
 
 class Entity {
@@ -60,24 +61,36 @@ const query = memoize(
 
 type QueryParam = (entity: Entity) => boolean;
 
+/**
+ * Match entities that contain a Component
+ */
 const With = memoize(
 	(Component: Ctor): QueryParam =>
 		(entity: Entity): boolean =>
 			entity.hasComponent(Component),
 );
 
+/**
+ * Match entities that do not contain a Component
+ */
 const Without = memoize(
 	(Component: Ctor): QueryParam =>
 		(entity: Entity): boolean =>
 			!entity.hasComponent(Component),
 );
 
+/**
+ * Match if all provided queries match
+ */
 const And = memoize(
 	(...params: Array<QueryParam>): QueryParam =>
 		(entity: Entity): boolean =>
 			params.every((param) => param(entity)),
 );
 
+/**
+ * Match if any provided queries match
+ */
 const Or = memoize(
 	(...params: Array<QueryParam>): QueryParam =>
 		(entity: Entity): boolean =>

@@ -7,9 +7,9 @@ import {
 	type ShapePrimitive,
 } from "pixi.js";
 import { And, Entity, With, World } from "../ecs.ts";
-import { chunk, Graphics } from "../graphics.ts";
+import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
-import { Timer, Stopwatch } from "../time.ts";
+import { Timer } from "../time.ts";
 import sporeImageFile from "../../static/spore.png";
 import mushroomImageFile from "../../static/mushroom.png";
 
@@ -210,7 +210,7 @@ export class MushroomApp {
 	}
 	render() {
 		const mushroomTransform = new Transform();
-		mushroomTransform.translate(-512/2, -512/2)
+		mushroomTransform.translate(-512 / 2, -512 / 2);
 		mushroomTransform.scale(0.5, 0.5);
 		mushroomTransform.translate(400, 300);
 		this.graphics.sprite(this.mushroomTexture, mushroomTransform);

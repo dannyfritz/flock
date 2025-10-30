@@ -1,10 +1,10 @@
 import { Howl } from "howler";
-import { Matrix, Point } from "pixi.js";
+import { Point } from "pixi.js";
+import blipSoundFile from "../../static/blip.wav";
+import coinSoundFile from "../../static/coin.wav";
 import { And, Entity, With, World } from "../ecs.ts";
 import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
-import blipSoundFile from "../../static/blip.wav";
-import coinSoundFile from "../../static/coin.wav";
 
 class Ball {
 	radius = 20;

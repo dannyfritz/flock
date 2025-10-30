@@ -9,10 +9,9 @@ describe("ECS", () => {
 			assert.equal(world.entities.length, 0);
 		});
 		test("new Entity()", () => {
-			const entity = new Entity();
+			const _entity = new Entity();
 		});
 		test("world.addEntity()", () => {
-			class Component {}
 			const world = new World();
 			const entity = new Entity();
 			world.addEntity(entity);
@@ -91,9 +90,6 @@ describe("ECS", () => {
 			});
 		});
 		test("world.removeEntity()", () => {
-			class Component {
-				x = 0;
-			}
 			const world = new World();
 			const entity = new Entity();
 			world.addEntity(entity);
@@ -101,9 +97,6 @@ describe("ECS", () => {
 			assert.equal(world.entities.length, 0);
 		});
 		test("entity.destroy() when Entity doesn't exist", () => {
-			class Component {
-				x = 0;
-			}
 			const world = new World();
 			const entity = new Entity();
 			world.addEntity(entity);
