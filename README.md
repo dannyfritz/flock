@@ -129,3 +129,7 @@ console.log(stopwatch.elapsed); // 30
 ```
 
 ## [Code of Conduct](./CODE_OF_CONDUCT.md)
+
+## Credits
+
+[Kenney Game Assets](https://www.kenney.nl/donate)
