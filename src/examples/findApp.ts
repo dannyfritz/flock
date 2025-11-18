@@ -5,8 +5,6 @@ import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Keyboard, type KeyCode } from "../input.ts";
 import { Timer } from "../time.ts";
 
-// TODO: Show color indicator when close
-
 const DT = 1000 / 60;
 
 type Assets = {
@@ -23,6 +21,7 @@ type Event =
 type State = {
 	elapsed: number;
 	is_won: boolean;
+	guesses: number;
 };
 
 class Player {}
@@ -48,6 +47,7 @@ export class FindApp {
 	state: State = {
 		elapsed: -1,
 		is_won: false,
+		guesses: 8,
 	};
 	async init(): Promise<void> {
 		await Promise.all([
@@ -146,7 +146,7 @@ export class FindApp {
 				x: Math.round(position.x / 128),
 				y: Math.round(position.y / 128),
 			};
-			if (events.indexOf("DIG") > -1) {
+			if (events.indexOf("DIG") > -1 && this.state.guesses > 0) {
 				const cell_entities = this.world.query(With(Cell));
 				for (const entity of cell_entities) {
 					const position = entity.getComponent(Position);
@@ -155,7 +155,11 @@ export class FindApp {
 						position.y === nearest_cell_pos.y
 					) {
 						const cell = entity.getComponent(Cell);
+						if (cell.is_visited) {
+							continue;
+						}
 						cell.is_visited = true;
+						this.state.guesses -= 1;
 						if (cell.has_treasure) {
 							this.state.is_won = true;
 						}
@@ -212,6 +216,14 @@ export class FindApp {
 		}
 		if (this.state.is_won) {
 			this.graphics.text("YOU WIN!", this.graphics.matrixPool.get(), {});
+		} else if (this.state.is_won === false && this.state.guesses === 0) {
+			this.graphics.text("YOU LOST!", this.graphics.matrixPool.get(), {});
+		} else {
+			this.graphics.text(
+				"Guesses:" + this.state.guesses,
+				this.graphics.matrixPool.get(),
+				{},
+			);
 		}
 		this.graphics.render();
 	}
