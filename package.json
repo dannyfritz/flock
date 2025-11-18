@@ -2,7 +2,7 @@
 	"name": "@dannyfritz/flock",
 	"version": "0.2.0",
 	"engines": {
-		"node": "^22"
+		"node": "^24"
 	},
 	"type": "module",
 	"exports": {
@@ -30,7 +30,7 @@
 	"files": [
 		"dist"
 	],
-	"packageManager": "pnpm@9.10.0",
+	"packageManager": "pnpm@10.19.0",
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.0",
 		"@storybook/html": "^9.1.15",

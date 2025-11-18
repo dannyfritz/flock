@@ -7,7 +7,7 @@ import { Timer } from "../time.ts";
 
 // TODO: Show color indicator when close
 
-const DT = 1000 / 30;
+const DT = 1000 / 60;
 
 type Assets = {
 	texture: Texture | undefined;
