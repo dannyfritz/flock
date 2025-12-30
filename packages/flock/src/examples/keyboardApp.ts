@@ -1,7 +1,7 @@
 import { Matrix, type Texture } from "pixi.js";
+import spriteFile from "../../static/extra_character_a.png";
 import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Keyboard, type KeyCode } from "../input.ts";
-import spriteFile from "../../static/extra_character_a.png";
 
 export class KeyboardApp {
 	graphics = new Graphics();

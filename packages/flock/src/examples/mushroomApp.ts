@@ -3,15 +3,15 @@ import {
 	Point,
 	Polygon,
 	Rectangle,
-	type Texture,
 	type ShapePrimitive,
+	type Texture,
 } from "pixi.js";
+import mushroomImageFile from "../../static/mushroom.png";
+import sporeImageFile from "../../static/spore.png";
 import { And, Entity, With, World } from "../ecs.ts";
 import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
 import { Timer } from "../time.ts";
-import sporeImageFile from "../../static/spore.png";
-import mushroomImageFile from "../../static/mushroom.png";
 
 const DEBUG = false;
 class Trigger {

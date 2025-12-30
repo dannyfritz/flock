@@ -1,6 +1,6 @@
-import test, { describe } from "node:test";
 import assert from "node:assert";
-import { World, And, Or, With, Without, Entity } from "./ecs.ts";
+import test, { describe } from "node:test";
+import { And, Entity, Or, With, Without, World } from "./ecs.ts";
 
 describe("ECS", () => {
 	describe("World / Entity", () => {

@@ -220,7 +220,7 @@ export class FindApp {
 			this.graphics.text("YOU LOST!", this.graphics.matrixPool.get(), {});
 		} else {
 			this.graphics.text(
-				"Digs Left:" + this.state.action_points,
+				`Digs Left: ${this.state.action_points}`,
 				this.graphics.matrixPool.get(),
 				{},
 			);

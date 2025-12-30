@@ -1,0 +1,3 @@
+packages:
+  - packages/flock
+  - packages/rs-flock

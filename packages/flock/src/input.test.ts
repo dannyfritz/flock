@@ -1,5 +1,5 @@
-import test, { describe } from "node:test";
 import assert from "node:assert";
+import test, { describe } from "node:test";
 import { BUTTON_STATE, Keyboard, Mouse } from "./input.ts";
 
 describe("Input", () => {
