@@ -5,7 +5,7 @@ import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Keyboard, type KeyCode } from "../input.ts";
 import { Timer } from "../time.ts";
 
-const DT = 1000 / 60;
+const DT = 1000 / 30;
 
 type Assets = {
 	texture: Texture | undefined;
@@ -21,7 +21,7 @@ type Event =
 type State = {
 	elapsed: number;
 	is_won: boolean;
-	guesses: number;
+	action_points: number;
 };
 
 class Player {}
@@ -47,7 +47,7 @@ export class FindApp {
 	state: State = {
 		elapsed: -1,
 		is_won: false,
-		guesses: 8,
+		action_points: 8,
 	};
 	async init(): Promise<void> {
 		await Promise.all([
@@ -146,7 +146,7 @@ export class FindApp {
 				x: Math.round(position.x / 128),
 				y: Math.round(position.y / 128),
 			};
-			if (events.indexOf("DIG") > -1 && this.state.guesses > 0) {
+			if (events.indexOf("DIG") > -1 && this.state.action_points > 0) {
 				const cell_entities = this.world.query(With(Cell));
 				for (const entity of cell_entities) {
 					const position = entity.getComponent(Position);
@@ -159,7 +159,7 @@ export class FindApp {
 							continue;
 						}
 						cell.is_visited = true;
-						this.state.guesses -= 1;
+						this.state.action_points -= 1;
 						if (cell.has_treasure) {
 							this.state.is_won = true;
 						}
@@ -216,11 +216,11 @@ export class FindApp {
 		}
 		if (this.state.is_won) {
 			this.graphics.text("YOU WIN!", this.graphics.matrixPool.get(), {});
-		} else if (this.state.is_won === false && this.state.guesses === 0) {
+		} else if (this.state.is_won === false && this.state.action_points === 0) {
 			this.graphics.text("YOU LOST!", this.graphics.matrixPool.get(), {});
 		} else {
 			this.graphics.text(
-				"Guesses:" + this.state.guesses,
+				"Digs Left:" + this.state.action_points,
 				this.graphics.matrixPool.get(),
 				{},
 			);
