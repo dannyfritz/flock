@@ -1,0 +1,14 @@
+{
+	"name": "rescript-flock",
+	"type": "module",
+	"scripts": {
+		"build": "rescript",
+		"dev": "rescript -w"
+	},
+	"devDependencies": {
+		"rescript": "^12.0.2"
+	},
+	"dependencies": {
+		"@dannyfritz/flock": "workspace:*"
+	}
+}
