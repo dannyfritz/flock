@@ -30,7 +30,7 @@
 	"scripts": {
 		"ci": "pnpm run test:unit && pnpm run test:lint && pnpm run test:format && pnpm run test:build",
 		"format": "oxfmt --write",
-		"prepack": "tsup src/ecs.ts src/graphics.ts src/input.ts src/pool.ts src/time.ts --sourcemap --format esm",
+		"prepack": "tsdown src/ecs.ts src/graphics.ts src/input.ts src/pool.ts src/time.ts --sourcemap --format esm",
 		"test:format": "oxfmt --check",
 		"test:lint": "oxlint",
 		"test:unit": "node --experimental-strip-types --test \"**/*.test.?(m)ts\"",
@@ -43,7 +43,8 @@
 		"howler": "^2",
 		"many-keys-map": "^3",
 		"memoize": "^11",
-		"pixi.js": "^8"
+		"pixi.js": "^8",
+		"tsdown": "^0.22.14"
 	},
 	"devDependencies": {
 		"@storybook/html": "^10",
@@ -54,9 +55,8 @@
 		"oxlint": "^1.79.0",
 		"pnpm": "^11",
 		"storybook": "^10",
-		"tsup": "^8",
 		"type-fest": "^5",
-		"typescript": "^6",
+		"typescript": "^7",
 		"ultra-runner": "^3"
 	},
 	"engines": {
