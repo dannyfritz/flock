@@ -46,7 +46,9 @@ npm install -S @dannyfritz/flock
 
 ```ts
 import { World, With, Entity } from "@dannyfritz/flock/ecs";
-class Health { hp = 0 }
+class Health {
+	hp = 0;
+}
 class Boss {}
 class Player {}
 function initSystem(world: World) {
@@ -62,12 +64,8 @@ function dieSystem(world: World) {
 	world.removeEntity(players[0]);
 }
 const world = new World();
-world.addEntity(
-	new Entity().addComponent(new Health()).addComponent(new Player()),
-);
-world.addEntity(
-	new Entity().addComponent(new Health()).addComponent(new Boss()),
-);
+world.addEntity(new Entity().addComponent(new Health()).addComponent(new Player()));
+world.addEntity(new Entity().addComponent(new Health()).addComponent(new Boss()));
 initSystem(world);
 dieSystem(world);
 ```

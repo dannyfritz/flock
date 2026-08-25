@@ -110,49 +110,24 @@ describe("ECS", () => {
 			class ComponentA {}
 			class ComponentB {}
 			const world = new World();
-			assert.equal(
-				world.query(And(With(ComponentA), With(ComponentB))).length,
-				0,
-			);
+			assert.equal(world.query(And(With(ComponentA), With(ComponentB))).length, 0);
 			world.addEntity(new Entity().addComponent(new ComponentA()));
-			assert.equal(
-				world.query(And(With(ComponentA), With(ComponentB))).length,
-				0,
-			);
+			assert.equal(world.query(And(With(ComponentA), With(ComponentB))).length, 0);
 			world.addEntity(new Entity().addComponent(new ComponentB()));
-			assert.equal(
-				world.query(And(With(ComponentA), With(ComponentB))).length,
-				0,
-			);
-			world.addEntity(
-				new Entity()
-					.addComponent(new ComponentA())
-					.addComponent(new ComponentB()),
-			);
-			assert.equal(
-				world.query(And(With(ComponentA), With(ComponentB))).length,
-				1,
-			);
+			assert.equal(world.query(And(With(ComponentA), With(ComponentB))).length, 0);
+			world.addEntity(new Entity().addComponent(new ComponentA()).addComponent(new ComponentB()));
+			assert.equal(world.query(And(With(ComponentA), With(ComponentB))).length, 1);
 		});
 		test("Or()", () => {
 			class ComponentA {}
 			class ComponentB {}
 			const world = new World();
-			assert.equal(
-				world.query(Or(With(ComponentA), With(ComponentB))).length,
-				0,
-			);
+			assert.equal(world.query(Or(With(ComponentA), With(ComponentB))).length, 0);
 			world.addEntity(new Entity().addComponent(new ComponentA()));
 			world.addEntity(new Entity().addComponent(new ComponentA()));
-			assert.equal(
-				world.query(Or(With(ComponentA), With(ComponentB))).length,
-				2,
-			);
+			assert.equal(world.query(Or(With(ComponentA), With(ComponentB))).length, 2);
 			world.addEntity(new Entity().addComponent(new ComponentB()));
-			assert.equal(
-				world.query(Or(With(ComponentA), With(ComponentB))).length,
-				3,
-			);
+			assert.equal(world.query(Or(With(ComponentA), With(ComponentB))).length, 3);
 		});
 		test("With()", () => {
 			class ComponentA {}
@@ -194,23 +169,13 @@ describe("ECS", () => {
 		}
 		class Player {}
 		const world = new World();
+		world.addEntity(new Entity().addComponent(new Health()).addComponent(new Dog()));
+		world.addEntity(new Entity().addComponent(new Health()).addComponent(new Dog()));
 		world.addEntity(
-			new Entity().addComponent(new Health()).addComponent(new Dog()),
+			new Entity().addComponent(new Health()).addComponent(new Dog()).addComponent(new Boss()),
 		);
 		world.addEntity(
-			new Entity().addComponent(new Health()).addComponent(new Dog()),
-		);
-		world.addEntity(
-			new Entity()
-				.addComponent(new Health())
-				.addComponent(new Dog())
-				.addComponent(new Boss()),
-		);
-		world.addEntity(
-			new Entity()
-				.addComponent(new Health())
-				.addComponent(new Cat())
-				.addComponent(new Player()),
+			new Entity().addComponent(new Health()).addComponent(new Cat()).addComponent(new Player()),
 		);
 		function initSystem(world: World) {
 			const minionDogs = world.query(And(With(Dog), Without(Boss)));

@@ -1,11 +1,4 @@
-import {
-	Matrix,
-	Point,
-	Polygon,
-	Rectangle,
-	type Texture,
-	type ShapePrimitive,
-} from "pixi.js";
+import { Matrix, Point, Polygon, Rectangle, type Texture, type ShapePrimitive } from "pixi.js";
 import { And, Entity, With, World } from "../ecs.ts";
 import { Graphics } from "../graphics.ts";
 import { BUTTON_STATE, Mouse } from "../input.ts";
@@ -106,9 +99,7 @@ export class MushroomApp {
 			const alarm = entity.getComponent(Timer);
 			alarm.tick(1);
 		}
-		for (const entity of this.world.query(
-			And(With(Timer), With(Spore), With(Transform)),
-		)) {
+		for (const entity of this.world.query(And(With(Timer), With(Spore), With(Transform)))) {
 			const alarm = entity.getComponent(Timer);
 			const spore = entity.getComponent(Spore);
 			if (alarm.isFinished) {
@@ -130,9 +121,7 @@ export class MushroomApp {
 				this.world.addEntity(newSporeEntity);
 			}
 		}
-		for (const entity of this.world.query(
-			And(With(Mushroom), With(Trigger), With(Transform)),
-		)) {
+		for (const entity of this.world.query(And(With(Mushroom), With(Trigger), With(Transform)))) {
 			const trigger = entity.getComponent(Trigger);
 			const transform = entity.getComponent(Transform);
 			if (trigger.active) {
@@ -153,9 +142,7 @@ export class MushroomApp {
 				this.world.addEntity(sporeEntity);
 			}
 		}
-		for (const entity of this.world.query(
-			And(With(Velocity), With(Transform)),
-		)) {
+		for (const entity of this.world.query(And(With(Velocity), With(Transform)))) {
 			const transform = entity.getComponent(Transform);
 			const velocity = entity.getComponent(Velocity);
 			transform.translate(velocity.x, velocity.y);
@@ -178,20 +165,13 @@ export class MushroomApp {
 			const transform = entity.getComponent(Transform);
 			this.graphics.circle(1, transform, { stroke: "green" });
 		}
-		for (const entity of this.world.query(
-			And(With(Velocity), With(Transform)),
-		)) {
+		for (const entity of this.world.query(And(With(Velocity), With(Transform)))) {
 			const transform = entity.getComponent(Transform);
 			const velocity = entity.getComponent(Velocity);
 			if (velocity) {
-				this.graphics.line(
-					this.graphics.pointPool.get(),
-					velocity.multiplyScalar(10),
-					transform,
-					{
-						stroke: "blue",
-					},
-				);
+				this.graphics.line(this.graphics.pointPool.get(), velocity.multiplyScalar(10), transform, {
+					stroke: "blue",
+				});
 			}
 		}
 		const color =
@@ -202,9 +182,7 @@ export class MushroomApp {
 					: "green";
 		this.graphics.circle(
 			4,
-			this.graphics.matrixPool
-				.get()
-				.translate(this.mouse.position.x, this.mouse.position.y),
+			this.graphics.matrixPool.get().translate(this.mouse.position.x, this.mouse.position.y),
 			{ stroke: color },
 		);
 	}

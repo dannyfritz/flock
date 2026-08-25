@@ -27,25 +27,17 @@ export class ParticlesApp {
 		this.mouse.tick();
 		if (this.mouse.buttons.get(0) === BUTTON_STATE.DOWN) {
 			const entity = new Entity();
-			const position = new Position(
-				this.mouse.position.x,
-				this.mouse.position.y,
-			);
+			const position = new Position(this.mouse.position.x, this.mouse.position.y);
 			entity.addComponent(position);
 			entity.addComponent(new Satellite());
 			const angle = Math.random() * 2 * Math.PI;
 			const radius = Math.sqrt(Math.random() * MAX_SPEED);
-			entity.addComponent(
-				new Velocity(radius * Math.cos(angle), radius * Math.sin(angle)),
-			);
+			entity.addComponent(new Velocity(radius * Math.cos(angle), radius * Math.sin(angle)));
 			this.world.addEntity(entity);
 		}
 		if (this.mouse.buttons.get(2) === BUTTON_STATE.PRESSED) {
 			const entity = new Entity();
-			const position = new Position(
-				this.mouse.position.x,
-				this.mouse.position.y,
-			);
+			const position = new Position(this.mouse.position.x, this.mouse.position.y);
 			entity.addComponent(position);
 			entity.addComponent(new Planet());
 			this.world.addEntity(entity);
@@ -85,11 +77,9 @@ export class ParticlesApp {
 			this.graphics.circle(15, matrix, { stroke: "#FF0000" });
 		}
 		const matrix = this.graphics.matrixPool.get();
-		this.graphics.text(
-			`Planets: ${planets.length}\nSatellites: ${satellites.length}`,
-			matrix,
-			{ fill: "#FFFFFFFF" },
-		);
+		this.graphics.text(`Planets: ${planets.length}\nSatellites: ${satellites.length}`, matrix, {
+			fill: "#FFFFFFFF",
+		});
 		this.graphics.render();
 	}
 }

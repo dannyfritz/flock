@@ -27,13 +27,10 @@
 			"import": "./dist/time.js"
 		}
 	},
-	"engines": {
-		"node": "^26"
-	},
 	"scripts": {
 		"ci": "pnpm run test:unit && pnpm run test:lint && pnpm run test:format && pnpm run test:build",
 		"format": "oxfmt --write",
-		"prepack": "tsup src/ecs.ts src/graphics.ts src/input.ts src/pool.ts src/time.ts --dts --sourcemap --format esm",
+		"prepack": "tsup src/ecs.ts src/graphics.ts src/input.ts src/pool.ts src/time.ts --sourcemap --format esm",
 		"test:format": "oxfmt --check",
 		"test:lint": "oxlint",
 		"test:unit": "node --experimental-strip-types --test \"**/*.test.?(m)ts\"",
@@ -59,8 +56,11 @@
 		"storybook": "^10",
 		"tsup": "^8",
 		"type-fest": "^5",
-		"typescript": "^7",
+		"typescript": "^6",
 		"ultra-runner": "^3"
+	},
+	"engines": {
+		"node": "^26"
 	},
 	"ultra": {
 		"concurrent": [

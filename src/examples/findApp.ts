@@ -13,12 +13,7 @@ type Assets = {
 	texture: Texture | undefined;
 };
 
-type Event =
-	| "PLAYER_UP"
-	| "PLAYER_DOWN"
-	| "PLAYER_RIGHT"
-	| "PLAYER_LEFT"
-	| "DIG";
+type Event = "PLAYER_UP" | "PLAYER_DOWN" | "PLAYER_RIGHT" | "PLAYER_LEFT" | "DIG";
 
 type State = {
 	elapsed: number;
@@ -77,9 +72,7 @@ export class FindApp {
 			}
 		}
 		const cells = this.world.query(With(Cell));
-		cells[Math.floor(Math.random() * cells.length)].getComponent(
-			Cell,
-		).has_treasure = true;
+		cells[Math.floor(Math.random() * cells.length)].getComponent(Cell).has_treasure = true;
 	}
 	tick(nextElapsed: number) {
 		this.events = [];
@@ -150,10 +143,7 @@ export class FindApp {
 				const cell_entities = this.world.query(With(Cell));
 				for (const entity of cell_entities) {
 					const position = entity.getComponent(Position);
-					if (
-						position.x === nearest_cell_pos.x &&
-						position.y === nearest_cell_pos.y
-					) {
+					if (position.x === nearest_cell_pos.x && position.y === nearest_cell_pos.y) {
 						const cell = entity.getComponent(Cell);
 						cell.is_visited = true;
 						if (cell.has_treasure) {
@@ -164,9 +154,7 @@ export class FindApp {
 			}
 			const target_entity = new Entity();
 			target_entity.addComponent(new Target());
-			target_entity.addComponent(
-				new Position(nearest_cell_pos.x * 128, nearest_cell_pos.y * 128),
-			);
+			target_entity.addComponent(new Position(nearest_cell_pos.x * 128, nearest_cell_pos.y * 128));
 			this.world.addEntity(target_entity);
 		}
 	}
@@ -185,12 +173,7 @@ export class FindApp {
 			this.graphics.rectangle(128, 128, matrix, {
 				fill: {
 					alpha: 1,
-					color:
-						cell.has_treasure && cell.is_visited
-							? "red"
-							: cell.is_visited
-								? "green"
-								: "blue",
+					color: cell.has_treasure && cell.is_visited ? "red" : cell.is_visited ? "green" : "blue",
 				},
 				stroke: { width: 1, alpha: 0.5 },
 			});

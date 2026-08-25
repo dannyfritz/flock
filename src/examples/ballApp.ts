@@ -46,9 +46,7 @@ export class BallApp {
 			}
 			return;
 		}
-		const balls = this.world.query(
-			And(With(Ball), With(Position), With(Velocity)),
-		);
+		const balls = this.world.query(And(With(Ball), With(Position), With(Velocity)));
 		for (const entity of balls) {
 			const position = entity.getComponent(Position);
 			const velocity = entity.getComponent(Velocity);
@@ -107,9 +105,7 @@ export class BallApp {
 		for (const entity of balls) {
 			const ball = entity.getComponent(Ball);
 			const position = entity.getComponent(Position);
-			const matrix = this.graphics.matrixPool
-				.get()
-				.translate(position.x, position.y);
+			const matrix = this.graphics.matrixPool.get().translate(position.x, position.y);
 			this.graphics.circle(ball.radius, matrix, { fill: "red" });
 		}
 		this.graphics.render();

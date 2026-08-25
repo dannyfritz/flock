@@ -21,8 +21,7 @@ import { Pool } from "./pool.ts";
 
 export function chunk<T>(array: Array<T>, size: number): Array<Array<T>> {
 	const chunkedArray = [];
-	for (let i = 0; i < array.length; i += size)
-		chunkedArray.push(array.slice(i, i + size));
+	for (let i = 0; i < array.length; i += size) chunkedArray.push(array.slice(i, i + size));
 	return chunkedArray;
 }
 
@@ -115,12 +114,7 @@ export class Graphics {
 		this.stage.addChild(pixiGraphics);
 		return pixiGraphics;
 	}
-	rectangle(
-		width: number,
-		height: number,
-		matrix: Matrix,
-		options?: ShapeOptions,
-	) {
+	rectangle(width: number, height: number, matrix: Matrix, options?: ShapeOptions) {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		pixiGraphics.rect(0, 0, width, height);
 		if (options?.fill) {
@@ -145,11 +139,7 @@ export class Graphics {
 		this.matrixPool.reset();
 		this.containerPool.reset();
 	}
-	shape(
-		shapePrimitive: ShapePrimitive,
-		matrix: Matrix,
-		options?: ShapeOptions,
-	) {
+	shape(shapePrimitive: ShapePrimitive, matrix: Matrix, options?: ShapeOptions) {
 		const pixiGraphics = this.pixiGraphicsPool.get();
 		if (shapePrimitive instanceof Polygon && shapePrimitive.closePath) {
 			this.poly(
@@ -170,9 +160,7 @@ export class Graphics {
 				options,
 			);
 		} else {
-			throw new Error(
-				`Draw for ShapePrimitive unsupported: ${shapePrimitive.type}`,
-			);
+			throw new Error(`Draw for ShapePrimitive unsupported: ${shapePrimitive.type}`);
 		}
 		pixiGraphics.setFromMatrix(matrix);
 		this.stage.addChild(pixiGraphics);

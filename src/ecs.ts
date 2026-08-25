@@ -7,16 +7,13 @@ class Entity {
 	components: Map<Ctor<unknown>, object> = new Map();
 	addComponent<T extends object>(component: T): Entity {
 		if (this.hasComponent(component.constructor as Ctor))
-			throw new Error(
-				`Component "${component.constructor.name}" already exists on Entity!`,
-			);
+			throw new Error(`Component "${component.constructor.name}" already exists on Entity!`);
 		this.components.set(component.constructor as Ctor, component);
 		return this;
 	}
 	getComponent<C>(Component: Ctor<C>): C {
 		const c = this.components.get(Component);
-		if (c === undefined)
-			throw new Error(`Component "${Component.name}" doesn't exist on Entity!`);
+		if (c === undefined) throw new Error(`Component "${Component.name}" doesn't exist on Entity!`);
 		return c as C;
 	}
 	hasComponent(Component: Ctor): boolean {

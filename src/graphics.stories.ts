@@ -70,7 +70,7 @@ export const Line: Story = {
 			stroke: "0000FF",
 		});
 		graphics.line(
-			new Point((800 * 3) / 3, (600 * 0) / 3),
+			new Point((800 * 3) / 3, 0),
 			new Point((800 * 2) / 3, (600 * 1) / 3),
 			Matrix.IDENTITY,
 			{ stroke: "FF0000" },
@@ -83,7 +83,7 @@ export const Line: Story = {
 		);
 		graphics.line(
 			new Point((800 * 1) / 3, (600 * 2) / 3),
-			new Point((800 * 0) / 3, (600 * 3) / 3),
+			new Point(0, (600 * 3) / 3),
 			Matrix.IDENTITY,
 			{ stroke: "0000FF" },
 		);
